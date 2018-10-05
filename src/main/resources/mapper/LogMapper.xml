@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--此处是对应UserDao接口-->
+<mapper namespace="org.sicau.votesys.dao.LogDao">
+
+    <insert id="insertActionLog" >
+        insert into log_t(id,user_id,log_time,log_ip,log_action)
+        values (#{id},#{userId},#{logTime},#{logIp},#{logAction});
+    </insert>
+</mapper>

@@ -5,13 +5,13 @@ package org.sicau.votesys.domain.POJO;
  * @Date Created in 9:46 2018/10/5
  * @Description:
  */
-public class Teacher extends User {
+public class TeacherPOJO extends UserPOJO {
     /**
      * 角色,默认teacher
      * */
     private String role;
 
-    public Teacher(){
+    public TeacherPOJO(){
         this.role = "teacher";
     }
 

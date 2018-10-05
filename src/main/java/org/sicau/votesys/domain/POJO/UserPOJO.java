@@ -5,7 +5,7 @@ package org.sicau.votesys.domain.POJO;
  * @Date Created in 9:43 2018/10/5
  * @Description:
  */
-public class User {
+public class UserPOJO {
     /**
      * 用户唯一识别id
      * */

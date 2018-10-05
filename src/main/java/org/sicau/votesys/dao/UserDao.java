@@ -1,7 +1,8 @@
 package org.sicau.votesys.dao;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.sicau.votesys.domain.VO.User;
+import org.apache.ibatis.annotations.Param;
+import org.sicau.votesys.domain.PO.UserPO;
 
 /**
  * @Author beifengtz
@@ -11,5 +12,8 @@ import org.sicau.votesys.domain.VO.User;
 @Mapper
 public interface UserDao {
 
-    User selectAllUserInfo();
+    UserPO selectAllUserInfo();
+
+    UserPO selectUserByUsernameAndPassword(@Param("username") String username,
+                                           @Param("password") String password);
 }

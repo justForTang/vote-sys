@@ -1,11 +1,11 @@
-package org.sicau.votesys.domain.VO;
+package org.sicau.votesys.domain.PO;
 
 /**
  * @Author beifengtz
  * @Date Created in 10:13 2018/10/5
  * @Description:
  */
-public class User extends org.sicau.votesys.domain.POJO.User {
+public class UserPO extends org.sicau.votesys.domain.POJO.UserPOJO {
     /**
      * 角色
      * */

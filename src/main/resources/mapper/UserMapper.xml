@@ -4,8 +4,22 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--此处是对应UserDao接口-->
 <mapper namespace="org.sicau.votesys.dao.UserDao">
-    <!--此处的Student对应POJO实体，id对应定义方法名-->
-    <select id="selectAllUserInfo" resultType="org.sicau.votesys.domain.VO.User">
-        select * from user_tb;
+    <resultMap id="UserResultMap" type="org.sicau.votesys.domain.PO.UserPO">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="real_name" jdbcType="VARCHAR" property="realName"/>
+        <result column="role" jdbcType="VARCHAR" property="role"/>
+        <result column="campus" jdbcType="VARCHAR" property="campus"/>
+        <result column="has_log" jdbcType="BOOLEAN" property="hasLog"/>
+        <result column="is_active" jdbcType="BOOLEAN" property="isActive"/>
+        <result column="login_ip" jdbcType="VARCHAR" property="loginIp"/>
+    </resultMap>
+
+    <select id="selectAllUserInfo" resultMap="UserResultMap">
+        select * from user_t;
+    </select>
+
+    <select id="selectUserByUsernameAndPassword" resultMap="UserResultMap">
+        select * from user_t where username=#{username} and #{password};
     </select>
 </mapper>
