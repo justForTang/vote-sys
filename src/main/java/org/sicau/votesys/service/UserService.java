@@ -3,6 +3,7 @@ package org.sicau.votesys.service;
 import org.sicau.votesys.domain.VO.ResultVO;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @Author beifengtz
@@ -11,6 +12,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface UserService {
 
-    ResultVO login(String username, String password, HttpServletRequest request);
+    ResultVO login(String username, String password, String loginBrowserInfo, HttpServletRequest request, HttpServletResponse response);
 
 }

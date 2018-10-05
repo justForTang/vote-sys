@@ -12,6 +12,11 @@ public class UserPOJO {
     private String id;
 
     /**
+     * 学号或工号
+     * */
+    private String sicauId;
+
+    /**
      * 用户名
      * */
     private String username;
@@ -30,6 +35,32 @@ public class UserPOJO {
      * 用户校区
      * */
     private String campus;
+
+    /**
+     * 是否登陆过
+     * */
+    private boolean hasLog;
+
+    /**
+     * 首次登录设备信息
+     * */
+    private String loginBrowserInfo;
+
+    public boolean isHasLog() {
+        return hasLog;
+    }
+
+    public void setHasLog(boolean hasLog) {
+        this.hasLog = hasLog;
+    }
+
+    public String getLoginBrowserInfo() {
+        return loginBrowserInfo;
+    }
+
+    public void setLoginBrowserInfo(String loginBrowserInfo) {
+        this.loginBrowserInfo = loginBrowserInfo;
+    }
 
     public String getId() {
         return id;
@@ -69,5 +100,13 @@ public class UserPOJO {
 
     public void setCampus(String campus) {
         this.campus = campus;
+    }
+
+    public String getSicauId() {
+        return sicauId;
+    }
+
+    public void setSicauId(String sicauId) {
+        this.sicauId = sicauId;
     }
 }

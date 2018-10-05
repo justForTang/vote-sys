@@ -12,16 +12,6 @@ public class UserPO extends org.sicau.votesys.domain.POJO.UserPOJO {
     private String role;
 
     /**
-     * 是否在线
-     * */
-    private String isActive;
-
-    /**
-     * 是否登录过
-     * */
-    private String hasLog;
-
-    /**
      * 登录ip
      * */
     private String loginIp;
@@ -32,22 +22,6 @@ public class UserPO extends org.sicau.votesys.domain.POJO.UserPOJO {
 
     public void setRole(String role) {
         this.role = role;
-    }
-
-    public String getIsActive() {
-        return isActive;
-    }
-
-    public void setIsActive(String isActive) {
-        this.isActive = isActive;
-    }
-
-    public String getHasLog() {
-        return hasLog;
-    }
-
-    public void setHasLog(String hasLog) {
-        this.hasLog = hasLog;
     }
 
     public String getLoginIp() {

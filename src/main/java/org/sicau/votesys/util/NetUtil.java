@@ -1,7 +1,6 @@
 package org.sicau.votesys.util;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -10,12 +9,11 @@ import javax.servlet.http.HttpServletRequest;
  * @Date Created in 12:51 2018/10/5
  * @Description:
  */
-@Component
 public class NetUtil {
     /**
      * 获取ip地址
      * */
-    public String getIpAddress(HttpServletRequest request){
+    public static String getIpAddress(HttpServletRequest request){
         String ip = request.getHeader("X-Forwarded-For");
         if(StringUtils.isNotEmpty(ip) && !"unKnown".equalsIgnoreCase(ip)){
             //多次反向代理后会有多个ip值，第一个ip才是真实ip
@@ -35,7 +33,7 @@ public class NetUtil {
     /**
      * sql敏感词过滤
      * */
-    public boolean filterSqlString(String str){
+    public static boolean filterSqlString(String str){
         String[] sqlList = {",","*","#","&","'","<",">","script","div"};
         for (String sqlStr : sqlList){
             if(sqlStr.indexOf(str) != -1) return false;

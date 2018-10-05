@@ -7,10 +7,10 @@ package org.sicau.votesys.enums;
  */
 public enum ActionLogEnum {
 
-    LOGIN(0100,"登录"),
-    VOTE(0101,"投票"),
-    LOOK_VOTE(0102,"查看投票"),
-    LOGOUT(0103,"退出登录");
+    LOGIN(200001,"登录"),
+    VOTE(200002,"投票"),
+    LOOK_VOTE(200003,"查看投票"),
+    LOGOUT(200004,"退出登录");
 
     private int code;
 

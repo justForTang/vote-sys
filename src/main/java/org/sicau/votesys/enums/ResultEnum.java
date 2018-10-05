@@ -9,10 +9,10 @@ public enum ResultEnum {
 
     UNKNOW_ERROR(-1,"未知错误"),
     SUCCESS(0,"成功"),
-    LOGIN_ERROR(0010,"登录错误"),
-    SOURCE_NOT_FOUND(0011,"资源未找到"),
-    SOURCE_EXIST(0012,"资源已存在"),
-    PARAM_ERROR(0013,"输入错误");
+    LOGIN_ERROR(100001,"登录错误"),
+    SOURCE_NOT_FOUND(100002,"资源未找到"),
+    SOURCE_EXIST(100003,"资源已存在"),
+    PARAM_ERROR(100004,"输入错误");
 
     private int code;
     private String msg;

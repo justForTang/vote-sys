@@ -25,7 +25,8 @@ public class UserController {
     @PostMapping("/login")
     public ResultVO login(@RequestParam("username") String username,
                           @RequestParam("password") String password,
+                          @RequestParam("loginBrowserInfo") String loginBrowserInfo,
                           HttpServletRequest request){
-        return userService.login(username,password,request);
+        return userService.login(username,password,loginBrowserInfo,request);
     }
 }

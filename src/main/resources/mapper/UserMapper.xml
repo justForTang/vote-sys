@@ -11,8 +11,9 @@
         <result column="role" jdbcType="VARCHAR" property="role"/>
         <result column="campus" jdbcType="VARCHAR" property="campus"/>
         <result column="has_log" jdbcType="BOOLEAN" property="hasLog"/>
-        <result column="is_active" jdbcType="BOOLEAN" property="isActive"/>
         <result column="login_ip" jdbcType="VARCHAR" property="loginIp"/>
+        <result column="sicau_id" jdbcType="VARCHAR" property="sicauId"/>
+        <result column="login_browser_info" jdbcType="VARCHAR" property="loginBrowserInfo"/>
     </resultMap>
 
     <select id="selectAllUserInfo" resultMap="UserResultMap">
@@ -20,6 +21,6 @@
     </select>
 
     <select id="selectUserByUsernameAndPassword" resultMap="UserResultMap">
-        select * from user_t where username=#{username} and #{password};
+        select * from user_t where username=#{username} and password=#{password};
     </select>
 </mapper>
