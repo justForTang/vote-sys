@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
  * @Description:
  */
 public class CookieUtil {
-    private static final Object Expression = "cuowu ";
 
     /**
      * @Author beifengtz
@@ -53,8 +52,11 @@ public class CookieUtil {
      * @param
      * @return
      */
-    public static void writeCookieWithTime(HttpServletResponse response, String sicau_vote_cookieid, String uuid, String maxAge) {
-
+    public static void writeCookieWithTime(HttpServletResponse response, String cookieName, String value, String maxAge) {
+        Cookie cookie = new Cookie(cookieName,value);
+        cookie.setPath("/");
+        cookie.setMaxAge(getIntegerTimeByString(maxAge));
+        response.addCookie(cookie);
     }
 
     /**
@@ -66,7 +68,7 @@ public class CookieUtil {
      * @param
      * @return Integer
      */
-    private Integer getIntegerTimeByString(String time){
+    private static Integer getIntegerTimeByString(String time){
         String tag = time.substring(time.length()-1);
         switch (tag.toLowerCase()){
             case "d":

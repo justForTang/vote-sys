@@ -20,6 +20,8 @@ import javax.servlet.http.HttpServletResponse;
 @Service
 public class UserServiceImp implements UserService {
 
+    private static final String COOKIE_NAME = "sicau_vote_cookieid";
+
     @Autowired
     private ResultUtil resultUtil;
     @Autowired
@@ -35,15 +37,25 @@ public class UserServiceImp implements UserService {
             if(userPO == null){
                 return resultUtil.loginError("用户名或密码错误");
             }else{
-                boolean hasLog = true;
+                userPO.setPassword(null);
                 if(userPO.isHasLog()){
                     // 登陆过，检查cookie
-                    CookieUtil.getCookie(request,"sicau_vote_cookieid");
+                    if(!userPO.getLogCookieId().equals(CookieUtil.getCookie(request,COOKIE_NAME))){
+                        return resultUtil.loginError("您已有登录记录，该系统仅限在同一设备、同一浏览器登录，请使用首次登录设备和浏览器登录。");
+                    }
                 }else {
                     // 未登录，注入cookie
-                    CookieUtil.writeCookieWithTime(response,"sicau_vote_cookieid", IdUtil.getUUID(),"12d");
+                    String logCookieId = IdUtil.getUUID();
+                    CookieUtil.writeCookieWithTime(response,COOKIE_NAME, logCookieId,"7d");
+                    if(!userDao.updateUserInfoById(userPO.getId(),true,ip,loginBrowserInfo,logCookieId)){
+                        return resultUtil.unknowError("系统错误：修改用户基本数据错误");
+                    }
                 }
-                actionLogUtil.logLogin(userPO.getId(),ip);
+                try{
+                    actionLogUtil.logLogin(userPO.getId(),ip);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
                 return resultUtil.success(userPO);
             }
         }else{

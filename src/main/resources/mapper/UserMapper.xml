@@ -14,7 +14,17 @@
         <result column="login_ip" jdbcType="VARCHAR" property="loginIp"/>
         <result column="sicau_id" jdbcType="VARCHAR" property="sicauId"/>
         <result column="login_browser_info" jdbcType="VARCHAR" property="loginBrowserInfo"/>
+        <result column="log_cookie_id" jdbcType="VARCHAR" property="logCookieId"/>
     </resultMap>
+    <update id="updateUserInfoById">
+        update user_t set
+        has_log=#{hasLog},
+        login_ip=#{loginIp},
+        <if test="loginBrowserInfo">
+            login_browser_info=#{loginBrowserInfo},
+        </if>
+        log_cookie_id=#{logCookieId}
+    </update>
 
     <select id="selectAllUserInfo" resultMap="UserResultMap">
         select * from user_t;

@@ -16,4 +16,10 @@ public interface UserDao {
 
     UserPO selectUserByUsernameAndPassword(@Param("username") String username,
                                            @Param("password") String password);
+
+    boolean updateUserInfoById(@Param("id") String id,
+                               @Param("hasLog") boolean hasLog,
+                               @Param("loginIp") String ip,
+                               @Param("loginBrowserInfo") String loginBrowserInfo,
+                               @Param("logCookieId") String logCookieId);
 }

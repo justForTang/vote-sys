@@ -16,6 +16,12 @@ public class UserPO extends org.sicau.votesys.domain.POJO.UserPOJO {
      * */
     private String loginIp;
 
+    /**
+     * 存贮的cookie信息id
+     * */
+    private String logCookieId;
+
+
     public String getRole() {
         return role;
     }
@@ -30,5 +36,13 @@ public class UserPO extends org.sicau.votesys.domain.POJO.UserPOJO {
 
     public void setLoginIp(String loginIp) {
         this.loginIp = loginIp;
+    }
+
+    public String getLogCookieId() {
+        return logCookieId;
+    }
+
+    public void setLogCookieId(String logCookieId) {
+        this.logCookieId = logCookieId;
     }
 }

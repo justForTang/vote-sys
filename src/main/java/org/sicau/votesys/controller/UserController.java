@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @Author beifengtz
@@ -25,8 +26,9 @@ public class UserController {
     @PostMapping("/login")
     public ResultVO login(@RequestParam("username") String username,
                           @RequestParam("password") String password,
-                          @RequestParam("loginBrowserInfo") String loginBrowserInfo,
-                          HttpServletRequest request){
-        return userService.login(username,password,loginBrowserInfo,request);
+                          @RequestParam(name = "loginBrowserInfo",required = false) String loginBrowserInfo,
+                          HttpServletRequest request,
+                          HttpServletResponse response){
+        return userService.login(username,password,loginBrowserInfo,request,response);
     }
 }
