@@ -11,3 +11,7 @@ body,html{
 .stats-msg-box b{
     font-weight: 600;
 }
+#secondNotice{
+    display: none;
+    color: red;
+}

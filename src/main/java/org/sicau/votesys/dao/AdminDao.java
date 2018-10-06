@@ -12,5 +12,5 @@ public interface AdminDao {
     AdminPO queryAdminInfoByUsernameAndPassword(@Param("username") String username,
                                                 @Param("password") String password);
 
-    int selectAdminNumById(String sessionValue);
+    String selectAdminNumById(@Param("id") String id);
 }

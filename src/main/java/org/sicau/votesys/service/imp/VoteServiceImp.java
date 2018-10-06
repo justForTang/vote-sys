@@ -41,7 +41,7 @@ public class VoteServiceImp implements VoteService {
         if (sessionValue ==null){
             return resultUtil.loginError();
         }else{
-            if(userDao.selectUserNumById(sessionValue) <= 0) return resultUtil.loginError();
+            if(userDao.selectUserNumById(sessionValue) == null) return resultUtil.loginError();
         }
         CurrentVoteInfoVO currentVoteInfoVO = voteDao.queryCurrentVoteInfo();
         if(currentVoteInfoVO == null){
@@ -56,7 +56,7 @@ public class VoteServiceImp implements VoteService {
         if (sessionValue ==null){
             return resultUtil.loginError();
         }else{
-            if(adminDao.selectAdminNumById(sessionValue) <= 0) return resultUtil.loginError();
+            if(adminDao.selectAdminNumById(sessionValue) == null) return resultUtil.loginError();
         }
         CurrentVoteInfoVO currentVoteInfoVO = voteDao.queryCurrentVoteInfo();
         if(currentVoteInfoVO == null){
@@ -71,10 +71,52 @@ public class VoteServiceImp implements VoteService {
         if (sessionValue ==null){
             return resultUtil.loginError();
         }else{
-            if(adminDao.selectAdminNumById(sessionValue) <= 0) return resultUtil.loginError();
+            if(adminDao.selectAdminNumById(sessionValue) == null) return resultUtil.loginError();
         }
         List<CollegePO> collegePOList = voteDao.queryAllCollegeList();
         return resultUtil.success(collegePOList);
+    }
+
+    @Override
+    public ResultVO updateCurrentStats(int startVote, int currentField, String currentCollegeId, HttpServletRequest request) {
+        String sessionValue = SessionUtil.getSession(ConstantEnum.SESSION_NAME_ADMIN.getValue(),request.getSession());
+        if (sessionValue ==null){
+            return resultUtil.loginError();
+        }else{
+            if(adminDao.selectAdminNumById(sessionValue) == null) return resultUtil.loginError();
+        }
+        if(voteDao.updateCurrentStats(startVote,currentField,currentCollegeId)){
+            return resultUtil.success();
+        }
+        return resultUtil.unknowError();
+    }
+
+    @Override
+    public ResultVO startVote(HttpServletRequest request) {
+        String sessionValue = SessionUtil.getSession(ConstantEnum.SESSION_NAME_ADMIN.getValue(),request.getSession());
+        if (sessionValue ==null){
+            return resultUtil.loginError();
+        }else{
+            if(adminDao.selectAdminNumById(sessionValue) == null) return resultUtil.loginError();
+        }
+        if(voteDao.startAndStopVote("start")){
+            return resultUtil.success();
+        }
+        return resultUtil.unknowError();
+    }
+
+    @Override
+    public ResultVO stopVote(HttpServletRequest request) {
+        String sessionValue = SessionUtil.getSession(ConstantEnum.SESSION_NAME_ADMIN.getValue(),request.getSession());
+        if (sessionValue ==null){
+            return resultUtil.loginError();
+        }else{
+            if(adminDao.selectAdminNumById(sessionValue) == null) return resultUtil.loginError();
+        }
+        if(voteDao.startAndStopVote("stop")){
+            return resultUtil.success();
+        }
+        return resultUtil.unknowError();
     }
 
     @Override
@@ -83,7 +125,7 @@ public class VoteServiceImp implements VoteService {
         if (sessionValue ==null){
             return resultUtil.loginError();
         }else{
-            if(userDao.selectUserNumById(sessionValue) <= 0) return resultUtil.loginError();
+            if(userDao.selectUserNumById(sessionValue) == null) return resultUtil.loginError();
         }
         List<CandidateVO> candidateVOList = voteDao.queryFirstVoteList(collegeId);
         if (candidateVOList!=null) return resultUtil.success(candidateVOList);
@@ -96,7 +138,7 @@ public class VoteServiceImp implements VoteService {
         if (sessionValue ==null){
             return resultUtil.loginError();
         }else{
-            if(userDao.selectUserNumById(sessionValue) <= 0) return resultUtil.loginError();
+            if(userDao.selectUserNumById(sessionValue) == null) return resultUtil.loginError();
         }
         String raterId = SessionUtil.getSession(ConstantEnum.SESSION_NAME.getValue(),request.getSession());
         if(voteDao.queryHasVote(raterId,voteField,currentCollegeId) != null){

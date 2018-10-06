@@ -68,7 +68,7 @@ public class UserServiceImp implements UserService {
         if(sessionValue == null){
             return resultUtil.loginError("登录已失效");
         }else{
-            if(userDao.selectUserNumById(sessionValue) > 0) return resultUtil.success();
+            if(userDao.selectUserNumById(sessionValue) != null) return resultUtil.success();
         }
         return resultUtil.loginError();
     }

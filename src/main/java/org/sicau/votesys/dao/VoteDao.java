@@ -31,4 +31,10 @@ public interface VoteDao {
                              @Param("voteField") int voteField);
 
     List<CollegePO> queryAllCollegeList();
+
+    boolean updateCurrentStats(@Param("startVote") int startVote,
+                               @Param("currentField") int currentField,
+                               @Param("currentCollegeId") String currentCollegeId);
+
+    boolean startAndStopVote(@Param("msg") String msg);
 }

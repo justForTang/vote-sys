@@ -31,16 +31,38 @@ public class VoteController {
     }
 
     @PostMapping("/uploadResult")
-    public ResultVO uploadResult(
-                                 @RequestParam("voteCandidateResult") String voteCandidateResult,
+    public ResultVO uploadResult(@RequestParam("voteCandidateResult") String voteCandidateResult,
                                  @RequestParam("currentCollegeId") String currentCollegeId,
                                  @RequestParam("voteField") int voteField,
                                  HttpServletRequest request){
         return voteService.updateResult(voteCandidateResult,currentCollegeId,voteField,request);
     }
 
+    @GetMapping("/getVoteStatsByAdmin")
+    public ResultVO getVoteStatsByAdmin(HttpServletRequest request){
+        return voteService.getVoteStatsByAdmin(request);
+    }
+
     @GetMapping("/getCollegeListByAdmin")
-    private ResultVO getCollegeListByAdmin(HttpServletRequest request){
+    public ResultVO getCollegeListByAdmin(HttpServletRequest request){
         return voteService.getCollegeListByAdmin(request);
+    }
+
+    @PostMapping("/updateCurrentStats")
+    public ResultVO updateCurrentStats(@RequestParam("startVote") int startVote,
+                                       @RequestParam("currentField") int currentField,
+                                       @RequestParam("currentCollegeId") String currentCollegeId,
+                                       HttpServletRequest request){
+        return voteService.updateCurrentStats(startVote,currentField,currentCollegeId,request);
+    }
+
+    @GetMapping("/startVote")
+    public ResultVO startVote(HttpServletRequest request){
+        return voteService.startVote(request);
+    }
+
+    @GetMapping("/stopVote")
+    public ResultVO stopVote(HttpServletRequest request){
+        return voteService.stopVote(request);
     }
 }
