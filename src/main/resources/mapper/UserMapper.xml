@@ -33,4 +33,7 @@
     <select id="selectUserByUsernameAndPassword" resultMap="UserResultMap">
         select * from user_t where username=#{username} and password=#{password};
     </select>
+    <select id="selectUserNumById" resultType="java.lang.Integer">
+        select id from user_t where id = #{id};
+    </select>
 </mapper>

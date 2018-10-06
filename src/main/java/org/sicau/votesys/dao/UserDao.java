@@ -22,4 +22,6 @@ public interface UserDao {
                                @Param("loginIp") String ip,
                                @Param("loginBrowserInfo") String loginBrowserInfo,
                                @Param("logCookieId") String logCookieId);
+
+    int selectUserNumById(@Param("id") String id);
 }

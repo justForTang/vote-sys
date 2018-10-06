@@ -3,10 +3,7 @@ package org.sicau.votesys.controller;
 import org.sicau.votesys.domain.VO.ResultVO;
 import org.sicau.votesys.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,5 +27,15 @@ public class UserController {
                           HttpServletRequest request,
                           HttpServletResponse response){
         return userService.login(username,password,loginBrowserInfo,request,response);
+    }
+
+    @GetMapping("/check")
+    public ResultVO checkLogStats(HttpServletRequest request){
+        return userService.checkLogStats(request);
+    }
+
+    @GetMapping("/logout")
+    public ResultVO logout(HttpServletRequest request){
+        return userService.logout(request);
     }
 }

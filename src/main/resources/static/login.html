@@ -18,15 +18,19 @@
         <form id="loginForm">
             <input type="text" class="form-btn" name="username" id="username" placeholder="请输入用户名">
             <input type="password" class="form-btn" name="password" id="password" placeholder="请输入密码">
-            <label>
-                <input type="radio" name="role" value="user" id="userRadio" class="a-radio" checked>
-                <span class="b-radio"></span>评委
-            </label>
-
-            <label>
-                <input type="radio" name="role" value="admin" id="adminRadio" class="a-radio">
-                <span class="b-radio"></span>管理员
-            </label>
+            <div class="row">
+                <label>
+                    <a href="javascript:showMsg()"><img src="images/question.png" style="width: 15px;margin: 2px 5px 5px 5px;">注意事项</a>
+                </label>
+                <label style="float: right">
+                    <input type="radio" name="role" value="admin" id="adminRadio" class="a-radio">
+                    <span class="b-radio"></span>管理员
+                </label>
+                <label style="float: right">
+                    <input type="radio" name="role" value="user" id="userRadio" class="a-radio" checked>
+                    <span class="b-radio"></span>评委
+                </label>
+            </div>
             <input type="button" class="form-control" id="loginBtn" onclick="checkForm()" value="登录" title="点击登录">
         </form>
         <div class="footer">&copy;&nbsp;四川农业大学 Powered by <a href="http://www.wingstudio.org">WingStudio</a></div>

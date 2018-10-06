@@ -1,24 +1,27 @@
 $(function () {
-    var msg = "您好！该系统仅限在<b>同一设备</b>、<b>同一浏览器</b>登录，不可在<b>多处登录</b>，并且在使用过程中您的操作可能会被记录。如有疑问请联系管理员。";
-    systemAlert('green',msg);
+    showMsg();
 })
 /**
  * 检查表单
  * */
 function checkForm() {
     var formData = $("#loginForm").serializeJson();
-    if(formData.username.trim()==""){
-        autoCloseAlert('red',"用户名不能为空",3000)
-    }else if(formData.password.trim() ==""){
-        autoCloseAlert('red',"密码不能为空",3000)
-    }else{
-        if(formData.role == "user"){
-            loginByUser(formData.username,formData.password);
+    if(navigator.cookieEnabled){
+        if(formData.username.trim()==""){
+            autoCloseAlert('red',"用户名不能为空",3000)
+        }else if(formData.password.trim() ==""){
+            autoCloseAlert('red',"密码不能为空",3000)
         }else{
-            loginByAdmin(formData.username,formData.password);
+            if(formData.role == "user"){
+                loginByUser(formData.username,formData.password);
+            }else{
+                loginByAdmin(formData.username,formData.password);
+            }
         }
+    }else{
+        var msg = "您当前浏览器<b>已关闭cookie</b>或正处于<b>无痕模式</b>,请前往浏览器设置并允许cookie使用或关闭无痕模式。";
+        systemAlert('red',msg);
     }
-
 }
 /**
  * 用户登录
@@ -44,6 +47,19 @@ function loginByUser(username, password) {
             systemAlert('red',"出错啦，code："+res.status);
         }
     })
+}
+/**
+ * 注意事项
+ * */
+function showMsg(){
+    var msg = "您好！在使用该系统前您需知：<br>" +
+        "<b>1、</b>在使用该系统前请先打开<b>浏览器cookie允许</b>（默认是打开的）并且关闭<b>无痕浏览模式</b>；<br>" +
+        "<b>2、</b>该系统仅限在<b>同一设备</b>、<b>同一浏览器</b>登录，不可在<b>多处登录</b>；<br>" +
+        "<b>3、</b>评委登录请勾选<b>评委</b>选项，评委账号由管理员分发；<br>" +
+        "<b>4、</b>在管理员开放投票之后才能进行投票；<br>" +
+        "<b>5、</b>您的所有操作会被系统记录，请谨慎操作。<br>" +
+        "在使用过程中遇到任何问题请及时联系管理员。";
+    systemAlert('green',msg);
 }
 /**
  * 管理员登录

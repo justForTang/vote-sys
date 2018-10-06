@@ -14,4 +14,8 @@ public interface UserService {
 
     ResultVO login(String username, String password, String loginBrowserInfo, HttpServletRequest request, HttpServletResponse response);
 
+    ResultVO checkLogStats(HttpServletRequest request);
+
+    ResultVO logout(HttpServletRequest request);
+
 }
