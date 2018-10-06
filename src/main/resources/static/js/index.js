@@ -1,8 +1,21 @@
 var voteList = [];
 var voteStats = {};
 $(function () {
-    // checkLogStats();
-    checkVoteStats();
+    var urlData = getRequest();
+    if(urlData.uid == null || urlData.realName == null || urlData.role == null){
+        location.href = "login.html"
+    }else{
+        // checkLogStats();
+        checkVoteStats();
+        if(urlData.role == "teacher"){
+            $("#realName").text(urlData.realName+"老师");
+        }else{
+            $("#realName").text(urlData.realName+"同学");
+        }
+
+    }
+
+
 })
 /**
  * refreshPage 刷新页面
@@ -291,7 +304,9 @@ function checkLogStats(){
             }
         });
     }
-// 序列化表单，将其转化为json格式
+    /**
+     *  序列化表单，将其转化为json格式
+     * */
     $.fn.serializeJson = function() {
         var arr = this.serializeArray();
         var json = {};
@@ -308,3 +323,18 @@ function checkLogStats(){
         });
         return json;
     }
+/**
+ * 获取url参数
+ * */
+function getRequest() {
+    var url = decodeURI(location.search); //获取url中"?"符后的字串
+    var theRequest = new Object();
+    if (url.indexOf("?") != -1) {
+        var str = url.substr(1);
+        strs = str.split("&");
+        for(var i = 0; i < strs.length; i ++) {
+            theRequest[strs[i].split("=")[0]]=unescape(strs[i].split("=")[1]);
+        }
+    }
+    return theRequest;
+}

@@ -20,6 +20,17 @@
             <result column="candidate_num" jdbcType="VARCHAR" property="candidateNum"/>
         </collection>
     </resultMap>
+
+    <resultMap id="RaterVoteLogMap" type="org.sicau.votesys.domain.VO.RaterVoteLogVO">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="vote_field" jdbcType="VARCHAR" property="voteField"/>
+        <result column="vote_time" jdbcType="TIMESTAMP" javaType="java.sql.Date" property="voteTime"/>
+        <result column="vote_candidate_result" jdbcType="VARCHAR" property="voteCandidateResult"/>
+        <collection property="rater" ofType="org.sicau.votesys.domain.PO.UserPO">
+            <id column="rater_id" jdbcType="VARCHAR" property="id"/>
+            <result column="role" jdbcType="VARCHAR" property="role"/>
+        </collection>
+    </resultMap>
     <insert id="insertVoteResult">
         insert into rater_vote_log_t
         (id,rater_id,
@@ -58,7 +69,6 @@
             </otherwise>
         </choose>
     </update>
-
     <select id="queryCurrentVoteInfo" resultMap="CurrentVoteInfoMap">
       select `current`.*,`campus`.campus_name,`campus`.id as current_campus_id,
       `college`.campus_id,`college`.college_name,`college`.candidate_num
@@ -77,5 +87,10 @@
     </select>
     <select id="queryAllCollegeList" resultType="org.sicau.votesys.domain.PO.CollegePO">
         select * from college_t;
+    </select>
+    <select id="queryRaterVoteLogList" resultMap="RaterVoteLogMap">
+        select log.*,rater.id as rater_id,rater.role as role
+        from rater_vote_log_t as log join user_t as rater
+        on log.rater_id = rater.id and log.vote_field=#{voteField} and log.vote_college_id = #{collegeId};
     </select>
 </mapper>

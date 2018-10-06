@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Param;
 import org.sicau.votesys.domain.PO.CollegePO;
 import org.sicau.votesys.domain.VO.CandidateVO;
 import org.sicau.votesys.domain.VO.CurrentVoteInfoVO;
+import org.sicau.votesys.domain.VO.RaterVoteLogVO;
 
 import java.util.List;
 
@@ -37,4 +38,7 @@ public interface VoteDao {
                                @Param("currentCollegeId") String currentCollegeId);
 
     boolean startAndStopVote(@Param("msg") String msg);
+
+    List<RaterVoteLogVO> queryRaterVoteLogList(@Param("voteField") int voteField,
+                                               @Param("collegeId") String collegeId);
 }

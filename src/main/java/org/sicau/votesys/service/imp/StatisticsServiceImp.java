@@ -3,6 +3,7 @@ package org.sicau.votesys.service.imp;
 import org.sicau.votesys.dao.VoteDao;
 import org.sicau.votesys.domain.VO.CandidateVO;
 import org.sicau.votesys.domain.VO.CurrentVoteInfoVO;
+import org.sicau.votesys.domain.VO.RaterVoteLogVO;
 import org.sicau.votesys.domain.VO.ResultVO;
 import org.sicau.votesys.service.StatisticsService;
 import org.sicau.votesys.util.ResultUtil;
@@ -37,6 +38,13 @@ public class StatisticsServiceImp implements StatisticsService {
     public ResultVO getFirstList(String collegeId) {
         List<CandidateVO> candidateVOList = voteDao.queryFirstVoteList(collegeId);
         if (candidateVOList!=null) return resultUtil.success(candidateVOList);
+        return resultUtil.unknowError();
+    }
+
+    @Override
+    public ResultVO getFirstCurrentData(String collegeId,int voteField) {
+        List<RaterVoteLogVO> raterVoteLogVOList = voteDao.queryRaterVoteLogList(voteField,collegeId);
+        if(raterVoteLogVOList !=null) return resultUtil.success(raterVoteLogVOList);
         return resultUtil.unknowError();
     }
 }

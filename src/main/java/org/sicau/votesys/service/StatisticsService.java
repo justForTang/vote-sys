@@ -11,4 +11,6 @@ public interface StatisticsService {
     ResultVO stats();
 
     ResultVO getFirstList(String collegeId);
+
+    ResultVO getFirstCurrentData(String collegeId,int voteField);
 }

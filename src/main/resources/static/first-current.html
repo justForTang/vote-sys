@@ -4,12 +4,62 @@
     <meta charset="UTF-8">
     <link rel="shortcut icon" href="images/vote.ico">
     <title>川农优标遴选投票系统</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/jquery-confirm.min.css">
     <link href="css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/first-current.css">
 </head>
 <body>
-
+<div class="container-fluid">
+    <div class="col-md-12 title">
+        <h1>川农优标遴选答辩投票（第一轮）</h1>
+        <h3>雅安校区 信息工程学院</h3>
+    </div>
+    <div class="col-md-12 oneCandidate">
+        <div class="col-md-6 col-md-offset-3  histogram-box" id="oneCandidateOne" data-id="0">
+            <div class="histogram">
+                <img src="images/people-red.png" alt="" class="people-img">
+                <span class="percentage">0%</span>
+            </div>
+            <div class="candidate-name">选手</div>
+            <div class="votes-num">
+                得票：15
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 twoCandidate" align="center">
+        <div class="col-md-4 col-md-offset-1 histogram-box" id="twoCandidateOne" data-id="0">
+            <div class="histogram">
+                <img src="images/people-red.png" alt="" class="people-img">
+                <span class="percentage">0%</span>
+            </div>
+            <div class="candidate-name">选手A</div>
+            <div class="votes-num">
+                得票：0
+            </div>
+        </div>
+        <div class="col-md-2">
+            <img src="images/vs.png" alt="" style="width: 100%;    margin-top: 230px;">
+            <div class="vote-situation">
+                <span id="votedRater">0</span>&nbsp;/&nbsp;<span id="totalRater">15</span>
+            </div>
+        </div>
+        <div class="col-md-4 histogram-box" id="twoCandidateTwo" data-id="0">
+            <div class="histogram">
+                <img src="images/people-yellow.png" alt="" class="people-img">
+                <span class="percentage">0%</span>
+            </div>
+            <div class="candidate-name">选手B</div>
+            <div class="votes-num">
+                得票：0
+            </div>
+        </div>
+    </div>
+</div>
+<div class="notice" align="center">
+    <img src="images/waiting.png" alt="" style="width: 350px;margin-top: 50px">
+    <h1>当前投票暂未开始！</h1>
+</div>
 <script src="js/jquery-3.3.1.min.js"></script>
 <script src="js/jquery-confirm.min.js"></script>
 <script src="js/first-current.js"></script>

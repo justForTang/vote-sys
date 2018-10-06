@@ -38,7 +38,7 @@ function loginByUser(username, password) {
         success:function (res) {
             console.log(res);
             if(res.code == 0){
-                location.href = "index.html";
+                location.href = encodeURI("index.html?uid="+res.data.id+"&realName="+res.data.realName+"&role="+res.data.role);
             }else{
                 systemAlert('red',res.msg);
             }

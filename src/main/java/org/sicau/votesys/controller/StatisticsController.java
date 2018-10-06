@@ -29,4 +29,10 @@ public class StatisticsController {
     public ResultVO getFirstList(@RequestParam("collegeId") String collegeId){
         return statisticsService.getFirstList(collegeId);
     }
+
+    @GetMapping("/getFirstCurrentData")
+    public ResultVO getFirstCurrentData(@RequestParam("collegeId") String collegeId,
+                                        @RequestParam("voteField") int voteField){
+        return statisticsService.getFirstCurrentData(collegeId,voteField);
+    }
 }
