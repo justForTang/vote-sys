@@ -22,10 +22,10 @@
     </resultMap>
 
     <select id="queryCurrentVoteInfo" resultMap="CurrentVoteInfoMap">
-      select `current`.*,`campus`.campus_name,
+      select `current`.*,`campus`.campus_name,`campus`.id as current_campus_id,
       `college`.campus_id,`college`.college_name,`college`.candidate_num
       from current_vote_t as `current` join college_t as college join campus_t as campus on
-      `current`.current_campus_id = campus.id and `current`.current_college_id = college.id;
+      `college`.campus_id = campus.id and `current`.current_college_id = college.id;
     </select>
     <select id="queryFirstVoteList" resultType="org.sicau.votesys.domain.VO.CandidateVO">
         select * from candidate_t where college_id = #{collegeId};

@@ -1,6 +1,6 @@
 var voteList = [];
 $(function () {
-    checkLogStats();
+    // checkLogStats();
     checkVoteStats();
 })
 /**

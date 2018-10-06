@@ -17,11 +17,6 @@ public class CurrentVotePO {
     private boolean isStartVote;
 
     /**
-     * 当前投票校区
-     * */
-    private String currentCampusId;
-
-    /**
      * 当前投票学院
      * */
     private String currentCollegeId;
@@ -50,14 +45,6 @@ public class CurrentVotePO {
 
     public void setStartVote(boolean startVote) {
         isStartVote = startVote;
-    }
-
-    public String getCurrentCampusId() {
-        return currentCampusId;
-    }
-
-    public void setCurrentCampusId(String currentCampusId) {
-        this.currentCampusId = currentCampusId;
     }
 
     public String getCurrentCollegeId() {
