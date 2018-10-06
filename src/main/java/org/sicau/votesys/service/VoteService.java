@@ -13,4 +13,10 @@ public interface VoteService {
     ResultVO getVoteStats(HttpServletRequest request);
 
     ResultVO getFirstList(String collegeId,HttpServletRequest request);
+
+    ResultVO updateResult(String voteCandidateResult, String currentCollegeId, int voteField, HttpServletRequest request);
+
+    ResultVO getVoteStatsByAdmin(HttpServletRequest request);
+
+    ResultVO getCollegeListByAdmin(HttpServletRequest request);
 }

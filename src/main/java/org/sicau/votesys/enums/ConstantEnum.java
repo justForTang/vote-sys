@@ -8,7 +8,9 @@ package org.sicau.votesys.enums;
 public enum  ConstantEnum {
 
     COOKIE_NAME("sicau_vote_cookieid"),
-    SESSION_NAME("sicau_vote_sessionid");
+    COOKIE_NAME_ADMIN("sicau_vote_admin_cookieid"),
+    SESSION_NAME("sicau_vote_sessionid"),
+    SESSION_NAME_ADMIN("sicau_vote_admin_sessionid");
 
     private String value;
 

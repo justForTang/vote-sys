@@ -3,10 +3,7 @@ package org.sicau.votesys.controller;
 import org.sicau.votesys.domain.VO.ResultVO;
 import org.sicau.votesys.service.VoteService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -31,5 +28,19 @@ public class VoteController {
     public ResultVO getFirstList(@RequestParam("collegeId") String collegeId,
                                  HttpServletRequest request){
         return voteService.getFirstList(collegeId,request);
+    }
+
+    @PostMapping("/uploadResult")
+    public ResultVO uploadResult(
+                                 @RequestParam("voteCandidateResult") String voteCandidateResult,
+                                 @RequestParam("currentCollegeId") String currentCollegeId,
+                                 @RequestParam("voteField") int voteField,
+                                 HttpServletRequest request){
+        return voteService.updateResult(voteCandidateResult,currentCollegeId,voteField,request);
+    }
+
+    @GetMapping("/getCollegeListByAdmin")
+    private ResultVO getCollegeListByAdmin(HttpServletRequest request){
+        return voteService.getCollegeListByAdmin(request);
     }
 }

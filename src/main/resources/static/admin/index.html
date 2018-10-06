@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+        <title>管理首页——川农优标遴选投票系统</title>
+        <meta content="VR360 Management" name="description" />
+        <meta content="Beifeng" name="author" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+        <link rel="shortcut icon" href="../images/vote.ico">
+
+        <!-- jvectormap -->
+        <link href="assets/plugins/jvectormap/jquery-jvectormap-2.0.2.css" rel="stylesheet">
+
+        <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="assets/css/icons.css" rel="stylesheet" type="text/css">
+        <link href="assets/css/style.css" rel="stylesheet" type="text/css">
+
+        <link rel="stylesheet" href="../css/admin/index.css">
+    </head>
+
+
+    <body class="fixed-left">
+
+        <!-- Loader -->
+        <div id="preloader"><div id="status"><div class="spinner"></div></div></div>
+
+        <!-- Begin page -->
+        <div id="wrapper">
+
+            <!-- ========== Left Sidebar Start ========== -->
+            <div class="left side-menu">
+                <button type="button" class="button-menu-mobile button-menu-mobile-topbar open-left waves-effect">
+                    <i class="ion-close"></i>
+                </button>
+
+                <!-- LOGO -->
+                <div class="topbar-left">
+                    <div class="text-center">
+                        <a href="../index.html" class="logo" target="_blank"> VOTE</a>
+                    </div>
+                </div>
+
+                <div class="sidebar-inner slimscrollleft">
+
+                    <div id="sidebar-menu">
+                        <ul>
+                            <li>
+                                <a href="index.html" class="waves-effect"><i class="mdi mdi-biohazard"></i><span> 系统管理</span></a>
+                            </li>
+                            <li>
+                                <a href="user.html" class="waves-effect"><i class="mdi mdi-account-circle m-r-5 text-muted"></i><span> 用户管理 </span></a>
+                            </li>
+                            <li>
+                                <a href="vote.html" class="waves-effect"><i class="mdi mdi-settings"></i><span> 投票管理 </span></a>
+                            </li>
+                            <li>
+                                <a href="first-vote.html" class="waves-effect"><i class="ti-email noti-icon"></i><span> 第一轮投票结果 </span></a>
+                            </li>
+                            <li>
+                                <a href="second-vote.html" class="waves-effect"><i class="mdi mdi-wallet"></i><span> 第二轮投票结果 </span></a>
+                            </li>
+                            <li>
+                                <a href="javascript:logOut();" class="waves-effect"><i class="mdi mdi-power"></i><span> 退出登录 </span></a>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                    <div class="clearfix"></div>
+                </div> <!-- end sidebarinner -->
+            </div>
+            <!-- Left Sidebar End -->
+
+            <!-- Start right Content here -->
+
+            <div class="content-page">
+                <!-- Start content -->
+                <div class="content">
+
+                    <!-- Top Bar Start -->
+                    <div class="topbar">
+
+                        <nav class="navbar-custom">
+
+                            <ul class="list-inline float-right mb-0">
+
+                                <li class="list-inline-item dropdown notification-list">
+                                    <a class="nav-link dropdown-toggle arrow-none waves-effect nav-user" data-toggle="dropdown" href="#" role="button"
+                                       aria-haspopup="false" aria-expanded="false">
+                                        <img src="../images/admin-head.png" alt="user" class="rounded-circle">
+                                    </a>
+                                </li>
+
+                            </ul>
+
+                            <ul class="list-inline menu-left mb-0">
+                                <li class="float-left">
+                                    <button class="button-menu-mobile open-left waves-light waves-effect">
+                                        <i class="mdi mdi-menu"></i>
+                                    </button>
+                                </li>
+                            </ul>
+
+                            <div class="clearfix"></div>
+
+                        </nav>
+
+                    </div>
+                    <!-- Top Bar End -->
+
+                    <div class="page-content-wrapper ">
+
+                        <div class="container-fluid">
+
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="page-title-box">
+                                        <div class="btn-group float-right">
+                                            <ol class="breadcrumb hide-phone p-0 m-0">
+                                                <li class="breadcrumb-item"><a href="#">Vote</a></li>
+                                                <li class="breadcrumb-item active">System</li>
+                                            </ol>
+                                        </div>
+                                        <h4 class="page-title">系统管理</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-6 col-md-6">
+                                    <div class="card m-b-30">
+                                        <form class="form-horizontal">
+                                            <div class="form-group" style="margin-top: 30px">
+                                                <label class="col-sm-4 control-label" style="font-weight: 600">系统开关</label>
+                                                <div class="col-sm-10">
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="system" value="open" id="openSystem"> 开启系统
+                                                    </label>
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="system" value="close" checked> 关闭系统
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="voteField" class="col-sm-4 control-label" style="font-weight: 600">选择当前轮次</label>
+                                                <div class="col-sm-10">
+                                                    <select class="form-control" name="voteField" id="voteField">
+                                                        <option value="1">第一轮</option>
+                                                        <option value="2">第二轮</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="currentCollege" class="col-sm-4 control-label" style="font-weight: 600">选择当前投票学院</label>
+                                                <div class="col-sm-10">
+                                                    <select class="form-control" name="voteField" id="currentCollege">
+                                                        <option value="1">信息工程学院</option>
+                                                        <option value="2">生命科学学院</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-sm-offset-2 col-sm-10">
+                                                    <button type="button" class="btn btn-default">保存</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-6">
+                                    <div class="card m-b-30" style="padding: 15px">
+                                        <div class="stats-msg-box">
+                                            <b>系统状态：</b><span id="systemStatsShow">已关闭</span>
+                                        </div>
+                                        <div class="stats-msg-box">
+                                            <b>当前轮次：</b><span id="voteFieldShow">第一轮</span>
+                                        </div>
+                                        <div class="stats-msg-box">
+                                            <b>当前投票学院：</b><span id="currentCollegeShow">信息工程学院</span>
+                                        </div>
+                                        <div class="stats-msg-box">
+                                            <b>本次学院投票状态：</b><span id="startCollegeVoteStatsShow">投票已开始</span>
+                                        </div>
+                                        <div class="stats-msg-box">
+                                            <button type="button" class="btn btn-warning">开始投票</button>
+                                            <button type="button" class="btn btn-default">停止投票</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><!--end row-->
+
+                        </div><!-- container -->
+
+                    </div> <!-- Page content Wrapper -->
+
+                </div> <!-- content -->
+
+                <footer class="footer">
+                    CopyRight © 2018 四川农业大学 Powered by <a href="http://www.wingstudio.org">WingStudio</a>
+                </footer>
+
+            </div>
+            <!-- End Right content here -->
+
+        </div>
+        <!-- END wrapper -->
+
+
+        <!-- jQuery  -->
+        <script src="assets/js/jquery.min.js"></script>
+        <script src="assets/js/popper.min.js"></script>
+        <script src="assets/js/bootstrap.min.js"></script>
+        <script src="assets/js/modernizr.min.js"></script>
+        <script src="assets/js/waves.js"></script>
+        <script src="assets/js/fastclick.js"></script>
+        <script src="assets/js/jquery.slimscroll.js"></script>
+        <script src="assets/js/jquery.nicescroll.js"></script>
+        
+        <script src="assets/plugins/jvectormap/jquery-jvectormap-2.0.2.min.js"></script>
+        <script src="assets/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+
+        <!-- App js -->
+        <script src="assets/js/app.js"></script>
+        <script>
+             
+            $(document).ready(function() {        
+            $("#boxscroll").niceScroll({cursorborder:"",cursorcolor:"#cecece",boxzoom:true});
+            $("#boxscroll2").niceScroll({cursorborder:"",cursorcolor:"#cecece",boxzoom:true}); 
+            });
+
+        </script>
+        <script src="../js/admin/index.js"></script>
+    </body>
+</html>

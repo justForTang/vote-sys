@@ -19,9 +19,9 @@ public class RaterVoteLogPO {
     private String raterId;
 
     /**
-     * 所投学院
+     * 投票轮次
      * */
-    private String voteCollegeId;
+    private int voteField;
 
     /**
      * 投票结果
@@ -49,14 +49,6 @@ public class RaterVoteLogPO {
         this.raterId = raterId;
     }
 
-    public String getVoteCollegeId() {
-        return voteCollegeId;
-    }
-
-    public void setVoteCollegeId(String voteCollegeId) {
-        this.voteCollegeId = voteCollegeId;
-    }
-
     public String getVoteCandidateResult() {
         return voteCandidateResult;
     }
@@ -71,5 +63,13 @@ public class RaterVoteLogPO {
 
     public void setVoteTime(Date voteTime) {
         this.voteTime = voteTime;
+    }
+
+    public int getVoteField() {
+        return voteField;
+    }
+
+    public void setVoteField(int voteField) {
+        this.voteField = voteField;
     }
 }

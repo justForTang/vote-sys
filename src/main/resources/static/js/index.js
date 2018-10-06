@@ -1,4 +1,5 @@
 var voteList = [];
+var voteStats = {};
 $(function () {
     // checkLogStats();
     checkVoteStats();
@@ -23,6 +24,7 @@ function checkVoteStats() {
             if(res.code == 100001){
                 location.href = "login.html";
             }else if(res.code == 0){
+                voteStats = res.data;
                 renderVotePage(res.data);
             }else{
                 systemAlert("red",res.msg+",code："+res.code);
@@ -159,7 +161,34 @@ function getCandidateNameById(id){
  * 上传投票结果
  * */
 function uploadVoteResult(voteResult) {
-
+    $.ajax({
+        url:"/vote/uploadResult",
+        type:"post",
+        dataType:"json",
+        data:{
+            voteCandidateResult:voteResult,
+            currentCollegeId:voteStats.currentCollege.id,
+            voteField:voteStats.currentField
+        },
+        async:false,
+        success:function (res) {
+            console.log(res);
+            if(res.code == 100001){
+                systemAlert("green","你的登录已失效，请重新登录后操作",function () {
+                    location.href = "login.html";
+                })
+            }else if(res.code == 0){
+                systemAlert("green","投票已成功！");
+            } else if(res.code == 100003){
+                systemAlert("red","投票失败！您已投票，不可重复投票。");
+            }else{
+                systemAlert("red",res.msg+",code："+res.code);
+            }
+        },
+        error:function (res) {
+            systemAlert('red',"出错啦，code："+res.status);
+        }
+    });
 }
 /**
  * showRule 显示投票规则
