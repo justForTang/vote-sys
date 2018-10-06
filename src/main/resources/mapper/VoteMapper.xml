@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.sicau.votesys.dao.VoteDao">
+
+    <resultMap id="CurrentVoteInfoMap" type="org.sicau.votesys.domain.VO.CurrentVoteInfoVO">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="start_vote" jdbcType="BOOLEAN" property="startVote"/>
+        <result column="start_vote_college" jdbcType="BOOLEAN" property="startVoteCollege"/>
+        <result column="current_field" jdbcType="INTEGER" property="currentField"/>
+        <collection property="currentCampus" ofType="org.sicau.votesys.domain.PO.CampusPO">
+            <id column="current_campus_id" jdbcType="VARCHAR" property="id"/>
+            <result column="campus_name" jdbcType="VARCHAR" property="campusName"/>
+        </collection>
+        <collection property="currentCollege" ofType="org.sicau.votesys.domain.PO.CollegePO">
+            <id column="current_college_id" jdbcType="VARCHAR" property="id"/>
+            <result column="college_name" jdbcType="VARCHAR" property="collegeName"/>
+            <result column="campus_id" jdbcType="VARCHAR" property="campusId"/>
+            <result column="candidate_num" jdbcType="VARCHAR" property="candidateNum"/>
+        </collection>
+    </resultMap>
+
+    <select id="queryCurrentVoteInfo" resultMap="CurrentVoteInfoMap">
+      select `current`.*,`campus`.campus_name,
+      `college`.campus_id,`college`.college_name,`college`.candidate_num
+      from current_vote_t as `current` join college_t as college join campus_t as campus on
+      `current`.current_campus_id = campus.id and `current`.current_college_id = college.id;
+    </select>
+    <select id="queryFirstVoteList" resultType="org.sicau.votesys.domain.VO.CandidateVO">
+        select * from candidate_t where college_id = #{collegeId};
+    </select>
+</mapper>

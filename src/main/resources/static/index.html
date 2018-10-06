@@ -15,36 +15,49 @@
     <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-offset-3 col-md-6">
         <h2 class="user-title">您好！<span id="realName">田智</span></h2>
         <div align="center"><a href="javascript:logOut()">退出登录</a></div>
-        <div class="msg-box" align="center" onclick="refreshPage()">
+        <div class="msg-box vote-msg" align="center" onclick="refreshPage()">
             <h3>投票系统暂未开放！</h3>
             <img src="images/refresh.png" alt="刷新" style="margin: 20px;"/>
             <p>点击此处刷新</p>
         </div>
         <div class="vote-box">
             <div class="vote-title">
-                <span id="voteCampus">雅安</span>&nbsp;|&nbsp;<span id="voteCollege">信息工程学院</span>
+                <span id="voteMsg"></span>
             </div>
-            <div class="form-container">
+            <div class="msg-box college-msg" align="center" onclick="refreshPage()">
+                <h3>该轮投票通道暂未开放！</h3>
+                <img src="images/refresh.png" alt="刷新" style="margin: 20px;"/>
+                <p>点击此处刷新</p>
+            </div>
+            <div class="form-container" id="firstVote">
                 <form id="voteForm">
                     <div class="row" align="center" style="margin-top: 10px">
-                        <div class="col-xs-6 col-sm-6 col-md-6 ">
-                            <div class="vote-card">
-                                <img src="images/head.png" style="width: 80%">
-                                <h4 class="student-name" id="studentOne">选手1</h4>
-                                <label>
-                                    <input type="radio" name="vote" value="1" id="1" class="a-radio">
-                                    <span class="b-radio"></span>我选Ta
-                                </label>
+                        <div class="oneCandidate">
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-xs-offset-3 col-sm-offset-3 col-md-offset-3 ">
+                                <div class="vote-card">
+                                    <img src="images/head.png" style="width: 80%">
+                                    <label id="one_studentOne">
+
+                                    </label>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-xs-6 col-sm-6 col-md-6 ">
-                            <div class="vote-card">
-                                <img src="images/head-one.png" style="width: 80%">
-                                <h4 class="student-name" id="studentTwo">选手2</h4>
-                                <label>
-                                    <input type="radio" name="vote" value="2" id="2" class="a-radio">
-                                    <span class="b-radio"></span>我选Ta
-                                </label>
+                        <div class="twoCandidate">
+                            <div class="col-xs-6 col-sm-6 col-md-6 ">
+                                <div class="vote-card">
+                                    <img src="images/head.png" style="width: 80%">
+                                    <label id="two_studentOne">
+
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-6 ">
+                                <div class="vote-card">
+                                    <img src="images/head-one.png" style="width: 80%">
+                                    <label id="two_studentTwo">
+
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -58,8 +71,16 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <label>
+                            <a href="javascript:showRule()"><img src="images/question.png" style="width: 15px;margin: 2px 5px 5px 5px;">投票规则</a>
+                        </label>
+                    </div>
                     <input type="button" class="form-control" id="voteBtn" onclick="checkForm()" value="投票" title="点击投票">
                 </form>
+            </div>
+            <div class="form-container" id="secondVote">
+
             </div>
         </div>
     </div>

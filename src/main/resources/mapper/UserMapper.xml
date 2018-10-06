@@ -2,7 +2,6 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<!--此处是对应UserDao接口-->
 <mapper namespace="org.sicau.votesys.dao.UserDao">
     <resultMap id="UserResultMap" type="org.sicau.votesys.domain.PO.UserPO">
         <id column="id" jdbcType="VARCHAR" property="id"/>

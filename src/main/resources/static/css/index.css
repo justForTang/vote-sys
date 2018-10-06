@@ -12,6 +12,8 @@ body,html{
     height: 200px;
     margin: 100px 0;
     color:#add8e6;
+}
+.vote-box{
     display: none;
 }
 .vote-title{
@@ -23,6 +25,9 @@ body,html{
 }
 .form-container{
     margin-top: 45px;
+}
+.oneCandidate,.twoCandidate{
+    display: none;
 }
 .vote-card{
     border: 1px solid white;
@@ -74,7 +79,7 @@ label{
     display: block;
 }
 #voteBtn{
-    margin:45px auto;
+    margin:35px auto;
     background: #b1cbfa;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
@@ -85,4 +90,10 @@ label{
 }
 #voteBtn:hover{
     background: #8e98f5;
+}
+#firstVote{
+    display: none;
+}
+#secondVote{
+    display: none;
 }
