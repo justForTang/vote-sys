@@ -118,6 +118,7 @@ function updateHistogram(data) {
 function renderStatisticsPage(data) {
     if(data.startVote){
         $(".notice").hide();
+        $("#currentCollege").text(data.currentCampus.campusName+"校区  "+data.currentCollege.collegeName);
     }
     if(data.startVoteCollege){
         renderCandidateInfo(data.currentCollege.id);

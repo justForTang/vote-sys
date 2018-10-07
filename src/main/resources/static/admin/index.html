@@ -30,7 +30,7 @@
         <div id="preloader"><div id="status"><div class="spinner"></div></div></div>
 
         <!-- Begin page -->
-        <div id="wrapper">
+        <div id="wrapper" style="overflow: auto">
 
             <!-- ========== Left Sidebar Start ========== -->
             <div class="left side-menu">
@@ -133,66 +133,70 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-xs-12 col-sm-6 col-md-6">
-                                    <div class="card m-b-30">
-                                        <form class="form-horizontal" id="currentVoteForm">
-                                            <div class="form-group" style="margin-top: 30px">
-                                                <label class="col-sm-4 control-label" style="font-weight: 600">系统开关</label>
-                                                <div class="col-sm-10">
-                                                    <label class="radio-inline">
-                                                        <input type="radio" name="system" value="1" id="openSystem" checked> 开启系统
-                                                    </label>
-                                                    <label class="radio-inline">
-                                                        <input type="radio" name="system" value="0"> 关闭系统
-                                                    </label>
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-xl-12">
+                                    <div class="card bg-white m-b-30">
+                                        <div class="card-body new-user">
+                                            <form class="form-horizontal" id="currentVoteForm">
+                                                <div class="form-group" style="margin-top: 30px">
+                                                    <label class="col-sm-4 control-label" style="font-weight: 600">系统开关</label>
+                                                    <div class="col-sm-10">
+                                                        <label class="radio-inline">
+                                                            <input type="radio" name="system" value="1" id="openSystem" checked> 开启系统
+                                                        </label>
+                                                        <label class="radio-inline">
+                                                            <input type="radio" name="system" value="0"> 关闭系统
+                                                        </label>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="voteField" class="col-sm-4 control-label" style="font-weight: 600">选择当前轮次</label>
-                                                <div class="col-sm-10">
-                                                    <select class="form-control" name="voteField" id="voteField">
-                                                        <option value="1">第一轮</option>
-                                                        <option value="2">第二轮</option>
-                                                    </select>
+                                                <div class="form-group">
+                                                    <label for="voteField" class="col-sm-4 control-label" style="font-weight: 600">选择当前轮次</label>
+                                                    <div class="col-sm-10">
+                                                        <select class="form-control" name="voteField" id="voteField">
+                                                            <option value="1">第一轮</option>
+                                                            <option value="2">第二轮</option>
+                                                        </select>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group" id="collegeChooseBox">
-                                                <label for="currentCollege" class="col-sm-4 control-label" style="font-weight: 600">选择当前投票学院</label>
-                                                <div class="col-sm-10">
-                                                    <select class="form-control" name="currentCollege" id="currentCollege">
-                                                        <option value="1">信息工程学院</option>
-                                                    </select>
+                                                <div class="form-group" id="collegeChooseBox">
+                                                    <label for="currentCollege" class="col-sm-4 control-label" style="font-weight: 600">选择当前投票学院</label>
+                                                    <div class="col-sm-10">
+                                                        <select class="form-control" name="currentCollege" id="currentCollege">
+                                                            <option value="1">信息工程学院</option>
+                                                        </select>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-xs-12 col-sm-12 col-md-12" id="secondNotice">您选择了当前答辩轮次为第二轮，请记得前往“投票管理”设置第二轮答辩人信息。</div>
-                                            <div class="form-group">
-                                                <div class="col-sm-offset-2 col-sm-10">
-                                                    <button type="button" class="btn btn-default" onclick="changeCurrentStats()">保存</button>
+                                                <div class="col-xs-12 col-sm-12 col-md-12" id="secondNotice">您选择了当前答辩轮次为第二轮，请记得前往“投票管理”设置第二轮答辩人信息。</div>
+                                                <div class="form-group">
+                                                    <div class="col-sm-offset-2 col-sm-10">
+                                                        <button type="button" class="btn btn-default" onclick="changeCurrentStats()">保存</button>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </form>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-xs-12 col-sm-6 col-md-6">
-                                    <div class="card m-b-30" style="padding: 15px">
-                                        <div class="stats-msg-box">
-                                            <b>系统状态：</b><span id="systemStatsShow"></span>
-                                        </div>
-                                        <div class="stats-msg-box">
-                                            <b>当前轮次：</b><span id="voteFieldShow"></span>
-                                        </div>
-                                        <div class="stats-msg-box">
-                                            <b>当前投票学院：</b><span id="currentCollegeShow"></span>
-                                        </div>
-                                        <div class="stats-msg-box">
-                                            <b>该学院竞选人数：</b><span id="currentCandidateNumShow"></span>
-                                        </div>
-                                        <div class="stats-msg-box">
-                                            <b>本次学院投票状态：</b><span id="startCollegeVoteStatsShow"></span>
-                                        </div>
-                                        <div class="stats-msg-box">
-                                            <button type="button" class="btn btn-warning" onclick="startVote()">开始投票</button>
-                                            <button type="button" class="btn btn-default" onclick="stopVote()">停止投票</button>
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-xl-12">
+                                    <div class="card bg-white m-b-30" style="padding: 15px">
+                                        <div class="card-body new-user">
+                                            <div class="stats-msg-box">
+                                                <b>系统状态：</b><span id="systemStatsShow"></span>
+                                            </div>
+                                            <div class="stats-msg-box">
+                                                <b>当前轮次：</b><span id="voteFieldShow"></span>
+                                            </div>
+                                            <div class="stats-msg-box">
+                                                <b>当前投票学院：</b><span id="currentCollegeShow"></span>
+                                            </div>
+                                            <div class="stats-msg-box">
+                                                <b>该学院竞选人数：</b><span id="currentCandidateNumShow"></span>
+                                            </div>
+                                            <div class="stats-msg-box">
+                                                <b>本次学院投票状态：</b><span id="startCollegeVoteStatsShow"></span>
+                                            </div>
+                                            <div class="stats-msg-box">
+                                                <button type="button" class="btn btn-warning" onclick="startVote()">开始投票</button>
+                                                <button type="button" class="btn btn-default" onclick="stopVote()">停止投票</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

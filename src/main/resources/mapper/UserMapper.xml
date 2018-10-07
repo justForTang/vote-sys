@@ -23,7 +23,17 @@
             login_browser_info=#{loginBrowserInfo},
         </if>
         log_cookie_id=#{logCookieId}
+        where id = #{id}
     </update>
+    <update id="updateUserLogStatsByUsername">
+        update user_t set has_log = 0 where username=#{username}
+    </update>
+    <update id="updateAllUserLogStats">
+        update user_t set has_log = 0;
+    </update>
+    <delete id="deleteUserByUsername">
+        delete from user_t where username=#{username}
+    </delete>
 
     <select id="selectAllUserInfo" resultMap="UserResultMap">
         select * from user_t;

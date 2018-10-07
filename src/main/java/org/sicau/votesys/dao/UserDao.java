@@ -4,6 +4,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.sicau.votesys.domain.PO.UserPO;
 
+import java.util.List;
+
 /**
  * @Author beifengtz
  * @Date Created in 10:14 2018/10/5
@@ -12,7 +14,7 @@ import org.sicau.votesys.domain.PO.UserPO;
 @Mapper
 public interface UserDao {
 
-    UserPO selectAllUserInfo();
+    List<UserPO> selectAllUserInfo();
 
     UserPO selectUserByUsernameAndPassword(@Param("username") String username,
                                            @Param("password") String password);
@@ -24,4 +26,10 @@ public interface UserDao {
                                @Param("logCookieId") String logCookieId);
 
     String selectUserNumById(@Param("id") String id);
+
+    boolean updateUserLogStatsByUsername(@Param("username") String username);
+
+    boolean deleteUserByUsername(@Param("username") String username);
+
+    boolean updateAllUserLogStats();
 }

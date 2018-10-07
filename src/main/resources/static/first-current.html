@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="shortcut icon" href="images/vote.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>川农优标遴选投票系统</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/jquery-confirm.min.css">
@@ -10,10 +11,10 @@
     <link rel="stylesheet" href="css/first-current.css">
 </head>
 <body>
-<div class="container-fluid">
+<div class="container-fluid" style="margin:0;padding: 0">
     <div class="col-md-12 title">
         <h1>川农优标遴选答辩投票（第一轮）</h1>
-        <h3>雅安校区 信息工程学院</h3>
+        <h3 id="currentCollege">雅安校区 信息工程学院</h3>
     </div>
     <div class="col-md-12 oneCandidate">
         <div class="col-md-6 col-md-offset-3  histogram-box" id="oneCandidateOne" data-id="0">
@@ -38,7 +39,7 @@
                 得票：0
             </div>
         </div>
-        <div class="col-md-2">
+        <div class="clearfix col-md-2">
             <img src="images/vs.png" alt="" style="width: 100%;    margin-top: 230px;">
             <div class="vote-situation">
                 <span id="votedRater">0</span>&nbsp;/&nbsp;<span id="totalRater">15</span>

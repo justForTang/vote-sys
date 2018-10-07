@@ -18,4 +18,11 @@ public interface UserService {
 
     ResultVO logout(HttpServletRequest request);
 
+    ResultVO getAllUserListByAdmin(HttpServletRequest request);
+
+    ResultVO updateUserLogStats(String username, HttpServletRequest request);
+
+    ResultVO updateAllUserLogStats(HttpServletRequest request);
+
+    ResultVO deleteUser(String username, HttpServletRequest request);
 }

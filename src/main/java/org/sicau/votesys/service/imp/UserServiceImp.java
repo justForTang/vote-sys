@@ -1,5 +1,6 @@
 package org.sicau.votesys.service.imp;
 
+import org.sicau.votesys.dao.AdminDao;
 import org.sicau.votesys.dao.UserDao;
 import org.sicau.votesys.domain.PO.UserPO;
 import org.sicau.votesys.domain.VO.ResultVO;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * @Author beifengtz
@@ -26,6 +28,8 @@ public class UserServiceImp implements UserService {
     private ActionLogUtil actionLogUtil;
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private AdminDao adminDao;
 
     @Override
     public ResultVO login(String username, String password, String loginBrowserInfo, HttpServletRequest request, HttpServletResponse response) {
@@ -81,5 +85,53 @@ public class UserServiceImp implements UserService {
         }catch (Exception e){
             return resultUtil.unknowError();
         }
+    }
+
+    @Override
+    public ResultVO getAllUserListByAdmin(HttpServletRequest request) {
+        String sessionValue = SessionUtil.getSession(ConstantEnum.SESSION_NAME_ADMIN.getValue(),request.getSession());
+        if (sessionValue ==null){
+            return resultUtil.loginError();
+        }else{
+            if(adminDao.selectAdminNumById(sessionValue) == null) return resultUtil.loginError();
+        }
+        List<UserPO> userPOList = userDao.selectAllUserInfo();
+        return resultUtil.success(userPOList);
+    }
+
+    @Override
+    public ResultVO updateUserLogStats(String username, HttpServletRequest request) {
+        String sessionValue = SessionUtil.getSession(ConstantEnum.SESSION_NAME_ADMIN.getValue(),request.getSession());
+        if (sessionValue ==null){
+            return resultUtil.loginError();
+        }else{
+            if(adminDao.selectAdminNumById(sessionValue) == null) return resultUtil.loginError();
+        }
+        if(userDao.updateUserLogStatsByUsername(username)) return resultUtil.success();
+        return resultUtil.unknowError();
+    }
+
+    @Override
+    public ResultVO updateAllUserLogStats(HttpServletRequest request) {
+        String sessionValue = SessionUtil.getSession(ConstantEnum.SESSION_NAME_ADMIN.getValue(),request.getSession());
+        if (sessionValue ==null){
+            return resultUtil.loginError();
+        }else{
+            if(adminDao.selectAdminNumById(sessionValue) == null) return resultUtil.loginError();
+        }
+        if(userDao.updateAllUserLogStats()) return resultUtil.success();
+        return resultUtil.unknowError();
+    }
+
+    @Override
+    public ResultVO deleteUser(String username, HttpServletRequest request) {
+        String sessionValue = SessionUtil.getSession(ConstantEnum.SESSION_NAME_ADMIN.getValue(),request.getSession());
+        if (sessionValue ==null){
+            return resultUtil.loginError();
+        }else{
+            if(adminDao.selectAdminNumById(sessionValue) == null) return resultUtil.loginError();
+        }
+        if(userDao.deleteUserByUsername(username)) return resultUtil.success();
+        return resultUtil.unknowError();
     }
 }

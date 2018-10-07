@@ -38,4 +38,26 @@ public class UserController {
     public ResultVO logout(HttpServletRequest request){
         return userService.logout(request);
     }
+
+    @GetMapping("/getAllUserList")
+    public ResultVO getAllUserList(HttpServletRequest request){
+        return userService.getAllUserListByAdmin(request);
+    }
+
+    @PostMapping("/updateUserLogStats")
+    public ResultVO updateUserLogStats(@RequestParam("username") String username,
+                                       HttpServletRequest request){
+        return userService.updateUserLogStats(username,request);
+    }
+
+    @GetMapping("/updateAllUserLogStats")
+    public ResultVO updateAllUserLogStats(HttpServletRequest request){
+        return userService.updateAllUserLogStats(request);
+    }
+
+    @PostMapping("deleteUser")
+    public ResultVO deleteUser(@RequestParam("username") String username,
+                                       HttpServletRequest request){
+        return userService.deleteUser(username,request);
+    }
 }
