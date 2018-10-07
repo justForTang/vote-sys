@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Param;
 import org.sicau.votesys.domain.PO.CollegePO;
 import org.sicau.votesys.domain.VO.CandidateVO;
 import org.sicau.votesys.domain.VO.CurrentVoteInfoVO;
+import org.sicau.votesys.domain.VO.FirstVoteResultVO;
 import org.sicau.votesys.domain.VO.RaterVoteLogVO;
 
 import java.util.List;
@@ -41,4 +42,6 @@ public interface VoteDao {
 
     List<RaterVoteLogVO> queryRaterVoteLogList(@Param("voteField") int voteField,
                                                @Param("collegeId") String collegeId);
+
+    List<FirstVoteResultVO> queryFirstVoteResult();
 }

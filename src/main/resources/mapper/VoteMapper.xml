@@ -93,4 +93,13 @@
         from rater_vote_log_t as log join user_t as rater
         on log.rater_id = rater.id and log.vote_field=#{voteField} and log.vote_college_id = #{collegeId};
     </select>
+    <select id="queryFirstVoteResult" resultType="org.sicau.votesys.domain.VO.FirstVoteResultVO">
+        select candidate.id,candidate.candidate_name,
+        (select count(*) from rater_vote_log_t as vote join user_t
+        on user_t.id=vote.rater_id and user_t.role='teacher') as teachervotednum,
+        (select count(*) from rater_vote_log_t as vote join user_t
+        on user_t.id=vote.rater_id and user_t.role='student') as studentvotednum,
+        from candidate_t as candidate join rater_vote_log_t as vote
+        on vote.vote_candidate_result = candidate.id and user_t.id=rater.rater_id;
+    </select>
 </mapper>

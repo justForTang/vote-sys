@@ -6,6 +6,7 @@ import org.sicau.votesys.dao.VoteDao;
 import org.sicau.votesys.domain.PO.CollegePO;
 import org.sicau.votesys.domain.VO.CandidateVO;
 import org.sicau.votesys.domain.VO.CurrentVoteInfoVO;
+import org.sicau.votesys.domain.VO.FirstVoteResultVO;
 import org.sicau.votesys.domain.VO.ResultVO;
 import org.sicau.votesys.enums.ConstantEnum;
 import org.sicau.votesys.service.VoteService;
@@ -116,6 +117,13 @@ public class VoteServiceImp implements VoteService {
         if(voteDao.startAndStopVote("stop")){
             return resultUtil.success();
         }
+        return resultUtil.unknowError();
+    }
+
+    @Override
+    public ResultVO getFirstVoteResult() {
+        List<FirstVoteResultVO> firstVoteResultVOList =  voteDao.queryFirstVoteResult();
+        if(firstVoteResultVOList!=null) return resultUtil.success(firstVoteResultVOList);
         return resultUtil.unknowError();
     }
 

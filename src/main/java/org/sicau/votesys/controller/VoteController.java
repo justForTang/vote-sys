@@ -65,4 +65,9 @@ public class VoteController {
     public ResultVO stopVote(HttpServletRequest request){
         return voteService.stopVote(request);
     }
+
+    @GetMapping("/getFirstVoteResult")
+    public ResultVO getFirstVoteResult(){
+        return voteService.getFirstVoteResult();
+    }
 }

@@ -25,4 +25,7 @@ public interface VoteService {
     ResultVO startVote(HttpServletRequest request);
 
     ResultVO stopVote(HttpServletRequest request);
+
+    ResultVO getFirstVoteResult();
+
 }
