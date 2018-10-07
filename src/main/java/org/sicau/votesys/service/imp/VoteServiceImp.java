@@ -128,6 +128,12 @@ public class VoteServiceImp implements VoteService {
     }
 
     @Override
+    public ResultVO getCurrentCount() {
+
+        return null;
+    }
+
+    @Override
     public ResultVO getFirstList(String collegeId, HttpServletRequest request) {
         String sessionValue = SessionUtil.getSession(ConstantEnum.SESSION_NAME.getValue(),request.getSession());
         if (sessionValue ==null){

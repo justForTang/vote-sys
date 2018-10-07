@@ -4,9 +4,13 @@ var studentValue = 1;
 var studentOneValue = 0;
 var studentTwoValue = 0;
 var rater = {
-    total:15,
+    total:21,
     teacher:10,
-    student:5
+    student:11
+}
+var waiverData={
+    teacher:0,
+    student:0
 }
 var refreshClock;
 $(function () {
@@ -70,7 +74,10 @@ function getFirstCurrentData(collegeId){
 function updateHistogram(data) {
     studentOneValue = 0;
     studentTwoValue = 0;
+    waiverData.student = 0;
+    waiverData.teacher = 0;
     if(voteStats.currentCollege.candidateNum == "1"){
+        $("#votedRaterOne").text(data.length);
         for (var i =0;i<data.length;i++){
             if($("#oneCandidateOne").attr("data-id") == data[i].voteCandidateResult){
                 if(data[i].rater.role == "student"){
@@ -79,11 +86,21 @@ function updateHistogram(data) {
                     studentOneValue = studentOneValue + teacherValue;
                 }
             }
+            if(data[i].voteCandidateResult == null){
+                if(data[i].rater.role == "teacher"){
+                    waiverData.teacher ++;
+                }else if(data[i].rater.role == "student"){
+                    waiverData.student ++;
+                }
+            }
         }
-        var histogram = (studentOneValue/rater.teacher*teacherValue+rater.student*studentValue).toFixed(4);
-        $("#oneCandidateOne .percentage").text(histogram * 100 + "%");
+        var histogram = (studentOneValue/(rater.teacher*teacherValue+rater.student*studentValue));
+        $("#oneCandidateOne .percentage").text((histogram * 100).toFixed(1) + "%");
         $("#oneCandidateOne .histogram").css("height",(histogram * 255 + 75)+"px");
         $("#oneCandidateOne .votes-num").text("得票："+studentOneValue);
+
+        $("#waiverTeacherOne").text(waiverData.teacher);
+        $("#waiverStudentOne").text(waiverData.student);
     }else{
         for (var i =0;i<data.length;i++){
             if($("#twoCandidateOne").attr("data-id") == data[i].voteCandidateResult){
@@ -99,18 +116,27 @@ function updateHistogram(data) {
                     studentTwoValue = studentTwoValue + teacherValue;
                 }
             }
+            if(data[i].voteCandidateResult == null){
+                if(data[i].rater.role == "teacher"){
+                    waiverData.teacher ++;
+                }else if(data[i].rater.role == "student"){
+                    waiverData.student ++;
+                }
+            }
         }
-        var histogramOne = (studentOneValue/(rater.teacher*teacherValue+rater.student*studentValue)).toFixed(4);
-        var histogramTwo = (studentTwoValue/(rater.teacher*teacherValue+rater.student*studentValue)).toFixed(4);
-        $("#twoCandidateOne .percentage").text(histogramOne * 100 + "%");
+        var histogramOne = (studentOneValue/(rater.teacher*teacherValue+rater.student*studentValue));
+        var histogramTwo = (studentTwoValue/(rater.teacher*teacherValue+rater.student*studentValue));
+        $("#twoCandidateOne .percentage").text((histogramOne * 100).toFixed(1) + "%");
         $("#twoCandidateOne .histogram").css("height",(histogramOne * 255 + 75)+"px");
-        $("#twoCandidateOne .votes-num").text("得票："+studentOneValue);
+        $("#twoCandidateOne .votes-num").text("同意票数："+studentOneValue);
 
-        $("#twoCandidateTwo .percentage").text(histogramTwo * 100 + "%");
+        $("#twoCandidateTwo .percentage").text((histogramTwo * 100).toFixed(1) + "%");
         $("#twoCandidateTwo .histogram").css("height",(histogramTwo * 255 + 75)+"px");
-        $("#twoCandidateTwo .votes-num").text("得票："+studentTwoValue);
-    }
+        $("#twoCandidateTwo .votes-num").text("同意票数："+studentTwoValue);
 
+        $("#waiverTeacher").text(waiverData.teacher);
+        $("#waiverStudent").text(waiverData.student);
+    }
 }
 /**
  * 设置页面显示

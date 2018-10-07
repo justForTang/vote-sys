@@ -93,13 +93,23 @@
         from rater_vote_log_t as log join user_t as rater
         on log.rater_id = rater.id and log.vote_field=#{voteField} and log.vote_college_id = #{collegeId};
     </select>
+
     <select id="queryFirstVoteResult" resultType="org.sicau.votesys.domain.VO.FirstVoteResultVO">
-        select candidate.id,candidate.candidate_name,
-        (select count(*) from rater_vote_log_t as vote join user_t
-        on user_t.id=vote.rater_id and user_t.role='teacher') as teachervotednum,
-        (select count(*) from rater_vote_log_t as vote join user_t
-        on user_t.id=vote.rater_id and user_t.role='student') as studentvotednum,
-        from candidate_t as candidate join rater_vote_log_t as vote
-        on vote.vote_candidate_result = candidate.id and user_t.id=rater.rater_id;
+        SELECT candidate_id,candidate_name,college_name,SUM(num) AS SUM
+FROM (SELECT candidate_id,number * 3 AS num,role,candidate_name,college_name
+FROM (SELECT vote.vote_candidate_result AS candidate_id,COUNT(vote.rater_id) AS number,user_t.role,candidate_t.candidate_name,college_t.college_name
+FROM rater_vote_log_t AS vote JOIN user_t JOIN candidate_t JOIN college_t
+         ON vote.rater_id = user_t.id AND vote_candidate_result = candidate_t.id AND candidate_t.college_id = college_t.id
+         GROUP BY vote_candidate_result,role ORDER BY vote_candidate_result
+) AS a
+WHERE role='teacher'
+UNION
+SELECT candidate_id,number,role,candidate_name,college_name
+FROM (SELECT vote.vote_candidate_result AS candidate_id,COUNT(vote.rater_id) AS number,user_t.role,candidate_t.candidate_name,college_t.college_name
+FROM rater_vote_log_t AS vote JOIN user_t JOIN candidate_t JOIN college_t
+         ON vote.rater_id = user_t.id AND vote_candidate_result = candidate_t.id AND candidate_t.college_id = college_t.id
+         GROUP BY vote_candidate_result,role ORDER BY vote_candidate_result
+) AS a
+WHERE role='student') AS b GROUP BY candidate_id,candidate_name,college_name
     </select>
 </mapper>

@@ -36,8 +36,14 @@ body,html{
     font-size: 42px;
     color: white;
 }
+.vote-waiver{
+    margin-top: 44px;
+    font-size: 30px;
+    color: white;
+}
 .percentage{
     font-size: 30px;
+    text-align: center;
 }
 .people-img{
     width: 61px;

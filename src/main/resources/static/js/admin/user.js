@@ -37,7 +37,7 @@ function renderUserTable(data) {
           "                                                <td>"+data[i].sicauId+"</td>\n" +
           "                                                <td>\n" +
           "                                                    <button class=\"btn btn-warning btn-xs\" onclick=\"initUser("+i+")\">初始化</button>\n" +
-          "                                                    <button class=\"btn btn-danger btn-xs\" onclick=\"delUser("+i+")\">删除</button>\n" +
+          // "                                                    <button class=\"btn btn-danger btn-xs\" onclick=\"delUser("+i+")\">删除</button>\n" +
           "                                                </td>\n" +
           "                                            </tr>")
    }

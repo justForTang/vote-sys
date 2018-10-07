@@ -70,4 +70,9 @@ public class VoteController {
     public ResultVO getFirstVoteResult(){
         return voteService.getFirstVoteResult();
     }
+
+    @GetMapping("/getCurrentCount")
+    public ResultVO getCurrentCount(){
+        return voteService.getCurrentCount();
+    }
 }
