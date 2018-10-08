@@ -12,7 +12,7 @@ body,html{
 }
 .histogram-box{
     position: relative;
-    height: 460px;
+    height: 400px;
     padding: 0;
 }
 .histogram{
@@ -33,40 +33,49 @@ body,html{
     transition: all 0.5s ease;
 }
 .vote-situation{
-    font-size: 42px;
+    margin-top: 30px;
+    font-size: 30px;
     color: white;
+    font-weight: 600;
+}
+.vote-situation-num{
+    font-size: 30px;
 }
 .vote-waiver{
     margin-top: 44px;
     font-size: 30px;
     color: white;
+    font-weight: 600;
 }
 .percentage{
     font-size: 30px;
     text-align: center;
+    font-weight: 600;
 }
 .people-img{
     width: 61px;
     margin-top: -102px;
 }
 .candidate-name{
-    bottom: 0;
+    bottom: -20px;
     position: absolute;
     text-align: center;
-    font-size: 30px;
+    font-size: 44px;
     color: wheat;
     width: 100%;
+    font-weight: 600;
 }
 .oneCandidate{
     display: none;
 }
 .votes-num{
-    bottom: -75px;
+    bottom: -98px;
     position: absolute;
     text-align: center;
     width: 100%;
-    font-size: 30px;
-    color: #fffdf9;
+    font-size: 40px;
+    color: #f5eb35;
+    font-weight: 600;
 }
 .notice{
     color: whitesmoke;
