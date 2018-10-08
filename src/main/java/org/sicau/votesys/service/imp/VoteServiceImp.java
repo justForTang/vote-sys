@@ -4,6 +4,7 @@ import org.sicau.votesys.dao.AdminDao;
 import org.sicau.votesys.dao.UserDao;
 import org.sicau.votesys.dao.VoteDao;
 import org.sicau.votesys.domain.PO.CollegePO;
+import org.sicau.votesys.domain.PO.SecondCandidatePO;
 import org.sicau.votesys.domain.VO.CandidateVO;
 import org.sicau.votesys.domain.VO.CurrentVoteInfoVO;
 import org.sicau.votesys.domain.VO.FirstVoteResultVO;
@@ -15,9 +16,12 @@ import org.sicau.votesys.util.ResultUtil;
 import org.sicau.votesys.util.SessionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author beifengtz
@@ -147,6 +151,45 @@ public class VoteServiceImp implements VoteService {
             return resultUtil.success(false);
         }
     }
+
+    @Transactional(rollbackFor=Exception.class)
+    @Override
+    public ResultVO getSecondVoteData(HttpServletRequest request) {
+        String sessionValue = SessionUtil.getSession(ConstantEnum.SESSION_NAME.getValue(),request.getSession());
+        if (sessionValue ==null){
+            return resultUtil.loginError();
+        }else{
+            if(userDao.selectUserNumById(sessionValue) == null) return resultUtil.loginError();
+        }
+        int passNum = voteDao.querySecondPassNum();
+        List<SecondCandidatePO> secondCandidatePOList = voteDao.getSecondVoteData();
+        Map<String,Object> resMap = new HashMap<>();
+        resMap.put("passNum",passNum);
+        resMap.put("candidateList",secondCandidatePOList);
+        return resultUtil.success(resMap);
+    }
+
+    @Transactional(rollbackFor=Exception.class)
+    @Override
+    public ResultVO uploadSecondVoteData(String raterId, List<String> candidateIdList, HttpServletRequest request) {
+        String sessionValue = SessionUtil.getSession(ConstantEnum.SESSION_NAME.getValue(),request.getSession());
+        if (sessionValue ==null){
+            return resultUtil.loginError();
+        }else{
+            if(userDao.selectUserNumById(sessionValue) == null) return resultUtil.loginError();
+        }
+        if(voteDao.queryHasSecondVote(raterId) != null){
+            return resultUtil.sourceExistError();
+        }else{
+            if(voteDao.updateSecondVote(candidateIdList)){
+                if(voteDao.insertSecondVoteLog(IdUtil.getUUID(),raterId)){
+                    return resultUtil.success();
+                }
+            }
+            return resultUtil.unknowError();
+        }
+    }
+
 
     @Override
     public ResultVO getFirstList(String collegeId, HttpServletRequest request) {

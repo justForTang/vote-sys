@@ -78,7 +78,7 @@ label{
 .a-radio:checked~.b-radio:before{
     display: block;
 }
-#voteBtn{
+#voteBtn,.voteBtn{
     margin:35px auto;
     background: #b1cbfa;
     -webkit-transition: all 0.5s ease;
@@ -88,7 +88,7 @@ label{
     transition: all 0.5s ease;
     color: white;
 }
-#voteBtn:hover{
+#voteBtn:hover,.voteBtn:hover{
     background: #8e98f5;
 }
 #firstVote{
@@ -96,4 +96,54 @@ label{
 }
 #secondVote{
     display: none;
+}
+.second-vote-choose{
+    font-size: 30px;
+    color: #616f39;
+}
+.check-container{
+    box-shadow: 0 0 5px #ff9280;
+    margin: 5px 0;
+    height: 40px;
+    font-size: 18px;
+    line-height: 40px;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+.b-checkbox{
+    display: inline-block;
+    border: 1px solid #6cd3f8;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 5px;
+    position: relative;
+    border-radius: 5px;
+}
+.b-checkbox:before{
+    content: '';
+    font-size: 0;
+    width: 13px;
+    height: 13px;
+    background: rgb(143, 188, 238);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -6.5px;
+    margin-top: -6.5px;
+    border-radius: 3px;
+    display: none;
+}
+.a-checkbox{
+    display: none;
+}
+.a-checkbox:checked~.b-checkbox:before{
+    display: block;
+}
+.checkbox-active{
+    background: #b1d1c5;
+    color: #343434;
 }

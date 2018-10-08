@@ -3,6 +3,7 @@ package org.sicau.votesys.service;
 import org.sicau.votesys.domain.VO.ResultVO;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @Author beifengtz
@@ -31,4 +32,9 @@ public interface VoteService {
     ResultVO getCurrentCount();
 
     ResultVO checkHasVoted(String raterId, int voteField, String currentCollegeId, HttpServletRequest request);
+
+    ResultVO getSecondVoteData(HttpServletRequest request);
+
+
+    ResultVO uploadSecondVoteData(String raterId, List<String> candidateIdList, HttpServletRequest request);
 }

@@ -3,6 +3,7 @@ package org.sicau.votesys.dao;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.sicau.votesys.domain.PO.CollegePO;
+import org.sicau.votesys.domain.PO.SecondCandidatePO;
 import org.sicau.votesys.domain.VO.CandidateVO;
 import org.sicau.votesys.domain.VO.CurrentVoteInfoVO;
 import org.sicau.votesys.domain.VO.FirstVoteResultVO;
@@ -44,4 +45,15 @@ public interface VoteDao {
                                                @Param("collegeId") String collegeId);
 
     List<FirstVoteResultVO> queryFirstVoteResult();
+
+    List<SecondCandidatePO> getSecondVoteData();
+
+    String queryHasSecondVote(@Param("raterId") String raterId);
+
+    boolean updateSecondVote(List<String> candidateIdList);
+
+    int querySecondPassNum();
+
+    boolean insertSecondVoteLog(@Param("id") String id,
+                             @Param("raterId") String raterId);
 }

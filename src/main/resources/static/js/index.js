@@ -1,9 +1,10 @@
 var voteList = [];
 var voteStats = {};
+var secondVoteData;
 $(function () {
     var urlData = getRequest();
     if(urlData.uid == null || urlData.realName == null || urlData.role == null){
-        location.href = "login.html"
+        // location.href = "login.html"
     }else{
         // checkLogStats();
         checkVoteStats();
@@ -12,10 +13,7 @@ $(function () {
         }else{
             $("#realName").text(urlData.realName+"同学");
         }
-
     }
-
-
 })
 /**
  * refreshPage 刷新页面
@@ -62,11 +60,11 @@ function renderVotePage(data){
         $('.waite-msg').hide();
         $(".vote-box").hide();
     }
-    // 开启此轮投票通道
-    if(data.startVoteCollege){
-        $(".college-msg").hide();
-        $(".waite-msg").hide();
-        if(data.currentField == 1){
+    // 第一轮
+    if(data.currentField == 1){
+        if(data.startVoteCollege){
+            $(".college-msg").hide();
+            $(".waite-msg").hide();
             $("#voteMsg").text(data.currentCampus.campusName+" | "+data.currentCollege.collegeName+"（第一轮）");
             var hasVoted = checkHasVoted(getRequest().uid,data.currentField,data.currentCollege.id);
             if(hasVoted){
@@ -75,20 +73,80 @@ function renderVotePage(data){
                 $("#firstVote").show();
                 renderFirstVoteForm(data.currentCollege.id);
             }
-        }else if(data.currentField == 2){
-            $("#voteMsg").text("川农优标遴选投票（第二轮）");
-            $("#secondVote").show();
         }else{
-            $("#voteMsg").text("系统出错");
+            $("#voteMsg").text(data.currentCampus.campusName+" | "+data.currentCollege.collegeName+"（第一轮）");
+            $(".college-msg").show();
+            $('.waite-msg').hide();
+            $("#firstVote").hide();
+            $("#secondVote").hide();
         }
-    }else{
-        $("#voteMsg").text(data.currentCampus.campusName+" | "+data.currentCollege.collegeName+"（第一轮）");
-        $(".college-msg").show();
-        $('.waite-msg').hide();
-        $("#firstVote").hide();
-        $("#secondVote").hide();
+    }else{// 第二轮
+        $("#voteMsg").text("川农优标遴选投票（第二轮）");
+        $("#secondVote").show();
+        $(".msg-box").hide();
+        showSecondVote();
     }
-
+}
+/**z
+ * 显示第二轮投票
+ * */
+function showSecondVote() {
+    $.ajax({
+        url:"/vote/getSecondVoteData",
+        type:"get",
+        dataType:"json",
+        async:false,
+        success:function (res) {
+            console.log(res);
+            if(res.code == 100001){
+                location.href = "login.html";
+            }else if(res.code == 0){
+                secondVoteData = res.data;
+                renderSecondList(secondVoteData);
+            }else{
+                systemAlert("red",res.msg+",code："+res.code);
+            }
+        },
+        error:function (res) {
+            console.log(res.status);
+            systemAlert("出错了，code："+res.status);
+        }
+    })
+    $("input[name='voteSecond']").click(function () {
+        var secondFormData = $("#secondForm").serializeJson();
+        if(secondFormData.voteSecond == null){
+            $("#secondChooseNum").text(0);
+        }else{
+            $("#secondChooseNum").text(secondFormData.voteSecond.length);
+        }
+        if(secondFormData.voteSecond.length >= secondVoteData.passNum){
+            for(var i=0;i<$("input[type='checkbox']").length;i++){
+                if(!$("input[type='checkbox']")[i].checked){
+                    $("input[type='checkbox']")[i].disabled=true;
+                }
+            }
+        }else{
+            for(var i=0;i<$("input[type='checkbox']").length;i++){
+                $("input[type='checkbox']")[i].disabled=false;
+            }
+        }
+    });
+}
+/**
+ * 渲染第二轮投票
+ * */
+function renderSecondList(data) {
+    $("#secondChooseTotal").text(data.passNum);
+    $("#secondFormContainer").empty();
+    for (var i = 0; i < data.candidateList.length; i++) {
+        $("#secondFormContainer").append("<div class=\"col-xs-12 check-container\">\n" +
+            "                                "+data.candidateList[i].collegeName+"&nbsp;"+data.candidateList[i].candidateName+"\n" +
+            "                                <label style=\"float: right;margin: 0;\">\n" +
+            "                                    <input type=\"checkbox\" name=\"voteSecond\" value='"+data.candidateList[i].id+"' class=\"a-checkbox\">\n" +
+            "                                    <span class=\"b-checkbox\"></span>\n" +
+            "                                </label>\n" +
+            "                            </div>");
+    }
 }
 /**
  * renderFirstVoteForm 渲染第一轮投票
@@ -164,6 +222,48 @@ function checkForm() {
             uploadVoteResult(formData.vote);
         })
     }
+}
+/**
+ * 上传第二轮表单
+ * */
+function updateSecondForm() {
+    if(voteStats.startVoteCollege){
+        systemConfirm("提交后不可修改，是否确认提交？",function () {
+            $.ajax({
+                url:"/vote/uploadSecondVoteData",
+                type:"post",
+                dataType:"json",
+                data:{
+                    raterId:getRequest().uid,
+                    candidateIdList:$("#secondForm").serializeJson().voteSecond.toString()
+                },
+                async:false,
+                success:function (res) {
+                    console.log(res);
+                    if(res.code == 100001){
+                        location.href = "login.html";
+                    }else if(res.code == 0){
+                        systemAlert("green","投票成功！",function () {
+                            location.reload();
+                        });
+                    }else if(res.code == 100003){
+                        systemAlert("green","您已投票，不可重复操作！");
+                    }else{
+                        systemAlert("red",res.msg+",code："+res.code);
+                    }
+                },
+                error:function (res) {
+                    console.log(res.status);
+                    systemAlert("出错了，code："+res.status);
+                }
+            })
+        })
+    }else{
+        systemAlert("red","投票暂未开始，请耐心等待！",function () {
+            location.reload();
+        });
+    }
+
 }
 /**
  *

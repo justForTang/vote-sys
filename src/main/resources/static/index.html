@@ -85,7 +85,27 @@
                 </form>
             </div>
             <div class="form-container" id="secondVote">
-
+                <div style="font-size: 18px;color: #53cde2;">
+                    已选&nbsp;<span id="secondChooseNum" class="second-vote-choose">0</span>&nbsp;人
+                    &nbsp;/&nbsp;
+                    可选&nbsp;<span id="secondChooseTotal" class="second-vote-choose">0</span>&nbsp;人
+                </div>
+                <div class="second-form">
+                    <form id="secondForm">
+                        <div id="secondFormContainer">
+                            <div class="col-xs-12 check-container">
+                                信息工程学院 劳一柯
+                                <label style="float: right;margin: 0;">
+                                    <input type="checkbox" name="voteSecond" value="1" class="a-checkbox">
+                                    <span class="b-checkbox"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="col-xs-12" style="padding-left:0;padding-right: 0 ">
+                        <input type="button" class="form-control voteBtn" onclick="updateSecondForm()" value="投票" title="点击投票">
+                    </div>
+                </div>
             </div>
         </div>
     </div>

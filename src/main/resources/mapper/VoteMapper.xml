@@ -50,6 +50,9 @@
         </if>
         #{voteField})
     </insert>
+    <insert id="insertSecondVoteLog">
+        insert into second_vote_log_t(id,rater_id) values (#{id},#{raterId})
+    </insert>
     <update id="updateCurrentStats">
         update current_vote_t set
         start_vote=#{startVote},
@@ -68,6 +71,13 @@
                 0
             </otherwise>
         </choose>
+    </update>
+    <update id="updateSecondVote" parameterType="java.util.ArrayList">
+        update second_student_t set voted_num = voted_num + 1
+        where
+        <foreach collection="list" item="candidateId" separator="or">
+             id = #{candidateId}
+        </foreach>
     </update>
     <select id="queryCurrentVoteInfo" resultMap="CurrentVoteInfoMap">
       select `current`.*,`campus`.campus_name,`campus`.id as current_campus_id,
@@ -111,5 +121,14 @@ FROM rater_vote_log_t AS vote JOIN user_t JOIN candidate_t JOIN college_t
          GROUP BY vote_candidate_result,role ORDER BY vote_candidate_result
 ) AS a
 WHERE role='student') AS b GROUP BY candidate_id,candidate_name,college_name
+    </select>
+    <select id="getSecondVoteData" resultType="org.sicau.votesys.domain.PO.SecondCandidatePO">
+        select * from second_student_t;
+    </select>
+    <select id="queryHasSecondVote" resultType="java.lang.String">
+        select id from second_vote_log_t where rater_id=#{raterId}
+    </select>
+    <select id="querySecondPassNum" resultType="java.lang.Integer">
+        select pass_num from second_data_t;
     </select>
 </mapper>

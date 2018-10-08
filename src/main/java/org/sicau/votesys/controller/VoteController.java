@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 
 /**
  * @Author beifengtz
@@ -82,5 +83,17 @@ public class VoteController {
                                   @RequestParam("currentCollegeId") String currentCollegeId,
                                   HttpServletRequest request){
         return voteService.checkHasVoted(raterId,voteField,currentCollegeId,request);
+    }
+
+    @GetMapping("/getSecondVoteData")
+    public ResultVO getSecondVoteData(HttpServletRequest request){
+        return voteService.getSecondVoteData(request);
+    }
+
+    @PostMapping("/uploadSecondVoteData")
+    public ResultVO uploadSecondVoteData(@RequestParam("raterId") String raterId,
+                                         @RequestParam("candidateIdList") ArrayList<String> candidateIdList,
+                                         HttpServletRequest request){
+        return voteService.uploadSecondVoteData(raterId,candidateIdList,request);
     }
 }
