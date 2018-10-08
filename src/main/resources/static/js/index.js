@@ -55,18 +55,26 @@ function renderVotePage(data){
     // 开启投票系统
     if(data.startVote){
         $(".vote-msg").hide();
+        $('.waite-msg').hide();
         $(".vote-box").show();
     }else{
         $(".vote-msg").show();
+        $('.waite-msg').hide();
         $(".vote-box").hide();
     }
     // 开启此轮投票通道
     if(data.startVoteCollege){
         $(".college-msg").hide();
+        $(".waite-msg").hide();
         if(data.currentField == 1){
             $("#voteMsg").text(data.currentCampus.campusName+" | "+data.currentCollege.collegeName+"（第一轮）");
-            $("#firstVote").show();
-            renderFirstVoteForm(data.currentCollege.id);
+            var hasVoted = checkHasVoted(getRequest().uid,data.currentField,data.currentCollege.id);
+            if(hasVoted){
+                $('.waite-msg').show();
+            }else{
+                $("#firstVote").show();
+                renderFirstVoteForm(data.currentCollege.id);
+            }
         }else if(data.currentField == 2){
             $("#voteMsg").text("川农优标遴选投票（第二轮）");
             $("#secondVote").show();
@@ -76,9 +84,11 @@ function renderVotePage(data){
     }else{
         $("#voteMsg").text(data.currentCampus.campusName+" | "+data.currentCollege.collegeName+"（第一轮）");
         $(".college-msg").show();
+        $('.waite-msg').hide();
         $("#firstVote").hide();
         $("#secondVote").hide();
     }
+
 }
 /**
  * renderFirstVoteForm 渲染第一轮投票
@@ -191,6 +201,8 @@ function uploadVoteResult(voteResult) {
                     location.href = "login.html";
                 })
             }else if(res.code == 0){
+                $(".waite-msg").show();
+                $("#firstVote").hide();
                 systemAlert("green","投票已成功！");
             } else if(res.code == 100003){
                 systemAlert("red","投票失败！您已投票，不可重复投票。");
@@ -231,6 +243,42 @@ function checkLogStats(){
             systemAlert('red',"出错啦，code："+res.status);
         }
    });
+}
+/**
+ * 检查投票状态
+ * */
+function checkHasVoted(raterId,voteField,currentCollegeId){
+    var hasVoted = false;
+    $.ajax({
+        url:"/vote/checkHasVoted",
+        type:"post",
+        dataType:"json",
+        data:{
+            raterId:raterId,
+            voteField:voteField,
+            currentCollegeId:currentCollegeId
+        },
+        async:false,
+        success:function (res) {
+            console.log(res);
+            if(res.code == 100001){
+                location.href = "login.html";
+            }else if(res.code == 0){
+                if(res.data) {
+                    hasVoted=true;
+                }else{
+                    hasVoted=false
+                }
+            }else{
+
+            }
+        },
+        error:function (res) {
+            systemAlert('red',"出错啦，code："+res.status);
+            hasVoted = null;
+        }
+    });
+    return hasVoted;
 }
 
     /**

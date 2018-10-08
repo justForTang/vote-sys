@@ -75,4 +75,12 @@ public class VoteController {
     public ResultVO getCurrentCount(){
         return voteService.getCurrentCount();
     }
+
+    @PostMapping("/checkHasVoted")
+    public ResultVO checkHasVoted(@RequestParam("raterId") String raterId,
+                                  @RequestParam("voteField") int voteField,
+                                  @RequestParam("currentCollegeId") String currentCollegeId,
+                                  HttpServletRequest request){
+        return voteService.checkHasVoted(raterId,voteField,currentCollegeId,request);
+    }
 }

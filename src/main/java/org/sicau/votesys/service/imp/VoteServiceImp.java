@@ -134,6 +134,21 @@ public class VoteServiceImp implements VoteService {
     }
 
     @Override
+    public ResultVO checkHasVoted(String raterId, int voteField, String currentCollegeId, HttpServletRequest request) {
+        String sessionValue = SessionUtil.getSession(ConstantEnum.SESSION_NAME.getValue(),request.getSession());
+        if (sessionValue ==null){
+            return resultUtil.loginError();
+        }else{
+            if(userDao.selectUserNumById(sessionValue) == null) return resultUtil.loginError();
+        }
+        if(voteDao.queryHasVote(raterId,voteField,currentCollegeId) != null){
+            return resultUtil.success(true);
+        }else{
+            return resultUtil.success(false);
+        }
+    }
+
+    @Override
     public ResultVO getFirstList(String collegeId, HttpServletRequest request) {
         String sessionValue = SessionUtil.getSession(ConstantEnum.SESSION_NAME.getValue(),request.getSession());
         if (sessionValue ==null){

@@ -29,4 +29,6 @@ public interface VoteService {
     ResultVO getFirstVoteResult();
 
     ResultVO getCurrentCount();
+
+    ResultVO checkHasVoted(String raterId, int voteField, String currentCollegeId, HttpServletRequest request);
 }

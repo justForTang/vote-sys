@@ -4,8 +4,8 @@ var studentValue = 1;
 var studentOneValue = 0;
 var studentTwoValue = 0;
 var rater = {
-    total:21,
-    teacher:10,
+    total:20,
+    teacher:9,
     student:11
 }
 var waiverData={
@@ -76,6 +76,7 @@ function updateHistogram(data) {
     studentTwoValue = 0;
     waiverData.student = 0;
     waiverData.teacher = 0;
+    $(".totalRater").text(rater.total);
     if(voteStats.currentCollege.candidateNum == "1"){
         $("#votedRaterOne").text(data.length);
         for (var i =0;i<data.length;i++){
@@ -97,7 +98,7 @@ function updateHistogram(data) {
         var histogram = (studentOneValue/(rater.teacher*teacherValue+rater.student*studentValue));
         $("#oneCandidateOne .percentage").text((histogram * 100).toFixed(1) + "%");
         $("#oneCandidateOne .histogram").css("height",(histogram * 255 + 75)+"px");
-        $("#oneCandidateOne .votes-num").text("得票："+studentOneValue);
+        $("#oneCandidateOne .votes-num").text("同意票数："+studentOneValue);
 
         $("#waiverTeacherOne").text(waiverData.teacher);
         $("#waiverStudentOne").text(waiverData.student);
@@ -146,12 +147,13 @@ function renderStatisticsPage(data) {
         $(".notice").hide();
         $("#currentCollege").text(data.currentCampus.campusName+"校区  "+data.currentCollege.collegeName);
     }
-    if(data.startVoteCollege){
-        renderCandidateInfo(data.currentCollege.id);
-        refreshClock = window.setInterval(function () {
-            getFirstCurrentData(data.currentCollege.id);
-        },2000);
-    }
+    renderCandidateInfo(data.currentCollege.id);
+    refreshClock = window.setInterval(function () {
+        getFirstCurrentData(data.currentCollege.id);
+    },2000);
+    // if(data.startVoteCollege){
+    //
+    // }
 }
 /**
  * 显示竞选人信息
