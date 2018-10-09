@@ -5,6 +5,7 @@ import org.sicau.votesys.dao.UserDao;
 import org.sicau.votesys.dao.VoteDao;
 import org.sicau.votesys.domain.PO.CollegePO;
 import org.sicau.votesys.domain.PO.SecondCandidatePO;
+import org.sicau.votesys.domain.PO.UserPO;
 import org.sicau.votesys.domain.VO.CandidateVO;
 import org.sicau.votesys.domain.VO.CurrentVoteInfoVO;
 import org.sicau.votesys.domain.VO.FirstVoteResultVO;
@@ -178,14 +179,44 @@ public class VoteServiceImp implements VoteService {
         }else{
             if(userDao.selectUserNumById(sessionValue) == null) return resultUtil.loginError();
         }
-        if(voteDao.queryHasSecondVote(raterId) != null){
-            return resultUtil.sourceExistError();
-        }else{
-            if(voteDao.updateSecondVote(candidateIdList)){
-                if(voteDao.insertSecondVoteLog(IdUtil.getUUID(),raterId)){
-                    return resultUtil.success();
+        // 检查用户角色
+        UserPO userPO = userDao.selectUserById(raterId);
+        if("teacher".equals(userPO.getRole())){
+            if(voteDao.queryHasSecondVote(raterId) != null){
+                return resultUtil.sourceExistError();
+            }else{
+                if(voteDao.updateSecondVote(candidateIdList)){
+                    if(voteDao.insertSecondVoteLog(IdUtil.getUUID(),raterId)){
+                        return resultUtil.success();
+                    }
                 }
+                return resultUtil.unknowError();
             }
+        }else {
+            return resultUtil.sourceNotFoundError("该轮学生不可投票");
+        }
+    }
+
+    @Override
+    public ResultVO getSecondVotedNum() {
+        int votedNum = voteDao.querySecondVotedNum();
+        if(votedNum >= 0){
+            return resultUtil.success(votedNum);
+        }else{
+            return resultUtil.unknowError();
+        }
+    }
+
+    @Override
+    public ResultVO getSecondCurrentData() {
+        List<SecondCandidatePO> secondCandidatePOList = voteDao.getSecondVoteDataOrderByNum();
+        if(secondCandidatePOList!=null){
+            int passNum = voteDao.querySecondPassNum();
+            Map<String,Object> resMap = new HashMap<>();
+            resMap.put("passNum",passNum);
+            resMap.put("candidateList",secondCandidatePOList);
+            return resultUtil.success(resMap);
+        }else{
             return resultUtil.unknowError();
         }
     }

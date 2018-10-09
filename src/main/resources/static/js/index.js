@@ -117,7 +117,11 @@ function showSecondVote() {
         if(secondFormData.voteSecond == null){
             $("#secondChooseNum").text(0);
         }else{
-            $("#secondChooseNum").text(secondFormData.voteSecond.length);
+            if(typeof(secondFormData.voteSecond) == "string"){
+                $("#secondChooseNum").text(1);
+            }else{
+                $("#secondChooseNum").text(secondFormData.voteSecond.length);
+            }
         }
         if(secondFormData.voteSecond.length >= secondVoteData.passNum){
             for(var i=0;i<$("input[type='checkbox']").length;i++){
@@ -247,7 +251,9 @@ function updateSecondForm() {
                             location.reload();
                         });
                     }else if(res.code == 100003){
-                        systemAlert("green","您已投票，不可重复操作！");
+                        systemAlert("red","您已投票，不可重复操作！");
+                    }else if(res.code == 100002){
+                        systemAlert("red","权限不足，该轮仅允许老师评委投票！");
                     }else{
                         systemAlert("red",res.msg+",code："+res.code);
                     }

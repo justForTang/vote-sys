@@ -4,8 +4,8 @@ var studentValue = 1;
 var studentOneValue = 0;
 var studentTwoValue = 0;
 var rater = {
-    total:21,
-    teacher:10,
+    total:23,
+    teacher:12,
     student:11
 }
 var waiverData={

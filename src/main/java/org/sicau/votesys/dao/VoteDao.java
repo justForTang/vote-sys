@@ -56,4 +56,8 @@ public interface VoteDao {
 
     boolean insertSecondVoteLog(@Param("id") String id,
                              @Param("raterId") String raterId);
+
+    int querySecondVotedNum();
+
+    List<SecondCandidatePO> getSecondVoteDataOrderByNum();
 }

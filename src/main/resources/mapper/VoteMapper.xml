@@ -131,4 +131,10 @@ WHERE role='student') AS b GROUP BY candidate_id,candidate_name,college_name
     <select id="querySecondPassNum" resultType="java.lang.Integer">
         select pass_num from second_data_t;
     </select>
+    <select id="querySecondVotedNum" resultType="java.lang.Integer">
+        select count(*) from second_vote_log_t;
+    </select>
+    <select id="getSecondVoteDataOrderByNum" resultType="org.sicau.votesys.domain.PO.SecondCandidatePO">
+        select * from second_student_t order by voted_num desc ;
+    </select>
 </mapper>

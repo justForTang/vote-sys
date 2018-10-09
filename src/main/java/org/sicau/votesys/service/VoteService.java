@@ -37,4 +37,8 @@ public interface VoteService {
 
 
     ResultVO uploadSecondVoteData(String raterId, List<String> candidateIdList, HttpServletRequest request);
+
+    ResultVO getSecondVotedNum();
+
+    ResultVO getSecondCurrentData();
 }

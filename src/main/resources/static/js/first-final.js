@@ -1,7 +1,7 @@
 var firstFinalData;
 var rater = {
-    total:21,
-    teacher:10,
+    total:23,
+    teacher:12,
     student:11
 }
 $(function () {

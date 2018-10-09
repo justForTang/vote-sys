@@ -96,4 +96,14 @@ public class VoteController {
                                          HttpServletRequest request){
         return voteService.uploadSecondVoteData(raterId,candidateIdList,request);
     }
+
+    @GetMapping("/getSecondVotedNum")
+    public ResultVO getSecondVotedNum(){
+        return voteService.getSecondVotedNum();
+    }
+
+    @GetMapping("/getSecondCurrentData")
+    public ResultVO getSecondCurrentData(){
+        return voteService.getSecondCurrentData();
+    }
 }

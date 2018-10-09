@@ -45,4 +45,7 @@
     <select id="selectUserNumById" resultType="java.lang.String">
         select id from user_t where id = #{id};
     </select>
+    <select id="selectUserById" resultType="org.sicau.votesys.domain.PO.UserPO">
+        select * from user_t where id = #{id}
+    </select>
 </mapper>

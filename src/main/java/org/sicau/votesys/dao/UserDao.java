@@ -32,4 +32,6 @@ public interface UserDao {
     boolean deleteUserByUsername(@Param("username") String username);
 
     boolean updateAllUserLogStats();
+
+    UserPO selectUserById(@Param("id") String id);
 }

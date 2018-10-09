@@ -2,9 +2,43 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="shortcut icon" href="images/vote.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>川农优标遴选投票系统</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/jquery-confirm.min.css">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/second-final.css">
 </head>
 <body>
+<div class="container-fluid show-container">
+    <div class="col-md-12 title">
+        <h1 style="margin-top: 50px;font-weight: 600;font-size: 52px">四川农业大学2017-2018学年“优秀学生标兵”答辩投票</h1>
+    </div>
+    <div class="col-md-10 col-md-offset-1 list-table" align="center">
+        <h2 style="font-weight: 600;font-size: 42px;">第二轮投票结果</h2>
+        <hr>
+        <div class="col-md-6" id="passCandidateListOne" style="    border-right: 1px solid;">
 
+        </div>
+        <div class="col-md-6" id="passCandidateListTwo">
+
+        </div>
+        <div id="passCandidateList">
+
+        </div>
+    </div>
+</div>
+
+<div class="loading-container" align="center">
+    <div class="loader"></div>
+    <div class="loader-title">投票进行中......</div>
+    <div class="show-rater">
+        已投&nbsp;<span id="votedNum">0</span>&nbsp;人&nbsp;/&nbsp;共计&nbsp;<span id="totalNum">0</span>&nbsp;人
+    </div>
+</div>
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/jquery-confirm.min.js"></script>
+<script src="js/second-final.js"></script>
 </body>
 </html>
