@@ -10,27 +10,35 @@ https://vr360-beifengtz.oss-cn-beijing.aliyuncs.com/github/vote-sys/QQ%E6%88%AA%
 https://vr360-beifengtz.oss-cn-beijing.aliyuncs.com/github/vote-sys/QQ%E6%88%AA%E5%9B%BE20181012194946.jpg?x-oss-process=style/0.60)
 
 登录页
+
 ![https://vr360-beifengtz.oss-cn-beijing.aliyuncs.com/github/vote-sys/QQ%E6%88%AA%E5%9B%BE20181012195602.jpg?x-oss-process=style/0.60](https://vr360-beifengtz.oss-cn-beijing.aliyuncs.com/github/vote-sys/QQ%E6%88%AA%E5%9B%BE20181012195602.jpg?x-oss-process=style/0.60)
 
 系统管理页
+
 ![https://vr360-beifengtz.oss-cn-beijing.aliyuncs.com/github/vote-sys/QQ%E6%88%AA%E5%9B%BE20181012195725.jpg?x-oss-process=style/0.60](https://vr360-beifengtz.oss-cn-beijing.aliyuncs.com/github/vote-sys/QQ%E6%88%AA%E5%9B%BE20181012195725.jpg?x-oss-process=style/0.60)
 
 第一轮实时投票情况
+
 ![https://vr360-beifengtz.oss-cn-beijing.aliyuncs.com/github/vote-sys/QQ%E6%88%AA%E5%9B%BE20181012195832.jpg?x-oss-process=style/0.60](https://vr360-beifengtz.oss-cn-beijing.aliyuncs.com/github/vote-sys/QQ%E6%88%AA%E5%9B%BE20181012195832.jpg?x-oss-process=style/0.60)
 
 第一轮最终结果榜
+
 ![https://vr360-beifengtz.oss-cn-beijing.aliyuncs.com/github/vote-sys/QQ%E6%88%AA%E5%9B%BE20181012195950.jpg?x-oss-process=style/0.60](https://vr360-beifengtz.oss-cn-beijing.aliyuncs.com/github/vote-sys/QQ%E6%88%AA%E5%9B%BE20181012195950.jpg?x-oss-process=style/0.60)
 
 第二轮投票等待
+
 ![https://vr360-beifengtz.oss-cn-beijing.aliyuncs.com/github/vote-sys/QQ%E6%88%AA%E5%9B%BE20181012200055.jpg?x-oss-process=style/0.60](https://vr360-beifengtz.oss-cn-beijing.aliyuncs.com/github/vote-sys/QQ%E6%88%AA%E5%9B%BE20181012200055.jpg?x-oss-process=style/0.60)
 
 第二轮投票结果榜
+
 ![https://vr360-beifengtz.oss-cn-beijing.aliyuncs.com/github/vote-sys/QQ%E6%88%AA%E5%9B%BE20181012200341.jpg?x-oss-process=style/0.60](https://vr360-beifengtz.oss-cn-beijing.aliyuncs.com/github/vote-sys/QQ%E6%88%AA%E5%9B%BE20181012200341.jpg?x-oss-process=style/0.60)
 
 评委等待投票
+
 ![https://vr360-beifengtz.oss-cn-beijing.aliyuncs.com/github/vote-sys/QQ%E6%88%AA%E5%9B%BE20181012200610.jpg?x-oss-process=style/0.60](https://vr360-beifengtz.oss-cn-beijing.aliyuncs.com/github/vote-sys/QQ%E6%88%AA%E5%9B%BE20181012200610.jpg?x-oss-process=style/0.60)
 
 评委进行第二轮投票
+
 # 操作说明
 ## 管理员
 管理员具有管理用户、管理系统（负责系统开关）、查看投票结果、查看投票记录等功能
