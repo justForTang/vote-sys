@@ -3,6 +3,7 @@ package org.sicau.votesys.dao;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.sicau.votesys.domain.PO.UserPO;
+import org.sicau.votesys.domain.VO.UserCountVO;
 
 import java.util.List;
 
@@ -34,4 +35,6 @@ public interface UserDao {
     boolean updateAllUserLogStats();
 
     UserPO selectUserById(@Param("id") String id);
+
+    UserCountVO selectUserCount();
 }

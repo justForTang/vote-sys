@@ -4,6 +4,7 @@ import org.sicau.votesys.dao.AdminDao;
 import org.sicau.votesys.dao.UserDao;
 import org.sicau.votesys.domain.PO.UserPO;
 import org.sicau.votesys.domain.VO.ResultVO;
+import org.sicau.votesys.domain.VO.UserCountVO;
 import org.sicau.votesys.enums.ConstantEnum;
 import org.sicau.votesys.service.UserService;
 import org.sicau.votesys.util.*;
@@ -132,6 +133,15 @@ public class UserServiceImp implements UserService {
             if(adminDao.selectAdminNumById(sessionValue) == null) return resultUtil.loginError();
         }
         if(userDao.deleteUserByUsername(username)) return resultUtil.success();
+        return resultUtil.unknowError();
+    }
+
+    @Override
+    public ResultVO getUserCount() {
+        UserCountVO userCountVO = userDao.selectUserCount();
+        if (userCountVO != null){
+            return resultUtil.success(userCountVO);
+        }
         return resultUtil.unknowError();
     }
 }

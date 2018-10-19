@@ -60,4 +60,9 @@ public class UserController {
                                        HttpServletRequest request){
         return userService.deleteUser(username,request);
     }
+
+    @GetMapping("getUserCount")
+    public ResultVO getUserCount(){
+        return userService.getUserCount();
+    }
 }

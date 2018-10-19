@@ -1,17 +1,39 @@
 var rater = {
-    total:23,
-    teacher:12,
-    student:11
+    total:0,
+    teacher:0,
+    student:0
 }
 var secondFinalData;
 var getVotedNumClock;
 $(function () {
+    getUserCount();
     $("#totalNum").text(rater.teacher);
     getVotedNumClock = window.setInterval(function () {
         getSecondVotedNum();
     },2000);
-
 });
+/**
+ * 获取用户统计数据
+ * */
+function getUserCount() {
+    $.ajax({
+        url:"/user/getUserCount",
+        type:"get",
+        dataType:"json",
+        async:false,
+        success:function (res) {
+            console.log(res);
+            if(res.code == 0){
+                rater = res.data;
+            }else{
+                alert(res.msg+",code："+res.code);
+            }
+        },
+        error:function (res) {
+            console.log(res.status);
+        }
+    })
+}
 /**
  * 获取当前投票总人数
  * */

@@ -4,9 +4,9 @@ var studentValue = 1;
 var studentOneValue = 0;
 var studentTwoValue = 0;
 var rater = {
-    total:23,
-    teacher:12,
-    student:11
+    total:0,
+    teacher:0,
+    student:0
 }
 var waiverData={
     teacher:0,
@@ -14,8 +14,31 @@ var waiverData={
 }
 var refreshClock;
 $(function () {
+    getUserCount();
     getVoteStats();
 })
+/**
+ * 获取用户统计数据
+ * */
+function getUserCount() {
+    $.ajax({
+        url:"/user/getUserCount",
+        type:"get",
+        dataType:"json",
+        async:false,
+        success:function (res) {
+            console.log(res);
+            if(res.code == 0){
+                rater = res.data;
+            }else{
+                alert(res.msg+",code："+res.code);
+            }
+        },
+        error:function (res) {
+            console.log(res.status);
+        }
+    })
+}
 /**
  * 获取投票状态
  * */

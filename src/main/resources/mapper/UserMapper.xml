@@ -48,4 +48,10 @@
     <select id="selectUserById" resultType="org.sicau.votesys.domain.PO.UserPO">
         select * from user_t where id = #{id}
     </select>
+    <select id="selectUserCount" resultType="org.sicau.votesys.domain.VO.UserCountVO">
+        select count(id) as total,
+       sum(case when role='teacher' then 1 else 0 end ) as teacher,
+       sum(case when role='student' then 1 else 0 end ) as student
+        from user_t;
+    </select>
 </mapper>
