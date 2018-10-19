@@ -29,8 +29,10 @@ function getSecondVotedNum() {
                     window.clearInterval(getVotedNumClock);
                     $(".loading-container").hide();
                     // $("body,html").css("overflow","auto");
-                    $(".show-container").css("transform","scale(1, 1)");
-                    $(".show-container").css("filter","blur(0)");
+                    $(".show-container").css({
+                        "transform":"scale(1, 1)",
+                        "filter":"blur(0)"
+                    });
                     getSecondCurrentData();
                 }
             }else{
