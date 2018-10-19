@@ -62,8 +62,13 @@
             <legend>评委管理</legend>
             <div class="layui-field-box">
                 <div class="layui-container">
-                    <blockquote class="layui-elem-quote">说明：在这里你可以决定系统状态及投票状态。</blockquote>
-
+                    <blockquote class="layui-elem-quote">说明：在这里你可以对所有评委进行操作。</blockquote>
+                    <button class="layui-btn layui-btn-normal" onclick="initUsersByUsername()">初始化选中用户</button>
+                    <table class="layui-hide" id="userTable" lay-filter="userTable"></table>
+                    <script type="text/html" id="barDemo">
+                        <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="detail">初始化</a>
+                        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+                    </script>
                 </div>
             </div>
         </fieldset>

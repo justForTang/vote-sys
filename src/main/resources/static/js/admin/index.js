@@ -163,7 +163,7 @@ function lockScreen() {
             ,moveType: 1 //拖拽模式，0或者1
             ,content: '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;">屏幕已锁定，请输入解锁密码。</div>' +
                 '<div class="margin-15">\n' +
-                '                                                <input type="text" id="screenInput" required  lay-verify="required" placeholder="请填入解锁密码" autocomplete="off" class="layui-input">\n' +
+                '                                                <input type="password" id="screenInput" required  lay-verify="required" placeholder="请填入解锁密码" autocomplete="off" class="layui-input">\n' +
                 '                                            </div>'
             ,yes: function(index){
                 if($("#screenInput").val() == screenPassword){
