@@ -11,4 +11,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface AdminService {
     ResultVO login(String username, String password, HttpServletRequest request);
+
+    ResultVO logout(HttpServletRequest request);
 }

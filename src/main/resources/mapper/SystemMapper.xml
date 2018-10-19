@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.sicau.votesys.dao.SystemDao">
+    <update id="setSystemConf" parameterType="org.sicau.votesys.domain.VO.SystemConfVO">
+        update system_config_t
+        <!-- set能自动去掉最后一个, -->
+        <set>
+            <if test="systemConfVO.title != null">
+                title = #{systemConfVO.title},
+            </if>
+            <if test="systemConfVO.singleTitle != null">
+                single_title = #{systemConfVO.singleTitle},
+            </if>
+            <if test="systemConfVO.timeOutLock != -1 ">
+                time_out_lock = #{systemConfVO.timeOutLock},
+            </if>
+            <if test="systemConfVO.screenPassword != null ">
+                screen_password = #{systemConfVO.screenPassword}
+            </if>
+        </set>
+    </update>
+
+    <select id="selectSystemTitle" resultType="org.sicau.votesys.domain.VO.SystemConfVO">
+        select * from system_config_t;
+    </select>
+</mapper>

@@ -3,10 +3,7 @@ package org.sicau.votesys.controller;
 import org.sicau.votesys.domain.VO.ResultVO;
 import org.sicau.votesys.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -27,5 +24,10 @@ public class AdminController {
                           @RequestParam("password") String password,
                           HttpServletRequest request){
         return adminService.login(username,password,request);
+    }
+
+    @GetMapping("/logout")
+    public ResultVO logout(HttpServletRequest request){
+        return adminService.logout(request);
     }
 }

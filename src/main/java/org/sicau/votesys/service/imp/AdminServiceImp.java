@@ -39,4 +39,14 @@ public class AdminServiceImp implements AdminService {
             return resultUtil.paramError("用户名或密码错误");
         }
     }
+
+    @Override
+    public ResultVO logout(HttpServletRequest request) {
+        try{
+            request.getSession().invalidate();
+            return resultUtil.success();
+        }catch (Exception e){
+            return resultUtil.unknowError();
+        }
+    }
 }
