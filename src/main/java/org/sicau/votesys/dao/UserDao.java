@@ -39,4 +39,6 @@ public interface UserDao {
     UserCountVO selectUserCount();
 
     boolean insertUser(@Param("userPO") UserPO userPO);
+
+    boolean deleteCollegeById(@Param("id") String id);
 }

@@ -1,7 +1,9 @@
 package org.sicau.votesys.controller;
 
+import org.sicau.votesys.domain.PO.CollegePO;
 import org.sicau.votesys.domain.VO.ResultVO;
 import org.sicau.votesys.service.VoteService;
+import org.sicau.votesys.util.IdUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -105,5 +107,23 @@ public class VoteController {
     @GetMapping("/getSecondCurrentData")
     public ResultVO getSecondCurrentData(){
         return voteService.getSecondCurrentData();
+    }
+
+    @PostMapping("/delCollegeById")
+    public ResultVO delCollegeById(HttpServletRequest request,@RequestParam("id") String id){
+        return voteService.delCollegeById(id,request);
+    }
+
+    @PostMapping("/addCollege")
+    public ResultVO addCollege(@RequestParam("campusId") String campusId,
+                               @RequestParam("collegeName") String collegeName,
+                               @RequestParam("candidateNum") String candidateNum,
+                               HttpServletRequest request){
+        CollegePO collegePO = new CollegePO();
+        collegePO.setCandidateNum(candidateNum);
+        collegePO.setCollegeName(collegeName);
+        collegePO.setId(IdUtil.getUUID());
+        collegePO.setCampusId(campusId);
+        return voteService.addCollege(collegePO,request);
     }
 }

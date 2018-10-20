@@ -4,10 +4,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.sicau.votesys.domain.PO.CollegePO;
 import org.sicau.votesys.domain.PO.SecondCandidatePO;
-import org.sicau.votesys.domain.VO.CandidateVO;
-import org.sicau.votesys.domain.VO.CurrentVoteInfoVO;
-import org.sicau.votesys.domain.VO.FirstVoteResultVO;
-import org.sicau.votesys.domain.VO.RaterVoteLogVO;
+import org.sicau.votesys.domain.VO.*;
 
 import java.util.List;
 
@@ -33,7 +30,7 @@ public interface VoteDao {
                              @Param("currentCollegeId") String currentCollegeId,
                              @Param("voteField") int voteField);
 
-    List<CollegePO> queryAllCollegeList();
+    List<CollegeVO> queryAllCollegeList();
 
     boolean updateCurrentStats(@Param("startVote") int startVote,
                                @Param("currentField") int currentField,
@@ -60,4 +57,6 @@ public interface VoteDao {
     int querySecondVotedNum();
 
     List<SecondCandidatePO> getSecondVoteDataOrderByNum();
+
+    boolean addCollege(@Param("collegePO") CollegePO collegePO);
 }

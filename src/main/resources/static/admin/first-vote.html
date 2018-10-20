@@ -71,24 +71,48 @@
                     <legend>组别专区</legend>
                     <div class="layui-field-box">
                         <blockquote class="layui-elem-quote">说明：在这里你可以设定规则及组别数据。</blockquote>
-                        <div class="layui-col-xs12 layui-col-md6 layui-card">
-                            <form class="layui-form">
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">投票规则</label>
-                                    <div class="layui-input-block">
-                                        <input type="radio" name="rater" value="1" title="得票数超50%并且票数高者胜出" checked>
-                                        <input type="radio" name="rater" value="2" title="得票数高者胜出">
+                        <div class="layui-col-xs12 layui-col-md6 ">
+                            <div class="margin-15 layui-card">
+                                <form class="layui-form">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">校区</label>
+                                        <div class="layui-input-block">
+                                            <select name="campusId" lay-verify="required">
+                                                <option value="1">雅安</option>
+                                                <option value="2">成都</option>
+                                                <option value="3">都江堰</option>
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="layui-form-item">
-                                    <div class="layui-input-block">
-                                        <button class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemo">立即保存</button>
-                                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">组别名</label>
+                                        <div class="layui-input-block">
+                                            <input type="text" name="collegeName" required  lay-verify="required" placeholder="请输入组别名" autocomplete="off" class="layui-input">
+                                        </div>
                                     </div>
-                                </div>
-                            </form>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">竞选人</label>
+                                        <div class="layui-input-block">
+                                            <input type="radio" name="candidateNum" value="1" title="1人">
+                                            <input type="radio" name="candidateNum" value="2" title="2人" checked>                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="addCollege">立即新增</button>
+                                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-
+                        <div class="layui-col-xs12 layui-col-md6">
+                            <div class="margin-15">
+                                <table class="layui-hide" id="collegeTable" lay-filter="collegeTable"></table>
+                                <script type="text/html" id="collegeBar">
+                                    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+                                </script>
+                            </div>
+                        </div>
                     </div>
                 </fieldset>
                 <fieldset class="layui-elem-field layui-field-title">

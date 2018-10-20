@@ -1,5 +1,6 @@
 package org.sicau.votesys.service;
 
+import org.sicau.votesys.domain.PO.CollegePO;
 import org.sicau.votesys.domain.VO.ResultVO;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,4 +42,8 @@ public interface VoteService {
     ResultVO getSecondVotedNum();
 
     ResultVO getSecondCurrentData();
+
+    ResultVO delCollegeById(String id, HttpServletRequest request);
+
+    ResultVO addCollege(CollegePO collegePO, HttpServletRequest request);
 }

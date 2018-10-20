@@ -42,6 +42,9 @@
     <delete id="deleteUserByUsername">
         delete from user_t where username=#{username}
     </delete>
+    <delete id="deleteCollegeById">
+        delete from college_t where id = #{id}
+    </delete>
 
     <select id="selectAllUserInfo" resultMap="UserResultMap">
         select * from user_t

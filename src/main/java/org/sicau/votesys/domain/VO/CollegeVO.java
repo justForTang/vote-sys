@@ -1,11 +1,11 @@
-package org.sicau.votesys.domain.PO;
+package org.sicau.votesys.domain.VO;
 
 /**
  * @Author beifengtz
- * @Date Created in 14:04 2018/10/6
+ * @Date Created in 16:56 2018/10/20
  * @Description:
  */
-public class CollegePO {
+public class CollegeVO {
     /**
      * 学院id
      * */
@@ -14,7 +14,7 @@ public class CollegePO {
     /**
      * 对应校区id
      * */
-    private String campusId;
+    private String campusName;
 
     /**
      * 学院名称
@@ -34,6 +34,14 @@ public class CollegePO {
         this.id = id;
     }
 
+    public String getCampusName() {
+        return campusName;
+    }
+
+    public void setCampusName(String campusName) {
+        this.campusName = campusName;
+    }
+
     public String getCollegeName() {
         return collegeName;
     }
@@ -48,13 +56,5 @@ public class CollegePO {
 
     public void setCandidateNum(String candidateNum) {
         this.candidateNum = candidateNum;
-    }
-
-    public String getCampusId() {
-        return campusId;
-    }
-
-    public void setCampusId(String campusId) {
-        this.campusId = campusId;
     }
 }

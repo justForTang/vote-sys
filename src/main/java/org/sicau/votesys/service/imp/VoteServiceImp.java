@@ -6,10 +6,7 @@ import org.sicau.votesys.dao.VoteDao;
 import org.sicau.votesys.domain.PO.CollegePO;
 import org.sicau.votesys.domain.PO.SecondCandidatePO;
 import org.sicau.votesys.domain.PO.UserPO;
-import org.sicau.votesys.domain.VO.CandidateVO;
-import org.sicau.votesys.domain.VO.CurrentVoteInfoVO;
-import org.sicau.votesys.domain.VO.FirstVoteResultVO;
-import org.sicau.votesys.domain.VO.ResultVO;
+import org.sicau.votesys.domain.VO.*;
 import org.sicau.votesys.enums.ConstantEnum;
 import org.sicau.votesys.service.VoteService;
 import org.sicau.votesys.util.IdUtil;
@@ -79,7 +76,7 @@ public class VoteServiceImp implements VoteService {
         }else{
             if(adminDao.selectAdminNumById(sessionValue) == null) return resultUtil.loginError();
         }
-        List<CollegePO> collegePOList = voteDao.queryAllCollegeList();
+        List<CollegeVO> collegePOList = voteDao.queryAllCollegeList();
         return resultUtil.success(collegePOList);
     }
 
@@ -219,6 +216,34 @@ public class VoteServiceImp implements VoteService {
         }else{
             return resultUtil.unknowError();
         }
+    }
+
+    @Override
+    public ResultVO delCollegeById(String id, HttpServletRequest request) {
+        String sessionValue = SessionUtil.getSession(ConstantEnum.SESSION_NAME_ADMIN.getValue(),request.getSession());
+        if (sessionValue ==null){
+            return resultUtil.loginError();
+        }else{
+            if(adminDao.selectAdminNumById(sessionValue) == null) return resultUtil.loginError();
+        }
+        if(userDao.deleteCollegeById(id)){
+            return resultUtil.success();
+        }
+        return resultUtil.unknowError();
+    }
+
+    @Override
+    public ResultVO addCollege(CollegePO collegePO, HttpServletRequest request) {
+        String sessionValue = SessionUtil.getSession(ConstantEnum.SESSION_NAME_ADMIN.getValue(),request.getSession());
+        if (sessionValue ==null){
+            return resultUtil.loginError();
+        }else{
+            if(adminDao.selectAdminNumById(sessionValue) == null) return resultUtil.loginError();
+        }
+        if(voteDao.addCollege(collegePO)){
+            return resultUtil.success();
+        }
+        return resultUtil.unknowError();
     }
 
 

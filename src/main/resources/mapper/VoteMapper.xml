@@ -53,6 +53,9 @@
     <insert id="insertSecondVoteLog">
         insert into second_vote_log_t(id,rater_id) values (#{id},#{raterId})
     </insert>
+    <insert id="addCollege" parameterType="org.sicau.votesys.domain.PO.CollegePO">
+        insert into college_t values (#{collegePO.id},#{collegePO.campusId},#{collegePO.collegeName},#{collegePO.candidateNum})
+    </insert>
     <update id="updateCurrentStats">
         update current_vote_t set
         start_vote=#{startVote},
@@ -95,8 +98,9 @@
         </if>
         and rater_id = #{raterId}
     </select>
-    <select id="queryAllCollegeList" resultType="org.sicau.votesys.domain.PO.CollegePO">
-        select * from college_t;
+    <select id="queryAllCollegeList" resultType="org.sicau.votesys.domain.VO.CollegeVO">
+        select college_t.id,college_t.college_name,college_t.candidate_num,campus_t.campus_name
+        from college_t join campus_t on college_t.campus_id = campus_t.id;
     </select>
     <select id="queryRaterVoteLogList" resultMap="RaterVoteLogMap">
         select log.*,rater.id as rater_id,rater.role as role
