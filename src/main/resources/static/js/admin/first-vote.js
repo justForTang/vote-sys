@@ -1,4 +1,41 @@
+var screenPassword;
+var timeOutLock; // 无操作多久后锁屏，单位分钟，可以有一位小数;
+window.onload = function (){
+    (function($){
+        funObj = {
+            timeUserFun:'timeUserFun',
+        }
+        $[funObj.timeUserFun] = function(time){
+            var time = time || 2;
+            var userTime = time*60;
+            var objTime = {
+                init:0,
+                time:function(){
+                    objTime.init += 1;
+                    if(objTime.init == userTime){
+                        lockScreen();  // 用户到达未操作事件 做一些处理
+                    }
+                },
+                eventFun:function(){
+                    clearInterval(testUser);
+                    objTime.init = 0;
+                    testUser = setInterval(objTime.time,1000);
+                }
+            }
 
+            var testUser = setInterval(objTime.time,1000);
+
+            var body = document.querySelector('html');
+            body.addEventListener("click",objTime.eventFun);
+            body.addEventListener("keydown",objTime.eventFun);
+            body.addEventListener("mousemove",objTime.eventFun);
+            body.addEventListener("mousewheel",objTime.eventFun);
+        }
+    })(window)
+
+//     直接调用 参数代表分钟数,可以有一位小数;
+    timeUserFun(timeOutLock);
+}
 $(function () {
     init();
 })
@@ -6,23 +43,26 @@ $(function () {
  * 初始化
  * */
 function init() {
-    renderCollegeTable();
-    renderCollegeSelect();
-    renderCandidateTable();
-    layui.use(['form','layer'],function () {
-        var form = layui.form;
-        form.on('submit(addCollege)', function(data){
-            console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
-            addCollege(data.field);
-            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
-        });
+    getSystemConfig();
+    if(checkSaveStatus()){
+        renderCollegeTable();
+        renderCollegeSelect();
+        renderCandidateTable();
+        layui.use(['form','layer'],function () {
+            var form = layui.form;
+            form.on('submit(addCollege)', function(data){
+                console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
+                addCollege(data.field);
+                return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+            });
 
-        form.on('submit(addCandidate)', function(data){
-            console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
-            addCandidate(data.field);
-            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
-        });
-    })
+            form.on('submit(addCandidate)', function(data){
+                console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
+                addCandidate(data.field);
+                return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+            });
+        })
+    }
 }
 /**
  * 渲染组别
@@ -197,7 +237,7 @@ function addCandidate(data){
 function delCandidateById(id) {
     $.ajax({
         url:"/vote/deleteFirstCandidate",
-        type:"post",
+        type:"get",
         dataType:"json",
         data:{
             id:id

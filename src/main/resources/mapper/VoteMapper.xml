@@ -87,7 +87,7 @@
         </foreach>
     </update>
     <delete id="deleteFirstCandidate">
-        delete form candidate_t where id=#{id}
+        delete from candidate_t where id=#{id}
     </delete>
     <select id="queryCurrentVoteInfo" resultMap="CurrentVoteInfoMap">
       select `current`.*,`campus`.campus_name,`campus`.id as current_campus_id,
@@ -158,8 +158,8 @@ WHERE role='student') AS b GROUP BY candidate_id,candidate_name,college_name
     </select>
     <select id="canInsertFirstCandidate" resultType="org.sicau.votesys.domain.VO.CandidateVO">
         select college_t.id,college_t.college_name,college_t.candidate_num,campus_t.campus_name
-        from college_t join campus_t on college_t.campus_id = campus_t.id
-        and college_t.candidate_num  &lt;
+        from college_t join campus_t on college_t.campus_id = campus_t.id and college_t.id = #{collegeId}
+        and college_t.candidate_num  &lt;=
         (select count(id) as num from candidate_t where college_id=#{collegeId})
     </select>
 </mapper>
