@@ -1,6 +1,29 @@
 $(function () {
+    getSysConf();
     showMsg();
 })
+/**
+ * 获取系统配置并更新
+ * */
+function getSysConf(){
+    $.ajax({
+        url:"/system/getSysConf",
+        type:"get",
+        dataType:"json",
+        success:function (res) {
+            console.log(res);
+            if(res.code == 0){
+                $("title").text("登录——"+res.data.singleTitle);
+                $("#systemTitle").text(res.data.singleTitle);
+            }else{
+                systemAlert('red',res.msg);
+            }
+        },
+        error:function (res) {
+            systemAlert('red',"出错啦，code："+res.status);
+        }
+    })
+}
 /**
  * 检查表单
  * */

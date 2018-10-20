@@ -2,6 +2,7 @@ var voteList = [];
 var voteStats = {};
 var secondVoteData;
 $(function () {
+    getSysConf();
     var urlData = getRequest();
     if(urlData.uid == null || urlData.realName == null || urlData.role == null){
         // location.href = "login.html"
@@ -15,6 +16,27 @@ $(function () {
         }
     }
 })
+/**
+ * 获取系统配置并更新
+ * */
+function getSysConf(){
+    $.ajax({
+        url:"/system/getSysConf",
+        type:"get",
+        dataType:"json",
+        success:function (res) {
+            console.log(res);
+            if(res.code == 0){
+                $("title").text("投票——"+res.data.singleTitle);
+            }else{
+                systemAlert('red',res.msg);
+            }
+        },
+        error:function (res) {
+            systemAlert('red',"出错啦，code："+res.status);
+        }
+    })
+}
 /**
  * refreshPage 刷新页面
  * */
@@ -193,6 +215,7 @@ function renderFirstVoteForm(collegeId){
         }
     })
 }
+
 /**
  * 退出登录
  * */

@@ -5,9 +5,32 @@ var rater = {
     student:0
 }
 $(function () {
+    getSysConf();
     getUserCount();
     getFirstCurrentData();
 })
+/**
+ * 获取系统配置并更新
+ * */
+function getSysConf(){
+    $.ajax({
+        url:"/system/getSysConf",
+        type:"get",
+        dataType:"json",
+        success:function (res) {
+            console.log(res);
+            if(res.code == 0){
+                $("title").text(res.data.singleTitle);
+                $("#systemTitle").text(res.data.title);
+            }else{
+                systemAlert('red',res.msg);
+            }
+        },
+        error:function (res) {
+            systemAlert('red',"出错啦，code："+res.status);
+        }
+    })
+}
 /**
  * 获取用户统计数据
  * */
