@@ -26,6 +26,16 @@ public class CandidatePO {
      * */
     private String candidateNumber;
 
+    public CandidatePO() {
+
+    }
+
+    public CandidatePO(String id, String collegeId, String candidateName) {
+        this.id = id;
+        this.collegeId = collegeId;
+        this.candidateName = candidateName;
+    }
+
     public String getId() {
         return id;
     }

@@ -56,6 +56,10 @@
     <insert id="addCollege" parameterType="org.sicau.votesys.domain.PO.CollegePO">
         insert into college_t values (#{collegePO.id},#{collegePO.campusId},#{collegePO.collegeName},#{collegePO.candidateNum})
     </insert>
+    <insert id="insertFirstCandidate" parameterType="org.sicau.votesys.domain.PO.CandidatePO">
+        insert into candidate_t(id,college_id,candidate_name) values
+        (#{candidatePO.id},#{candidatePO.collegeId},#{candidatePO.candidateName})
+    </insert>
     <update id="updateCurrentStats">
         update current_vote_t set
         start_vote=#{startVote},
@@ -82,6 +86,9 @@
              id = #{candidateId}
         </foreach>
     </update>
+    <delete id="deleteFirstCandidate">
+        delete form candidate_t where id=#{id}
+    </delete>
     <select id="queryCurrentVoteInfo" resultMap="CurrentVoteInfoMap">
       select `current`.*,`campus`.campus_name,`campus`.id as current_campus_id,
       `college`.campus_id,`college`.college_name,`college`.candidate_num
@@ -140,5 +147,19 @@ WHERE role='student') AS b GROUP BY candidate_id,candidate_name,college_name
     </select>
     <select id="getSecondVoteDataOrderByNum" resultType="org.sicau.votesys.domain.PO.SecondCandidatePO">
         select * from second_student_t order by voted_num desc ;
+    </select>
+    <select id="selectCandidateList" resultType="org.sicau.votesys.domain.VO.CandidateVO">
+        select campus_t.campus_name,college_t.college_name,candidate_t.candidate_name,candidate_t.id
+        from candidate_t join college_t on candidate_t.college_id = college_t.id
+        join campus_t on college_t.campus_id = campus_t.id order by college_t.college_name limit #{page},#{limit}
+    </select>
+    <select id="selectCandidateCount" resultType="java.lang.Integer">
+        select count(id) from candidate_t;
+    </select>
+    <select id="canInsertFirstCandidate" resultType="org.sicau.votesys.domain.VO.CandidateVO">
+        select college_t.id,college_t.college_name,college_t.candidate_num,campus_t.campus_name
+        from college_t join campus_t on college_t.campus_id = campus_t.id
+        and college_t.candidate_num  &lt;
+        (select count(id) as num from candidate_t where college_id=#{collegeId})
     </select>
 </mapper>

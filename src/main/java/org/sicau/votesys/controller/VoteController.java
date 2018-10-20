@@ -1,5 +1,6 @@
 package org.sicau.votesys.controller;
 
+import org.sicau.votesys.domain.PO.CandidatePO;
 import org.sicau.votesys.domain.PO.CollegePO;
 import org.sicau.votesys.domain.VO.ResultVO;
 import org.sicau.votesys.service.VoteService;
@@ -125,5 +126,25 @@ public class VoteController {
         collegePO.setId(IdUtil.getUUID());
         collegePO.setCampusId(campusId);
         return voteService.addCollege(collegePO,request);
+    }
+
+    @GetMapping("/getCandidateListByAdmin")
+    public ResultVO getCandidateListByAdmin(@RequestParam("page") int page,
+                                            @RequestParam("limit") int limit,
+                                            HttpServletRequest request){
+        return voteService.getCandidateListByAdmin(page,limit,request);
+    }
+
+    @GetMapping("/deleteFirstCandidate")
+    public ResultVO deleteFirstCandidate(@RequestParam("id") String id,HttpServletRequest request){
+        return voteService.deleteFirstCandidate(id,request);
+    }
+
+    @PostMapping("/addFirstCandidate")
+    public ResultVO addFirstCandidate(@RequestParam("collegeId") String collegeId,
+                                      @RequestParam("candidateName") String candidateName,
+                                      HttpServletRequest request){
+        CandidatePO candidatePO = new CandidatePO(IdUtil.getUUID(),collegeId,candidateName);
+        return voteService.addFirstCandidate(candidatePO,request);
     }
 }

@@ -3,6 +3,7 @@ package org.sicau.votesys.service.imp;
 import org.sicau.votesys.dao.AdminDao;
 import org.sicau.votesys.dao.UserDao;
 import org.sicau.votesys.dao.VoteDao;
+import org.sicau.votesys.domain.PO.CandidatePO;
 import org.sicau.votesys.domain.PO.CollegePO;
 import org.sicau.votesys.domain.PO.SecondCandidatePO;
 import org.sicau.votesys.domain.PO.UserPO;
@@ -242,6 +243,57 @@ public class VoteServiceImp implements VoteService {
         }
         if(voteDao.addCollege(collegePO)){
             return resultUtil.success();
+        }
+        return resultUtil.unknowError();
+    }
+
+    @Override
+    public ResultVO getCandidateListByAdmin(int page,int limit,HttpServletRequest request) {
+        String sessionValue = SessionUtil.getSession(ConstantEnum.SESSION_NAME_ADMIN.getValue(),request.getSession());
+        if (sessionValue ==null){
+            return resultUtil.loginError();
+        }else{
+            if(adminDao.selectAdminNumById(sessionValue) == null) return resultUtil.loginError();
+        }
+        List<CandidateVO> candidateVOList = voteDao.selectCandidateList((page-1)*limit,limit);
+        int candidateCount = voteDao.selectCandidateCount();
+        if(candidateVOList!=null && candidateCount >= 0){
+            Map<String,Object> resMap = new HashMap<>();
+            resMap.put("candidateList",candidateVOList);
+            resMap.put("total",candidateCount);
+            return resultUtil.success(resMap);
+        }
+        return resultUtil.unknowError();
+    }
+
+    @Override
+    public ResultVO deleteFirstCandidate(String id, HttpServletRequest request) {
+        String sessionValue = SessionUtil.getSession(ConstantEnum.SESSION_NAME_ADMIN.getValue(),request.getSession());
+        if (sessionValue ==null){
+            return resultUtil.loginError();
+        }else{
+            if(adminDao.selectAdminNumById(sessionValue) == null) return resultUtil.loginError();
+        }
+        if(voteDao.deleteFirstCandidate(id)){
+            return resultUtil.success();
+        }
+        return resultUtil.unknowError();
+    }
+
+    @Override
+    public ResultVO addFirstCandidate(CandidatePO candidatePO, HttpServletRequest request) {
+        String sessionValue = SessionUtil.getSession(ConstantEnum.SESSION_NAME_ADMIN.getValue(),request.getSession());
+        if (sessionValue ==null){
+            return resultUtil.loginError();
+        }else{
+            if(adminDao.selectAdminNumById(sessionValue) == null) return resultUtil.loginError();
+        }
+        if(voteDao.canInsertFirstCandidate(candidatePO.getCollegeId()) == null){
+            if(voteDao.insertFirstCandidate(candidatePO)){
+                return resultUtil.success();
+            }
+        }else{
+            return resultUtil.sourceExistError("组别人数已上线");
         }
         return resultUtil.unknowError();
     }

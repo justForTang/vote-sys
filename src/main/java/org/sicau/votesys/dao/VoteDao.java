@@ -2,6 +2,7 @@ package org.sicau.votesys.dao;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.sicau.votesys.domain.PO.CandidatePO;
 import org.sicau.votesys.domain.PO.CollegePO;
 import org.sicau.votesys.domain.PO.SecondCandidatePO;
 import org.sicau.votesys.domain.VO.*;
@@ -59,4 +60,15 @@ public interface VoteDao {
     List<SecondCandidatePO> getSecondVoteDataOrderByNum();
 
     boolean addCollege(@Param("collegePO") CollegePO collegePO);
+
+    List<CandidateVO> selectCandidateList(@Param("page") int page,
+                                          @Param("limit") int limit);
+
+    int selectCandidateCount();
+
+    boolean deleteFirstCandidate(@Param("id") String id);
+
+    boolean insertFirstCandidate(@Param("candidatePO") CandidatePO candidatePO);
+
+    CandidateVO canInsertFirstCandidate(@Param("collegeId") String collegeId);
 }

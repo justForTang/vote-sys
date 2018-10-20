@@ -1,5 +1,6 @@
 package org.sicau.votesys.service;
 
+import org.sicau.votesys.domain.PO.CandidatePO;
 import org.sicau.votesys.domain.PO.CollegePO;
 import org.sicau.votesys.domain.VO.ResultVO;
 
@@ -46,4 +47,11 @@ public interface VoteService {
     ResultVO delCollegeById(String id, HttpServletRequest request);
 
     ResultVO addCollege(CollegePO collegePO, HttpServletRequest request);
+
+    ResultVO getCandidateListByAdmin(int page,int limit,HttpServletRequest request);
+
+
+    ResultVO deleteFirstCandidate(String id, HttpServletRequest request);
+
+    ResultVO addFirstCandidate(CandidatePO candidatePO, HttpServletRequest request);
 }

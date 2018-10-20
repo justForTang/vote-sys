@@ -73,28 +73,33 @@
                         <blockquote class="layui-elem-quote">说明：在这里你可以设定规则及组别数据。</blockquote>
                         <div class="layui-col-xs12 layui-col-md6 ">
                             <div class="margin-15 layui-card">
+                                <h2 style="text-align: center;margin:20px 0;">新增组别</h2>
                                 <form class="layui-form">
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">校区</label>
-                                        <div class="layui-input-block">
+                                        <div class="layui-input-inline">
                                             <select name="campusId" lay-verify="required">
                                                 <option value="1">雅安</option>
                                                 <option value="2">成都</option>
                                                 <option value="3">都江堰</option>
                                             </select>
                                         </div>
+                                        <div class="layui-form-mid layui-word-aux">创建某一校区下的组别</div>
                                     </div>
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">组别名</label>
-                                        <div class="layui-input-block">
+                                        <div class="layui-input-inline">
                                             <input type="text" name="collegeName" required  lay-verify="required" placeholder="请输入组别名" autocomplete="off" class="layui-input">
                                         </div>
+                                        <div class="layui-form-mid layui-word-aux">分组组别名，优标答辩请填学院名称</div>
                                     </div>
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">竞选人</label>
-                                        <div class="layui-input-block">
+                                        <div class="layui-input-inline">
                                             <input type="radio" name="candidateNum" value="1" title="1人">
-                                            <input type="radio" name="candidateNum" value="2" title="2人" checked>                                        </div>
+                                            <input type="radio" name="candidateNum" value="2" title="2人" checked>
+                                        </div>
+                                        <div class="layui-form-mid layui-word-aux">限定每个组别竞选人数</div>
                                     </div>
                                     <div class="layui-form-item">
                                         <div class="layui-input-block">
@@ -119,7 +124,43 @@
                     <legend>选手专区</legend>
                     <div class="layui-field-box">
                         <blockquote class="layui-elem-quote">说明：在这里你可以管理竞选人员。</blockquote>
-                        该功能尚未完成！
+                        <div class="layui-col-xs12 layui-col-md6 ">
+                            <div class="margin-15 layui-card">
+                                <h2 style="text-align: center;margin:20px 0;">新增第一轮选手</h2>
+                                <form class="layui-form">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">组别</label>
+                                        <div class="layui-input-inline">
+                                            <select name="collegeId" lay-verify="required" id="collegeSelect">
+                                                <!--<option value="1">信息工程学院</option>-->
+                                            </select>
+                                        </div>
+                                        <div class="layui-form-mid layui-word-aux">如果某组别竞选人数上限将无法选择该组别</div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">姓名</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="candidateName" required  lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+                                        </div>
+                                        <div class="layui-form-mid layui-word-aux">请尽量避免同一组别的选手重名</div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="addCandidate">立即新增</button>
+                                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="layui-col-xs12 layui-col-md6">
+                            <div class="margin-15">
+                                <table class="layui-hide" id="candidateTable" lay-filter="candidateTable"></table>
+                                <script type="text/html" id="candidateBar">
+                                    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+                                </script>
+                            </div>
+                        </div>
                     </div>
                 </fieldset>
             </div>

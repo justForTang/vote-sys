@@ -7,6 +7,8 @@ $(function () {
  * */
 function init() {
     renderCollegeTable();
+    renderCollegeSelect();
+    renderCandidateTable();
     layui.use(['form','layer'],function () {
         var form = layui.form;
         form.on('submit(addCollege)', function(data){
@@ -14,7 +16,45 @@ function init() {
             addCollege(data.field);
             return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
         });
+
+        form.on('submit(addCandidate)', function(data){
+            console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
+            addCandidate(data.field);
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        });
     })
+}
+/**
+ * 渲染组别
+ * */
+function renderCollegeSelect(){
+    $.ajax({
+        url:"/vote/getCollegeListByAdmin",
+        type:"get",
+        dataType:"json",
+        async:false,
+        success:function (res) {
+            console.log(res);
+            if(res.code == 100001){
+                location.href = "/login.html";
+            }else if(res.code == 0){
+                $("#collegeSelect").empty();
+                for (var i = 0; i < res.data.length; i++) {
+                    $("#collegeSelect").append("<option value="+res.data[i].id+">"+res.data[i].collegeName+"</option>")
+                }
+                layui.use('form',function () {
+                    var form = layui.form;
+                    form.render();
+                })
+            }else{
+                systemAlert(res.msg+",code："+res.code,2);
+            }
+        },
+        error:function (res) {
+            console.log(res.status);
+            systemAlert("错误code："+res.status,2);
+        }
+    });
 }
 /**
  * 渲染组别（学院）表格
@@ -58,13 +98,127 @@ function renderCollegeTable(){
             var data = obj.data //获得当前行数据
                 ,layEvent = obj.event; //获得 lay-event 对应的值
             if(layEvent === 'del'){
-                layer.confirm('删除组别将删除该组别下所有关联用户，确定删除'+data.collegeName+"?",{icon:0}, function(index){
+                layer.confirm('删除组别将删除该组别下所有关联，确定删除'+data.collegeName+"?",{icon:0}, function(index){
                     obj.del(); //删除对应行（tr）的DOM结构
                     layer.close(index);
                     delCollegeById(data.id);
                 });
             }
         });
+    });
+}
+/**
+ * 渲染选手表格
+ * */
+function renderCandidateTable(){
+    layui.use('table', function(){
+        var table = layui.table;
+
+        //执行一个 table 实例
+        table.render({
+            elem: '#candidateTable'
+            ,id:'candidateTable'
+            ,height: 400
+            ,url: '/vote/getCandidateListByAdmin' //数据接口
+            ,method:'get'
+            ,title: '用户表'
+            ,page: true//开启分页
+            ,toolbar: 'true' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
+            ,totalRow: false //开启合计行
+            ,cols: [[ //表头
+                {field: 'campusName', title: '校区'}
+                ,{field: 'collegeName', title: '组别名'}
+                ,{field: 'candidateName', title: '姓名'}
+                ,{fixed: 'right', title: '操作', align:'center', toolbar: '#candidateBar'}
+            ]]
+            ,request: {
+                pageName: 'page' //页码的参数名称，默认：page
+                ,limitName: 'limit' //每页数据量的参数名，默认：limit
+            }
+            ,parseData: function(res){ //res 即为原始返回的数据
+                return {
+                    "code": res.code, //解析接口状态
+                    "msg": res.msg, //解析提示文本
+                    "count": res.data.total, //解析数据长度
+                    "data": res.data.candidateList //解析数据列表
+                };
+            }
+        });
+        //监听行工具事件
+        table.on('tool(candidateTable)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+            var data = obj.data //获得当前行数据
+                ,layEvent = obj.event; //获得 lay-event 对应的值
+            if(layEvent === 'del'){
+                layer.confirm('确定删除选手'+data.collegeName+"?",{icon:0}, function(index){
+                    obj.del(); //删除对应行（tr）的DOM结构
+                    layer.close(index);
+                    delCandidateById(data.id);
+                });
+            }
+        });
+    });
+}
+/**
+ * 新增选手
+ * */
+function addCandidate(data){
+    $.ajax({
+        url:"/vote/addFirstCandidate",
+        type:"post",
+        dataType:"json",
+        data:{
+            collegeId:data.collegeId,
+            candidateName:data.candidateName
+        },
+        async:false,
+        success:function (res) {
+            console.log(res);
+            if(res.code == 100001){
+                location.href = "/login.html";
+            }else if(res.code == 0){
+                systemAlert("新增成功！",1,function () {
+                    location.reload();
+                });
+            }else if(res.code == 100003){
+                systemAlert("新增失败！该组别人已满",2);
+            }else{
+                systemAlert(res.msg+",code："+res.code,2);
+            }
+        },
+        error:function (res) {
+            console.log(res.status);
+            systemAlert("错误code："+res.status,2);
+        }
+    });
+}
+/**
+ * 删除选手
+ * */
+function delCandidateById(id) {
+    $.ajax({
+        url:"/vote/deleteFirstCandidate",
+        type:"post",
+        dataType:"json",
+        data:{
+            id:id
+        },
+        async:false,
+        success:function (res) {
+            console.log(res);
+            if(res.code == 100001){
+                location.href = "/login.html";
+            }else if(res.code == 0){
+                systemAlert("删除成功！",1,function () {
+                    location.reload();
+                });
+            }else{
+                systemAlert(res.msg+",code："+res.code,2);
+            }
+        },
+        error:function (res) {
+            console.log(res.status);
+            systemAlert("错误code："+res.status,2);
+        }
     });
 }
 /**
