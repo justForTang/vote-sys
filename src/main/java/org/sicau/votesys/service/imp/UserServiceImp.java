@@ -150,4 +150,19 @@ public class UserServiceImp implements UserService {
         }
         return resultUtil.unknowError();
     }
+
+    @Override
+    public ResultVO insertUser(UserPO userPO, HttpServletRequest request) {
+        String sessionValue = SessionUtil.getSession(ConstantEnum.SESSION_NAME_ADMIN.getValue(),request.getSession());
+        if (sessionValue ==null){
+            return resultUtil.loginError();
+        }else{
+            if(adminDao.selectAdminNumById(sessionValue) == null) return resultUtil.loginError();
+        }
+        if(userDao.insertUser(userPO)){
+            return resultUtil.success();
+        }
+        return resultUtil.unknowError();
+    }
+
 }

@@ -37,4 +37,6 @@ public interface UserDao {
     UserPO selectUserById(@Param("id") String id);
 
     UserCountVO selectUserCount();
+
+    boolean insertUser(@Param("userPO") UserPO userPO);
 }

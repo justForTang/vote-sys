@@ -1,7 +1,9 @@
 package org.sicau.votesys.controller;
 
+import org.sicau.votesys.domain.PO.UserPO;
 import org.sicau.votesys.domain.VO.ResultVO;
 import org.sicau.votesys.service.UserService;
+import org.sicau.votesys.util.IdUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -68,5 +70,24 @@ public class UserController {
     @GetMapping("getUserCount")
     public ResultVO getUserCount(){
         return userService.getUserCount();
+    }
+
+    @PostMapping("insertRater")
+    public ResultVO insertRater(@RequestParam("username") String username,
+                                @RequestParam("password") String password,
+                                @RequestParam("role") String role,
+                                @RequestParam("campus") String campus,
+                                @RequestParam("realName") String realName,
+                                @RequestParam("sicauId") String sicauId,
+                                HttpServletRequest request){
+        UserPO userPO = new UserPO();
+        userPO.setRole(role);
+        userPO.setPassword(password);
+        userPO.setId(IdUtil.getUUID());
+        userPO.setRealName(realName);
+        userPO.setSicauId(sicauId);
+        userPO.setUsername(username);
+        userPO.setCampus(campus);
+        return userService.insertUser(userPO,request);
     }
 }

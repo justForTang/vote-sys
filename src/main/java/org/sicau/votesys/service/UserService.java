@@ -1,5 +1,6 @@
 package org.sicau.votesys.service;
 
+import org.sicau.votesys.domain.PO.UserPO;
 import org.sicau.votesys.domain.VO.ResultVO;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,4 +29,6 @@ public interface UserService {
     ResultVO deleteUser(String username, HttpServletRequest request);
 
     ResultVO getUserCount();
+
+    ResultVO insertUser(UserPO userPO, HttpServletRequest request);
 }

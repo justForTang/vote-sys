@@ -15,6 +15,11 @@
         <result column="login_browser_info" jdbcType="VARCHAR" property="loginBrowserInfo"/>
         <result column="log_cookie_id" jdbcType="VARCHAR" property="logCookieId"/>
     </resultMap>
+    <insert id="insertUser" parameterType="org.sicau.votesys.domain.PO.UserPO">
+        insert into user_t(id,campus,username,real_name,password,role,sicau_id)
+        values (#{userPO.id},#{userPO.campus},#{userPO.username},#{userPO.realName}
+        ,#{userPO.password},#{userPO.role},#{userPO.sicauId})
+    </insert>
     <update id="updateUserInfoById">
         update user_t set
         has_log=#{hasLog},
