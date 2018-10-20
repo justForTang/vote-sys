@@ -4,6 +4,7 @@ import org.sicau.votesys.domain.VO.ResultVO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * @Author beifengtz
@@ -18,11 +19,11 @@ public interface UserService {
 
     ResultVO logout(HttpServletRequest request);
 
-    ResultVO getAllUserListByAdmin(HttpServletRequest request);
+    ResultVO getAllUserListByAdmin(int page,int limit,HttpServletRequest request);
 
     ResultVO updateUserLogStats(String username, HttpServletRequest request);
 
-    ResultVO updateAllUserLogStats(HttpServletRequest request);
+    ResultVO updateAllUserLogStats(List<String> usernameList, HttpServletRequest request);
 
     ResultVO deleteUser(String username, HttpServletRequest request);
 

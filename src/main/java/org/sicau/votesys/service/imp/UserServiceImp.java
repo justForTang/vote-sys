@@ -13,7 +13,9 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author beifengtz
@@ -89,15 +91,19 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public ResultVO getAllUserListByAdmin(HttpServletRequest request) {
+    public ResultVO getAllUserListByAdmin(int page,int limit,HttpServletRequest request) {
         String sessionValue = SessionUtil.getSession(ConstantEnum.SESSION_NAME_ADMIN.getValue(),request.getSession());
         if (sessionValue ==null){
             return resultUtil.loginError();
         }else{
             if(adminDao.selectAdminNumById(sessionValue) == null) return resultUtil.loginError();
         }
-        List<UserPO> userPOList = userDao.selectAllUserInfo();
-        return resultUtil.success(userPOList);
+        UserCountVO userCount = userDao.selectUserCount();
+        List<UserPO> userPOList = userDao.selectAllUserInfo((page-1)*limit,limit);
+        Map<String,Object> resMap = new HashMap<>();
+        resMap.put("count",userCount.getTotal());
+        resMap.put("items",userPOList);
+        return resultUtil.success(resMap);
     }
 
     @Override
@@ -113,14 +119,14 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public ResultVO updateAllUserLogStats(HttpServletRequest request) {
+    public ResultVO updateAllUserLogStats(List<String> usernameList, HttpServletRequest request) {
         String sessionValue = SessionUtil.getSession(ConstantEnum.SESSION_NAME_ADMIN.getValue(),request.getSession());
         if (sessionValue ==null){
             return resultUtil.loginError();
         }else{
             if(adminDao.selectAdminNumById(sessionValue) == null) return resultUtil.loginError();
         }
-        if(userDao.updateAllUserLogStats()) return resultUtil.success();
+        if(userDao.updateAllUserLogStats(usernameList)) return resultUtil.success();
         return resultUtil.unknowError();
     }
 

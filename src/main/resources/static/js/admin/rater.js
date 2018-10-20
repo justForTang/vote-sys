@@ -67,13 +67,14 @@ function initUsersByUsername() {
         console.log(checkStatus.data);
         var usernameList = [];
         for (var i = 0; i < checkStatus.data.length; i++) {
-            usernameList.concat(checkStatus.data[i].username);
+            usernameList.push(checkStatus.data[i].username);
         }
+        console.log(usernameList);
         $.ajax({
             url:"/user/updateAllUserLogStats",
             type:"post",
             data:{
-                usernameList:JSON.stringify(usernameList)
+                usernameList:usernameList.toString()
             },
             dataType:"json",
             async:false,

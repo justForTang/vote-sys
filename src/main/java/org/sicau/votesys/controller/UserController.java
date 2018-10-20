@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * @Author beifengtz
@@ -40,8 +41,10 @@ public class UserController {
     }
 
     @GetMapping("/getAllUserList")
-    public ResultVO getAllUserList(HttpServletRequest request){
-        return userService.getAllUserListByAdmin(request);
+    public ResultVO getAllUserList(@RequestParam("page") int page,
+                                   @RequestParam("limit") int limit,
+                                   HttpServletRequest request){
+        return userService.getAllUserListByAdmin(page,limit,request);
     }
 
     @PostMapping("/updateUserLogStats")
@@ -50,9 +53,10 @@ public class UserController {
         return userService.updateUserLogStats(username,request);
     }
 
-    @GetMapping("/updateAllUserLogStats")
-    public ResultVO updateAllUserLogStats(HttpServletRequest request){
-        return userService.updateAllUserLogStats(request);
+    @PostMapping("/updateAllUserLogStats")
+    public ResultVO updateAllUserLogStats(@RequestParam("usernameList") List<String> usernameList,
+                                          HttpServletRequest request){
+        return userService.updateAllUserLogStats(usernameList,request);
     }
 
     @PostMapping("deleteUser")

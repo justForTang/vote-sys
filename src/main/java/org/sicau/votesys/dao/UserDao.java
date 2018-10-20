@@ -15,7 +15,7 @@ import java.util.List;
 @Mapper
 public interface UserDao {
 
-    List<UserPO> selectAllUserInfo();
+    List<UserPO> selectAllUserInfo(@Param("pstart") int pstart,@Param("psize") int psize);
 
     UserPO selectUserByUsernameAndPassword(@Param("username") String username,
                                            @Param("password") String password);
@@ -32,7 +32,7 @@ public interface UserDao {
 
     boolean deleteUserByUsername(@Param("username") String username);
 
-    boolean updateAllUserLogStats();
+    boolean updateAllUserLogStats(List<String> usernameList);
 
     UserPO selectUserById(@Param("id") String id);
 
