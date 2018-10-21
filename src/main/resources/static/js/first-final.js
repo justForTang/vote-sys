@@ -77,10 +77,39 @@ function getFirstCurrentData(){
         }
     })
 }
+/**
+ * 渲染结果
+ * */
 function renderResult(data) {
     var totalSum = rater.student*1+rater.teacher*3;
     $("#passCandidateList").empty();
-    for(var i=0;i<data.length;i++){
+    // 扫描并处理结果数据
+    var passData = {};
+    for (j in data) {
+        if(passData[data[j].collegeName] == "" || passData[data[j].collegeName] == null){
+            passData[data[j].collegeName] = {
+                candidateName:data[j].candidateName,
+                sum:data[j].sum
+            }
+        }else{
+            try{
+                if(parseInt(passData[data[j].collegeName].sum) < parseInt(data[j].sum)){
+                    passData[data[j].collegeName].sum = data[j].sum;
+                }else if(parseInt(passData[data[j].collegeName].sum) == parseInt(data[j].sum)){
+                    passData[data[j].collegeName].candidateName += ","+data[j].candidateName;
+                }
+            }catch (e) {
+                console.error(e);
+            }
+
+        }
+    }
+    console.log(passData);
+    data = passData;
+    //渲染结果数据
+    for(var i in data){
+        // 规则一 超出50%胜出
+        /*
         if(data[i].sum >= totalSum* 0.5 ){
             $("#passCandidateList").append("<div class=\"row\">\n" +
                 "                <div class=\"col-md-4\">\n" +
@@ -94,5 +123,19 @@ function renderResult(data) {
                 "                </div>\n" +
                 "            </div>")
         }
+        */
+
+        // 规则二：票数高者胜出
+        $("#passCandidateList").append("<div class=\"row\">\n" +
+            "                <div class=\"col-md-4\">\n" +
+            "                    <h3>"+data[i].candidateName+"</h3>\n" +
+            "                </div>\n" +
+            "                <div class=\"col-md-4\">\n" +
+            "                    <h3>"+i+"</h3>\n" +
+            "                </div>\n" +
+            "                <div class=\"col-md-4\">\n" +
+            "                    <h3>"+data[i].sum+"票</h3>\n" +
+            "                </div>\n" +
+            "            </div>")
     }
 }

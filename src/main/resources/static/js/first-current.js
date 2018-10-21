@@ -193,18 +193,17 @@ function renderStatisticsPage(data) {
         $(".notice").hide();
         $("#currentCollege").text(data.currentCampus.campusName+"校区  "+data.currentCollege.collegeName);
     }
-    renderCandidateInfo(data.currentCollege.id);
-    refreshClock = window.setInterval(function () {
-        getFirstCurrentData(data.currentCollege.id);
-    },2000);
-    // if(data.startVoteCollege){
-    //
-    // }
+    if(renderCandidateInfo(data.currentCollege.id)){
+        refreshClock = window.setInterval(function () {
+            getFirstCurrentData(data.currentCollege.id);
+        },2000);
+    }
 }
 /**
  * 显示竞选人信息
  * */
 function renderCandidateInfo(collegeId){
+    var pass = true;
     $.ajax({
         url:"/statistics/getFirstList",
         type:"get",
@@ -217,18 +216,23 @@ function renderCandidateInfo(collegeId){
             console.log(res);
             if(res.code == 0){
                 voteList = res.data;
-                if(res.data.length == 1){
-                    $("#oneCandidateOne").attr("data-id",voteList[0].id);
-                    $("#oneCandidateOne .candidate-name").text(voteList[0].candidateName);
-                    $(".oneCandidate").show();
-                    $(".twoCandidate").hide();
+                if(res.data.length != voteStats.currentCollege.candidateNum){
+                    pass = false;
+                    systemAlert("red","出错了！该组别人数不足，请管理员添加该组别选手");
                 }else{
-                    $("#twoCandidateOne").attr("data-id",voteList[0].id);
-                    $("#twoCandidateOne .candidate-name").text(voteList[0].candidateName);
-                    $("#twoCandidateTwo").attr("data-id",voteList[1].id);
-                    $("#twoCandidateTwo .candidate-name").text(voteList[1].candidateName);
-                    $(".oneCandidate").hide();
-                    $(".twoCandidate").show();
+                    if(res.data.length == 1){
+                        $("#oneCandidateOne").attr("data-id",voteList[0].id);
+                        $("#oneCandidateOne .candidate-name").text(voteList[0].candidateName);
+                        $(".oneCandidate").show();
+                        $(".twoCandidate").hide();
+                    }else if(res.data.length == 2){
+                        $("#twoCandidateOne").attr("data-id",voteList[0].id);
+                        $("#twoCandidateOne .candidate-name").text(voteList[0].candidateName);
+                        $("#twoCandidateTwo").attr("data-id",voteList[1].id);
+                        $("#twoCandidateTwo .candidate-name").text(voteList[1].candidateName);
+                        $(".oneCandidate").hide();
+                        $(".twoCandidate").show();
+                    }
                 }
             }else{
                 systemAlert("red",res.msg+",code："+res.code);
@@ -238,6 +242,7 @@ function renderCandidateInfo(collegeId){
             systemAlert("出错了，code："+res.status);
         }
     })
+    return pass;
 }
 /**
  * 自动关闭式提示

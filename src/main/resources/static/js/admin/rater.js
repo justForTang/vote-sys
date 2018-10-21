@@ -194,9 +194,7 @@ function delUserByUsername(username){
             if(res.code == 100001){
                 location.href = "/login.html";
             }else if(res.code == 0){
-                systemAlert("删除成功！",1,function () {
-                    location.reload();
-                });
+                systemAlert("删除成功！",1);
             }else{
                 systemAlert(res.msg+",code："+res.code,2);
             }
@@ -208,7 +206,7 @@ function delUserByUsername(username){
     });
 }
 /**
- * 初始化用户
+ * 初始化选中用户
  * */
 function initUsersByUsername() {
     layui.use('table', function() {
@@ -219,32 +217,35 @@ function initUsersByUsername() {
         for (var i = 0; i < checkStatus.data.length; i++) {
             usernameList.push(checkStatus.data[i].username);
         }
-        console.log(usernameList);
-        $.ajax({
-            url:"/user/updateAllUserLogStats",
-            type:"post",
-            data:{
-                usernameList:usernameList.toString()
-            },
-            dataType:"json",
-            async:false,
-            success:function (res) {
-                console.log(res);
-                if(res.code == 100001){
-                    location.href = "/login.html";
-                }else if(res.code == 0){
-                    systemAlert("初始化成功！",1,function () {
-                        location.reload();
-                    });
-                }else{
-                    systemAlert(res.msg+",code："+res.code,2);
+        if(usernameList.length == 0){
+            systemAlert("请先勾选",2);
+        }else{
+            $.ajax({
+                url:"/user/updateAllUserLogStats",
+                type:"post",
+                data:{
+                    usernameList:usernameList.toString()
+                },
+                dataType:"json",
+                async:false,
+                success:function (res) {
+                    console.log(res);
+                    if(res.code == 100001){
+                        location.href = "/login.html";
+                    }else if(res.code == 0){
+                        systemAlert("初始化成功！",1,function () {
+                            location.reload();
+                        });
+                    }else{
+                        systemAlert(res.msg+",code："+res.code,2);
+                    }
+                },
+                error:function (res) {
+                    console.log(res.status);
+                    systemAlert("错误code："+res.status,2);
                 }
-            },
-            error:function (res) {
-                console.log(res.status);
-                systemAlert("错误code："+res.status,2);
-            }
-        });
+            });
+        }
     });
 }
 /**
