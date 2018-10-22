@@ -76,4 +76,12 @@ public interface VoteDao {
     boolean deleteFirstVoteCollegeLog(@Param("voteCollegeId") String voteCollegeId);
 
     SecondDataPO querySecondData();
+
+    boolean updateSecondVoteData(@Param("passNum") int passNum,@Param("voteRule") int voteRule);
+
+    boolean insertSecondCandidate(@Param("secondCandidatePO") SecondCandidatePO secondCandidatePO);
+
+    boolean deleteSecondCandidates(List<String> idList);
+
+    boolean deleteSecondCandidate(@Param("id") String id);
 }

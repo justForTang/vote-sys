@@ -325,6 +325,62 @@ public class VoteServiceImp implements VoteService {
         return resultUtil.unknowError();
     }
 
+    @Override
+    public ResultVO updateSecondVoteRule(int passNum, int voteRule, HttpServletRequest request) {
+        String sessionValue = SessionUtil.getSession(ConstantEnum.SESSION_NAME_ADMIN.getValue(),request.getSession());
+        if (sessionValue ==null){
+            return resultUtil.loginError();
+        }else{
+            if(adminDao.selectAdminNumById(sessionValue) == null) return resultUtil.loginError();
+        }
+        if(voteDao.updateSecondVoteData(passNum,voteRule)){
+            return resultUtil.success();
+        }
+        return resultUtil.unknowError();
+    }
+
+    @Override
+    public ResultVO addSecondCandidate(SecondCandidatePO secondCandidatePO, HttpServletRequest request) {
+        String sessionValue = SessionUtil.getSession(ConstantEnum.SESSION_NAME_ADMIN.getValue(),request.getSession());
+        if (sessionValue ==null){
+            return resultUtil.loginError();
+        }else{
+            if(adminDao.selectAdminNumById(sessionValue) == null) return resultUtil.loginError();
+        }
+        if(voteDao.insertSecondCandidate(secondCandidatePO)){
+            return resultUtil.success();
+        }
+        return resultUtil.unknowError();
+    }
+
+    @Override
+    public ResultVO deleteSecondCandidate(String id, HttpServletRequest request) {
+        String sessionValue = SessionUtil.getSession(ConstantEnum.SESSION_NAME_ADMIN.getValue(),request.getSession());
+        if (sessionValue ==null){
+            return resultUtil.loginError();
+        }else{
+            if(adminDao.selectAdminNumById(sessionValue) == null) return resultUtil.loginError();
+        }
+        if(voteDao.deleteSecondCandidate(id)){
+            return resultUtil.success();
+        }
+        return resultUtil.unknowError();
+    }
+
+    @Override
+    public ResultVO deleteSecondCandidates(List<String> idList, HttpServletRequest request) {
+        String sessionValue = SessionUtil.getSession(ConstantEnum.SESSION_NAME_ADMIN.getValue(),request.getSession());
+        if (sessionValue ==null){
+            return resultUtil.loginError();
+        }else{
+            if(adminDao.selectAdminNumById(sessionValue) == null) return resultUtil.loginError();
+        }
+        if(voteDao.deleteSecondCandidates(idList)){
+            return resultUtil.success();
+        }
+        return resultUtil.unknowError();
+    }
+
 
     @Override
     public ResultVO getFirstList(String collegeId, HttpServletRequest request) {

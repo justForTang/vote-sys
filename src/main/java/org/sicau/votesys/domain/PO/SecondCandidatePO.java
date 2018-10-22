@@ -16,6 +16,17 @@ public class SecondCandidatePO {
 
     private int votedNum;
 
+    public SecondCandidatePO(){
+
+    }
+
+    public SecondCandidatePO(String id,String collegeName, String candidateName, String sicauId) {
+        this.id = id;
+        this.collegeName = collegeName;
+        this.candidateName = candidateName;
+        this.sicauId = sicauId;
+    }
+
     public String getId() {
         return id;
     }

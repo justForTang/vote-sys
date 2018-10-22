@@ -2,6 +2,7 @@ package org.sicau.votesys.controller;
 
 import org.sicau.votesys.domain.PO.CandidatePO;
 import org.sicau.votesys.domain.PO.CollegePO;
+import org.sicau.votesys.domain.PO.SecondCandidatePO;
 import org.sicau.votesys.domain.VO.ResultVO;
 import org.sicau.votesys.service.VoteService;
 import org.sicau.votesys.util.IdUtil;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Author beifengtz
@@ -156,5 +158,31 @@ public class VoteController {
     @PostMapping("/deleteFirstVoteAllCollegeLog")
     public ResultVO deleteFirstVoteAllCollegeLog(HttpServletRequest request){
         return voteService.deleteFirstVoteAllCollegeLog(request);
+    }
+
+    @PostMapping("/updateSecondVoteRule")
+    public ResultVO updateSecondVoteRule(@RequestParam("passNum") int passNum,
+                                         @RequestParam("voteRule") int voteRule,
+                                         HttpServletRequest request){
+        return voteService.updateSecondVoteRule(passNum,voteRule,request);
+    }
+
+    @PostMapping("/addSecondCandidate")
+    public ResultVO addSecondCandidate(@RequestParam("collegeName") String collegeName,
+                                          @RequestParam("candidateName") String candidateName,
+                                          @RequestParam("sicauId") String sicauId,
+                                          HttpServletRequest request){
+        SecondCandidatePO secondCandidatePO = new SecondCandidatePO(IdUtil.getUUID(),collegeName,candidateName,sicauId);
+        return voteService.addSecondCandidate(secondCandidatePO,request);
+    }
+
+    @PostMapping("/deleteSecondCandidate")
+    public ResultVO deleteSecondCandidate(@RequestParam("id") String id,HttpServletRequest request){
+        return voteService.deleteSecondCandidate(id,request);
+    }
+
+    @PostMapping("/deleteSecondCandidates")
+    public ResultVO deleteSecondCandidates(@RequestParam("idList") List<String> idList, HttpServletRequest request){
+        return voteService.deleteSecondCandidates(idList,request);
     }
 }

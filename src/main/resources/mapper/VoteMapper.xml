@@ -60,6 +60,11 @@
         insert into candidate_t(id,college_id,candidate_name) values
         (#{candidatePO.id},#{candidatePO.collegeId},#{candidatePO.candidateName})
     </insert>
+    <insert id="insertSecondCandidate" parameterType="org.sicau.votesys.domain.PO.SecondCandidatePO">
+        insert into second_student_t values
+        (#{secondCandidatePO.id},#{secondCandidatePO.collegeName},#{secondCandidatePO.candidateName},
+        #{secondCandidatePO.sicauId})
+    </insert>
     <update id="updateCurrentStats">
         update current_vote_t set
         start_vote=#{startVote},
@@ -86,6 +91,9 @@
              id = #{candidateId}
         </foreach>
     </update>
+    <update id="updateSecondVoteData">
+       update second_data_t set pass_num=#{passNum},vote_rule=#{voteRule}
+    </update>
     <delete id="deleteFirstCandidate">
         delete from candidate_t where id=#{id}
     </delete>
@@ -94,6 +102,15 @@
     </delete>
     <delete id="deleteFirstVoteCollegeLog">
         delete from rater_vote_log_t where vote_college_id = #{voteCollegeId};
+    </delete>
+    <delete id="deleteSecondCandidate">
+        delete from second_student_t where id=#{id}
+    </delete>
+    <delete id="deleteSecondCandidates">
+        delete from second_student_t where
+        <foreach collection="list" item="idList" separator="or">
+            id = #{idList}
+        </foreach>
     </delete>
     <select id="queryCurrentVoteInfo" resultMap="CurrentVoteInfoMap">
       select `current`.*,`campus`.campus_name,`campus`.id as current_campus_id,

@@ -48,6 +48,14 @@ function init() {
     getSystemConfig();
     if(checkSaveStatus()){
         renderTable();
+        layui.use('form',function () {
+            var form = layui.form;
+            form.on('submit(insertRater)', function(data){
+                console.log(data.field) ;
+                updateVoteRule(data.field);
+                return false;
+            });
+        })
     }
 }
 
@@ -98,20 +106,89 @@ function renderTable(){
         table.on('tool(userTable)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
             var data = obj.data //获得当前行数据
                 ,layEvent = obj.event; //获得 lay-event 对应的值
-            if(layEvent === 'detail'){
-                initUserByUsername(data.username);
-            } else if(layEvent === 'del'){
-                layer.confirm('确定删除'+data.realName+"?", function(index){
-                    obj.del(); //删除对应行（tr）的DOM结构
+            if(layEvent === 'del'){
+                layer.confirm('确定删除'+data.candidateName+"?", function(index){
                     console.log(data);
                     layer.close(index);
-                    delUserByUsername(data.username);
+                    delSecondCandidate(data.id,obj);
                 });
             }
         });
     });
 }
-
+/**
+ * 删除某一个选手
+ * */
+function delSecondCandidate(id,obj){
+    $.ajax({
+        url:"/vote/deleteSecondCandidate",
+        type:"post",
+        data:{
+            id:id
+        },
+        dataType:"json",
+        async:false,
+        success:function (res) {
+            console.log(res);
+            if(res.code == 100001){
+                location.href = "/login.html";
+            }else if(res.code == 0){
+                systemAlert("删除成功！",1,function () {
+                    obj.del(); //删除对应行（tr）的DOM结构
+                });
+            }else{
+                systemAlert(res.msg+",code："+res.code,2);
+            }
+        },
+        error:function (res) {
+            console.log(res.status);
+            systemAlert("错误code："+res.status,2);
+        }
+    });
+}
+/**
+ * 删除选中选手
+ * */
+function delSecondCandidates(idList,obj){
+    layui.use('table', function() {
+        var table = layui.table;
+        var checkStatus = table.checkStatus('userTable');
+        console.log(checkStatus.data);
+        var idList = [];
+        for (var i = 0; i < checkStatus.data.length; i++) {
+            idList.push(checkStatus.data[i].username);
+        }
+        if(idList.length == 0){
+            systemAlert("请先勾选",2);
+        }else{
+            $.ajax({
+                url:"/vote/deleteSecondCandidates",
+                type:"post",
+                data:{
+                    idList:idList.toString()
+                },
+                dataType:"json",
+                async:false,
+                success:function (res) {
+                    console.log(res);
+                    if(res.code == 100001){
+                        location.href = "/login.html";
+                    }else if(res.code == 0){
+                        systemAlert("删除成功！",1,function () {
+                            obj.del(); //删除对应行（tr）的DOM结构
+                        });
+                    }else{
+                        systemAlert(res.msg+",code："+res.code,2);
+                    }
+                },
+                error:function (res) {
+                    console.log(res.status);
+                    systemAlert("错误code："+res.status,2);
+                }
+            });
+        }
+    });
+}
 /**
  * 渲染规则表
  * */
@@ -123,7 +200,40 @@ function renderRuleForm() {
         form.render();
     })
 }
-
+/**
+ * 保存投票规则
+ * */
+function updateVoteRule(data){
+    $.ajax({
+        url:"/vote/updateSecondVoteRule",
+        type:"post",
+        data:{
+            voteRule:data.voteRule,
+            passNum:data.passNum
+        },
+        dataType:"json",
+        async:false,
+        success:function (res) {
+            console.log(res);
+            if(res.code == 100001){
+                location.href = "/login.html";
+            }else if(res.code == 0){
+                systemAlert("保存成功！",1,function () {
+                    layui.use('form',function () {
+                        var form = layui.form;
+                        form.render();
+                    })
+                });
+            }else{
+                systemAlert(res.msg+",code："+res.code,2);
+            }
+        },
+        error:function (res) {
+            console.log(res.status);
+            systemAlert("错误code："+res.status,2);
+        }
+    });
+}
 
 
 

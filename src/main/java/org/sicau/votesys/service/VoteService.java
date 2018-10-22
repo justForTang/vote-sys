@@ -2,6 +2,7 @@ package org.sicau.votesys.service;
 
 import org.sicau.votesys.domain.PO.CandidatePO;
 import org.sicau.votesys.domain.PO.CollegePO;
+import org.sicau.votesys.domain.PO.SecondCandidatePO;
 import org.sicau.votesys.domain.VO.ResultVO;
 
 import javax.servlet.http.HttpServletRequest;
@@ -58,4 +59,12 @@ public interface VoteService {
     ResultVO deleteFirstVoteCollegeLog(String voteCollegeId, HttpServletRequest request);
 
     ResultVO deleteFirstVoteAllCollegeLog(HttpServletRequest request);
+
+    ResultVO updateSecondVoteRule(int passNum, int voteRule, HttpServletRequest request);
+
+    ResultVO addSecondCandidate(SecondCandidatePO secondCandidatePO, HttpServletRequest request);
+
+    ResultVO deleteSecondCandidate(String id, HttpServletRequest request);
+
+    ResultVO deleteSecondCandidates(List<String> idList, HttpServletRequest request);
 }
