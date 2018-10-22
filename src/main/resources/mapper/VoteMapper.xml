@@ -63,7 +63,7 @@
     <insert id="insertSecondCandidate" parameterType="org.sicau.votesys.domain.PO.SecondCandidatePO">
         insert into second_student_t values
         (#{secondCandidatePO.id},#{secondCandidatePO.collegeName},#{secondCandidatePO.candidateName},
-        #{secondCandidatePO.sicauId})
+        #{secondCandidatePO.sicauId},0)
     </insert>
     <update id="updateCurrentStats">
         update current_vote_t set

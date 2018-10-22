@@ -59,7 +59,67 @@ function init() {
         })
     }
 }
-
+/**
+ * 新增第二次选手名单
+ * */
+function addSecondCandidate() {
+    layui.use('layer',function () {
+        layer.open({
+            type: 1
+            ,title: false //不显示标题栏
+            ,closeBtn: true
+            ,area: '300px;'
+            ,shade: 0.3
+            ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
+            ,btn: ['新增','取消']
+            ,btnAlign: 'c'
+            ,moveType: 1 //拖拽模式，0或者1
+            ,content: '<div style="padding: 15px; line-height: 22px; background-color: #53cde2; color: #393e46; text-align: center;font-size: 20px;">新增第二轮选手</div>' +
+                '<div class="margin-15">\n' +
+                '                                                <input type="text" id="collegeName" required  lay-verify="required" placeholder="请填入选手分组" autocomplete="off" class="layui-input candidate-input">\n' +
+                '<input type="text" id="candidateName" required  lay-verify="required" placeholder="请填入选手姓名" autocomplete="off" class="layui-input candidate-input">' +
+                '<input type="text" id="sicauId" required  lay-verify="required" placeholder="请填入选手学号" autocomplete="off" class="layui-input candidate-input">' +
+                '                                            </div>'
+            ,yes: function(index){
+                var candidateName = $("#candidateName").val();
+                var collegeName = $("#collegeName").val();
+                var sicauId = $("#sicauId").val();
+                if(candidateName.trim() != "" && collegeName.trim() != "" && sicauId!=""){
+                    $.ajax({
+                        url:"/vote/addSecondCandidate",
+                        type:"post",
+                        data:{
+                            candidateName:candidateName,
+                            collegeName:collegeName,
+                            sicauId:sicauId
+                        },
+                        dataType:"json",
+                        async:false,
+                        success:function (res) {
+                            console.log(res);
+                            layer.close(index);
+                            if(res.code == 100001){
+                                location.href = "/login.html";
+                            }else if(res.code == 0){
+                                systemAlert("添加成功！",1,function () {
+                                    location.reload();
+                                });
+                            }else{
+                                systemAlert(res.msg+",code："+res.code,2);
+                            }
+                        },
+                        error:function (res) {
+                            console.log(res.status);
+                            systemAlert("错误code："+res.status,2);
+                        }
+                    });
+                }else{
+                    systemAlert("必填字段不能为空或空格",2);
+                }
+            }
+        });
+    })
+}
 /**
  * 渲染表格
  * */
