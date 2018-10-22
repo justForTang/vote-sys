@@ -178,7 +178,27 @@ public class VoteServiceImp implements VoteService {
         }
         // 检查用户角色
         UserPO userPO = userDao.selectUserById(raterId);
-        if("teacher".equals(userPO.getRole())){
+
+        SecondDataPO secondDataPO = voteDao.querySecondData();
+        boolean isAllowed = false;
+        switch (secondDataPO.getVoteRule()){
+            case 1:// 允许老师和学生
+                if("teacher".equals(userPO.getRole()) || "student".equals(userPO.getRole())){
+                    isAllowed = true;
+                }
+                break;
+            case 2:// 仅允许老师
+                if("teacher".equals(userPO.getRole())){
+                    isAllowed = true;
+                }
+                break;
+            case 3:// 仅允许学生
+                if("student".equals(userPO.getRole())){
+                    isAllowed = true;
+                }
+                break;
+        }
+        if(isAllowed){
             if(voteDao.queryHasSecondVote(raterId) != null){
                 return resultUtil.sourceExistError();
             }else{
@@ -190,7 +210,7 @@ public class VoteServiceImp implements VoteService {
                 return resultUtil.unknowError();
             }
         }else {
-            return resultUtil.sourceNotFoundError("该轮学生不可投票");
+            return resultUtil.sourceNotFoundError("权限不足，该角色不可参与本轮投票");
         }
     }
 

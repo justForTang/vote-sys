@@ -109,7 +109,7 @@ function renderVotePage(data){
         showSecondVote();
     }
 }
-/**z
+/**
  * 显示第二轮投票
  * */
 function showSecondVote() {
@@ -276,7 +276,7 @@ function updateSecondForm() {
                     }else if(res.code == 100003){
                         systemAlert("red","您已投票，不可重复操作！");
                     }else if(res.code == 100002){
-                        systemAlert("red","权限不足，该轮仅允许老师评委投票！");
+                        systemAlert("red","权限不足，您无法参与该轮投票！");
                     }else{
                         systemAlert("red",res.msg+",code："+res.code);
                     }
