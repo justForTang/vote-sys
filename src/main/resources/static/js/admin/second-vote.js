@@ -50,7 +50,7 @@ function init() {
         renderTable();
         layui.use('form',function () {
             var form = layui.form;
-            form.on('submit(insertRater)', function(data){
+            form.on('submit(saveSecondVoteData)', function(data){
                 console.log(data.field) ;
                 updateVoteRule(data.field);
                 return false;
@@ -149,44 +149,47 @@ function delSecondCandidate(id,obj){
 /**
  * 删除选中选手
  * */
-function delSecondCandidates(idList,obj){
-    layui.use('table', function() {
-        var table = layui.table;
-        var checkStatus = table.checkStatus('userTable');
-        console.log(checkStatus.data);
-        var idList = [];
-        for (var i = 0; i < checkStatus.data.length; i++) {
-            idList.push(checkStatus.data[i].username);
-        }
-        if(idList.length == 0){
-            systemAlert("请先勾选",2);
-        }else{
-            $.ajax({
-                url:"/vote/deleteSecondCandidates",
-                type:"post",
-                data:{
-                    idList:idList.toString()
-                },
-                dataType:"json",
-                async:false,
-                success:function (res) {
-                    console.log(res);
-                    if(res.code == 100001){
-                        location.href = "/login.html";
-                    }else if(res.code == 0){
-                        systemAlert("删除成功！",1,function () {
-                            obj.del(); //删除对应行（tr）的DOM结构
-                        });
-                    }else{
-                        systemAlert(res.msg+",code："+res.code,2);
+function delSecondCandidates(){
+    layui.use(['table','layer'], function() {
+        var table = layui.table,layer=layui.layer;
+        layer.confirm('确定删除选中的选手?', function(index){
+            layer.close(index);
+            var checkStatus = table.checkStatus('userTable');
+            console.log(checkStatus.data);
+            var idList = [];
+            for (var i = 0; i < checkStatus.data.length; i++) {
+                idList.push(checkStatus.data[i].id);
+            }
+            if(idList.length == 0){
+                systemAlert("请先勾选",2);
+            }else{
+                $.ajax({
+                    url:"/vote/deleteSecondCandidates",
+                    type:"post",
+                    data:{
+                        idList:idList.toString()
+                    },
+                    dataType:"json",
+                    async:false,
+                    success:function (res) {
+                        console.log(res);
+                        if(res.code == 100001){
+                            location.href = "/login.html";
+                        }else if(res.code == 0){
+                            systemAlert("删除成功！",1,function () {
+                                location.reload();
+                            });
+                        }else{
+                            systemAlert(res.msg+",code："+res.code,2);
+                        }
+                    },
+                    error:function (res) {
+                        console.log(res.status);
+                        systemAlert("错误code："+res.status,2);
                     }
-                },
-                error:function (res) {
-                    console.log(res.status);
-                    systemAlert("错误code："+res.status,2);
-                }
-            });
-        }
+                });
+            }
+        });
     });
 }
 /**

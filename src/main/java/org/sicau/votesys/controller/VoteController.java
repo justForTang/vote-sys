@@ -183,6 +183,7 @@ public class VoteController {
 
     @PostMapping("/deleteSecondCandidates")
     public ResultVO deleteSecondCandidates(@RequestParam("idList") List<String> idList, HttpServletRequest request){
+        System.out.println(idList);
         return voteService.deleteSecondCandidates(idList,request);
     }
 }
