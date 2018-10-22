@@ -70,4 +70,5 @@ public interface VoteService {
 
     ResultVO getSecondData();
 
+    ResultVO clearSecondVote(HttpServletRequest request);
 }

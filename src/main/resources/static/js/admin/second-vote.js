@@ -60,6 +60,86 @@ function init() {
     }
 }
 /**
+ * 清空第二轮投票记录
+ * */
+function clearSecondVote() {
+    layui.use('layer',function () {
+        layer.open({
+            type: 1
+            ,title: false //不显示标题栏
+            ,closeBtn: true
+            ,area: '300px;'
+            ,shade: 0.3
+            ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
+            ,btn: ['解锁']
+            ,btnAlign: 'c'
+            ,moveType: 1 //拖拽模式，0或者1
+            ,content: '<div style="padding: 50px; line-height: 22px; background-color: #f47645; color: #fff; font-weight: 300;">本操作属于危险操作，需确认操作者身份。</div>' +
+                '<div class="margin-15">\n' +
+                '                                                <input type="password" required  lay-verify="required" placeholder="请填入管理员密码" autocomplete="off" class="layui-input checkLoginPassword">\n' +
+                '                                            </div>'
+            ,yes: function(index){
+                layer.close(index);
+                if (dangerActionAuthentication($(".checkLoginPassword").val())) {
+                    $.ajax({
+                        url:"/vote/clearSecondVote",
+                        type:"post",
+                        dataType:"json",
+                        async:false,
+                        success:function (res) {
+                            console.log(res);
+                            if(res.code == 100001){
+                                location.href = "/login.html";
+                            }else if(res.code == 0){
+                                systemAlert("已成功清空本轮投票记录！",1,function () {
+                                    location.reload();
+                                });
+                            }else{
+                                systemAlert(res.msg+",code："+res.code,2);
+                            }
+                        },
+                        error:function (res) {
+                            console.log(res.status);
+                            systemAlert("错误code："+res.status,2);
+                        }
+                    });
+                }
+            }
+        });
+    })
+}
+/**
+ * 危险操作身份验证
+ * */
+function dangerActionAuthentication(password) {
+    var pass = false;
+    $.ajax({
+        url:"/admin/dangerActionAuthentication",
+        type:"post",
+        data:{
+            password:password
+        },
+        dataType:"json",
+        async:false,
+        success:function (res) {
+            console.log(res);
+            if(res.code == 100001){
+                location.href = "/login.html";
+            }else if(res.code == 0){
+                pass = true;
+            }else if(res.code == 100004){
+                systemAlert("密码错误",2);
+            }else{
+                systemAlert(res.msg+",code："+res.code,2);
+            }
+        },
+        error:function (res) {
+            console.error(res.status);
+        }
+    });
+    return pass;
+}
+/**
  * 新增第二次选手名单
  * */
 function addSecondCandidate() {

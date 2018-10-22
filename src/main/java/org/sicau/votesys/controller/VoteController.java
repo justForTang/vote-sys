@@ -192,4 +192,9 @@ public class VoteController {
     public ResultVO getSecondData(){
         return voteService.getSecondData();
     }
+
+    @PostMapping("/clearSecondVote")
+    public ResultVO clearSecondVote(HttpServletRequest request){
+        return voteService.clearSecondVote(request);
+    }
 }

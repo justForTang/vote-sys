@@ -94,6 +94,9 @@
     <update id="updateSecondVoteData">
        update second_data_t set pass_num=#{passNum},vote_rule=#{voteRule},show_type=#{showType}
     </update>
+    <update id="initSecondCandidateVoteNum">
+        update second_student_t set voted_num = 0;
+    </update>
     <delete id="deleteFirstCandidate">
         delete from candidate_t where id=#{id}
     </delete>
@@ -111,6 +114,9 @@
         <foreach collection="list" item="idList" separator="or">
             id = #{idList}
         </foreach>
+    </delete>
+    <delete id="deleteSecondVoteLog">
+        delete from second_vote_log_t;
     </delete>
     <select id="queryCurrentVoteInfo" resultMap="CurrentVoteInfoMap">
       select `current`.*,`campus`.campus_name,`campus`.id as current_campus_id,

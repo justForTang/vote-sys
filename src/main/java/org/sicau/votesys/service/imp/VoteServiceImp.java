@@ -12,6 +12,8 @@ import org.sicau.votesys.util.ResultUtil;
 import org.sicau.votesys.util.SessionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
@@ -408,6 +410,21 @@ public class VoteServiceImp implements VoteService {
         SecondDataPO secondDataPO = voteDao.selectSecondData();
         if(secondDataPO!= null){
             return resultUtil.success(secondDataPO);
+        }
+        return resultUtil.unknowError();
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.DEFAULT,timeout=36000,rollbackFor=Exception.class)
+    public ResultVO clearSecondVote(HttpServletRequest request) {
+        String sessionValue = SessionUtil.getSession(ConstantEnum.SESSION_NAME_ADMIN.getValue(),request.getSession());
+        if (sessionValue ==null){
+            return resultUtil.loginError();
+        }else{
+            if(adminDao.selectAdminNumById(sessionValue) == null) return resultUtil.loginError();
+        }
+        if(voteDao.initSecondCandidateVoteNum() && voteDao.deleteSecondVoteLog()){
+            return resultUtil.success();
         }
         return resultUtil.unknowError();
     }

@@ -87,4 +87,7 @@ public interface VoteDao {
 
     SecondDataPO selectSecondData();
 
+    boolean initSecondCandidateVoteNum();
+
+    boolean deleteSecondVoteLog();
 }

@@ -68,6 +68,15 @@
             <legend>投票管理（第二轮）</legend>
             <div class="layui-field-box">
                 <fieldset class="layui-elem-field layui-field-title">
+                    <legend>记录专区</legend>
+                    <div class="layui-field-box">
+                        <button type="button" class="layui-btn layui-btn-danger" onclick="clearSecondVote()">
+                            <i class="layui-icon layui-icon-tips" style="color: yellow; font-weight: 600"></i>&nbsp;清空投票记录
+                        </button>
+                    </div>
+                </fieldset>
+
+                <fieldset class="layui-elem-field layui-field-title">
                     <legend>规则专区</legend>
                     <div class="layui-field-box">
                         <div class="layui-col-xs12 layui-col-sm8 layui-col-sm-offset2 layui-col-md6 layui-col-md-offset3 layui-card" style="padding: 20px 20px 20px 0">
@@ -107,6 +116,7 @@
                 <fieldset class="layui-elem-field layui-field-title">
                     <legend>选手专区</legend>
                     <div class="layui-field-box">
+                        <blockquote class="layui-elem-quote">注意：每删除一位选手将影响整个第二轮投票，请在正式投票之前设定好人员。如若在正式投票时操作失误，可前往第二轮投票管理的记录专区清空第二轮投票记录，重新组织进行第二轮投票。</blockquote>
                         <button class="layui-btn layui-btn-normal" onclick="addSecondCandidate()">新增选手</button>
                         <button class="layui-btn layui-btn-danger" onclick="delSecondCandidates()">删除选中选手</button>
                         <table class="layui-hide" id="userTable" lay-filter="userTable"></table>
