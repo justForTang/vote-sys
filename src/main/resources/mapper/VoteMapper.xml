@@ -92,7 +92,7 @@
         </foreach>
     </update>
     <update id="updateSecondVoteData">
-       update second_data_t set pass_num=#{passNum},vote_rule=#{voteRule}
+       update second_data_t set pass_num=#{passNum},vote_rule=#{voteRule},show_type=#{showType}
     </update>
     <delete id="deleteFirstCandidate">
         delete from candidate_t where id=#{id}
@@ -183,6 +183,9 @@ WHERE role='student') AS b GROUP BY candidate_id,candidate_name,college_name
         (select count(id) as num from candidate_t where college_id=#{collegeId})
     </select>
     <select id="querySecondData" resultType="org.sicau.votesys.domain.PO.SecondDataPO">
+        select * from second_data_t;
+    </select>
+    <select id="selectSecondData" resultType="org.sicau.votesys.domain.PO.SecondDataPO">
         select * from second_data_t;
     </select>
 </mapper>

@@ -81,6 +81,13 @@
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
+                                    <label class="layui-form-label">显示页面</label>
+                                    <div class="layui-input-block" >
+                                        <input type="radio" name="showType" lay-filter="showType" value="1" title="一页显示（两侧各11人）" checked>
+                                        <input type="radio" name="showType" lay-filter="showType" value="2" title="长页显示（页面较长可滑动）">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
                                     <label class="layui-form-label">胜出人数</label>
                                     <div class="layui-input-inline">
                                         <input type="number" name="passNum"  required lay-filter="passNum"  lay-verify="required" placeholder="请输入最终胜出人数" autocomplete="off" class="layui-input">

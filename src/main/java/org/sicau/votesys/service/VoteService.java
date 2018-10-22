@@ -60,11 +60,14 @@ public interface VoteService {
 
     ResultVO deleteFirstVoteAllCollegeLog(HttpServletRequest request);
 
-    ResultVO updateSecondVoteRule(int passNum, int voteRule, HttpServletRequest request);
+    ResultVO updateSecondVoteRule(int passNum, int voteRule,int showType, HttpServletRequest request);
 
     ResultVO addSecondCandidate(SecondCandidatePO secondCandidatePO, HttpServletRequest request);
 
     ResultVO deleteSecondCandidate(String id, HttpServletRequest request);
 
     ResultVO deleteSecondCandidates(List<String> idList, HttpServletRequest request);
+
+    ResultVO getSecondData();
+
 }

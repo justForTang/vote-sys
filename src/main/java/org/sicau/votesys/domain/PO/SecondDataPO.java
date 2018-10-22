@@ -12,6 +12,8 @@ public class SecondDataPO {
 
     private int voteRule;
 
+    private int showType;
+
     public String getId() {
         return id;
     }
@@ -34,5 +36,13 @@ public class SecondDataPO {
 
     public void setVoteRule(int voteRule) {
         this.voteRule = voteRule;
+    }
+
+    public int getShowType() {
+        return showType;
+    }
+
+    public void setShowType(int showType) {
+        this.showType = showType;
     }
 }

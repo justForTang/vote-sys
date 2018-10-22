@@ -5,14 +5,37 @@ var rater = {
 }
 var secondFinalData;
 var getVotedNumClock;
+var secondData;
 $(function () {
-    getSysConf
+    getSysConf();
+    getSecondData();
     getUserCount();
-    $("#totalNum").text(rater.teacher);
     getVotedNumClock = window.setInterval(function () {
         getSecondVotedNum();
     },2000);
 });
+/**
+ * 获取第二轮配置数据
+ * */
+function getSecondData(){
+    $.ajax({
+        url:"/vote/getSecondData",
+        type:"get",
+        dataType:"json",
+        async:false,
+        success:function (res) {
+            console.log(res);
+            if(res.code == 0){
+                secondData = res.data ;
+            }else{
+                systemAlert('red',res.msg);
+            }
+        },
+        error:function (res) {
+            systemAlert('red',"出错啦，code："+res.status);
+        }
+    })
+}
 /**
  * 获取系统配置并更新
  * */
@@ -70,16 +93,7 @@ function getSecondVotedNum() {
             console.log(res);
             if(res.code == 0){
                 $("#votedNum").text(res.data);
-                if(res.data == rater.teacher){
-                    window.clearInterval(getVotedNumClock);
-                    $(".loading-container").hide();
-                    // $("body,html").css("overflow","auto");
-                    $(".show-container").css({
-                        "transform":"scale(1, 1)",
-                        "filter":"blur(0)"
-                    });
-                    getSecondCurrentData();
-                }
+                checkSecondVote(res);
             }else{
                 alert(res.msg+",code："+res.code);
                 window.clearInterval(getVotedNumClock);
@@ -90,6 +104,53 @@ function getSecondVotedNum() {
             window.clearInterval(getVotedNumClock);
         }
     })
+}
+/**
+ * 检查第二轮投票规则及已投人数
+ * */
+function checkSecondVote(res){
+    switch (secondData.voteRule) {
+        case 1:
+            $("#totalNum").text(rater.total);
+            if(res.data == rater.total){
+                window.clearInterval(getVotedNumClock);
+                $(".loading-container").hide();
+                // $("body,html").css("overflow","auto");
+                $(".show-container").css({
+                    "transform":"scale(1, 1)",
+                    "filter":"blur(0)"
+                });
+                getSecondCurrentData();
+            }
+            break;
+        case 2:
+            $("#totalNum").text(rater.teacher);
+            if(res.data == rater.teacher){
+                window.clearInterval(getVotedNumClock);
+                $(".loading-container").hide();
+                // $("body,html").css("overflow","auto");
+                $(".show-container").css({
+                    "transform":"scale(1, 1)",
+                    "filter":"blur(0)"
+                });
+                getSecondCurrentData();
+            }
+            break;
+        case 3:
+            console.log(22222222222222222);
+            $("#totalNum").text(rater.student);
+            if(res.data == rater.student){
+                window.clearInterval(getVotedNumClock);
+                $(".loading-container").hide();
+                // $("body,html").css("overflow","auto");
+                $(".show-container").css({
+                    "transform":"scale(1, 1)",
+                    "filter":"blur(0)"
+                });
+                getSecondCurrentData();
+            }
+            break;
+    }
 }
 /**
  * 获取投票数据
@@ -119,41 +180,64 @@ function getSecondCurrentData(){
  * */
 function renderResult(data) {
     $("#secondChooseTotal").text(data.passNum);
-    var showColorClass = "not-through";
-    $("#passCandidateList").empty();
-    $("#passCandidateListOne").empty();
-    $("#passCandidateListTwo").empty();
-    for (var i = 0; i < data.candidateList.length; i++) {
-        if((i+1)>data.passNum){
-            showColorClass = "not-through";
-        }else{
-            showColorClass = "through";
-        }
-        if(i <= 11){
-            $("#passCandidateListOne").append("<div class='row "+showColorClass+"'>\n" +
-                "                <div class=\"col-md-4\">\n" +
-                "                    <h3>"+data.candidateList[i].candidateName+"</h3>\n" +
-                "                </div>\n" +
-                "                <div class=\"col-md-4\">\n" +
-                "                    <h3>"+data.candidateList[i].collegeName+"</h3>\n" +
-                "                </div>\n" +
-                "                <div class=\"col-md-4\">\n" +
-                "                    <h3>"+data.candidateList[i].votedNum+"票</h3>\n" +
-                "                </div>\n" +
-                "            </div>")
-        }else{
-            $("#passCandidateListTwo").append("<div class='row "+showColorClass+"'>\n" +
-                "                <div class=\"col-md-4\">\n" +
-                "                    <h3>"+data.candidateList[i].candidateName+"</h3>\n" +
-                "                </div>\n" +
-                "                <div class=\"col-md-4\">\n" +
-                "                    <h3>"+data.candidateList[i].collegeName+"</h3>\n" +
-                "                </div>\n" +
-                "                <div class=\"col-md-4\">\n" +
-                "                    <h3>"+data.candidateList[i].votedNum+"票</h3>\n" +
-                "                </div>\n" +
-                "            </div>")
-        }
+    switch (secondData.showType) {
+        case 1:// 一页显示
+            var showColorClass = "not-through";
+            $("#passCandidateListOne").empty();
+            $("#passCandidateListTwo").empty();
+            for (var i = 0; i < data.candidateList.length; i++) {
+                if((i+1)>data.passNum){
+                    showColorClass = "not-through";
+                }else{
+                    showColorClass = "through";
+                }
+                if(i <= 11){
+                    $("#passCandidateListOne").append("<div class='row "+showColorClass+"'>\n" +
+                        "                <div class=\"col-md-4\">\n" +
+                        "                    <h3>"+data.candidateList[i].candidateName+"</h3>\n" +
+                        "                </div>\n" +
+                        "                <div class=\"col-md-4\">\n" +
+                        "                    <h3>"+data.candidateList[i].collegeName+"</h3>\n" +
+                        "                </div>\n" +
+                        "                <div class=\"col-md-4\">\n" +
+                        "                    <h3>"+data.candidateList[i].votedNum+"票</h3>\n" +
+                        "                </div>\n" +
+                        "            </div>")
+                }else{
+                    $("#passCandidateListTwo").append("<div class='row "+showColorClass+"'>\n" +
+                        "                <div class=\"col-md-4\">\n" +
+                        "                    <h3>"+data.candidateList[i].candidateName+"</h3>\n" +
+                        "                </div>\n" +
+                        "                <div class=\"col-md-4\">\n" +
+                        "                    <h3>"+data.candidateList[i].collegeName+"</h3>\n" +
+                        "                </div>\n" +
+                        "                <div class=\"col-md-4\">\n" +
+                        "                    <h3>"+data.candidateList[i].votedNum+"票</h3>\n" +
+                        "                </div>\n" +
+                        "            </div>")
+                }
+            }
+            break;
+        case 2:// 长页显示
+            $("#passCandidateList").empty();
+            for (var i = 0; i < data.candidateList.length; i++) {
+                $("#passCandidateList").append("<div class='row "+showColorClass+"'>\n" +
+                    "                <div class=\"col-md-4\">\n" +
+                    "                    <h3>"+data.candidateList[i].candidateName+"</h3>\n" +
+                    "                </div>\n" +
+                    "                <div class=\"col-md-4\">\n" +
+                    "                    <h3>"+data.candidateList[i].collegeName+"</h3>\n" +
+                    "                </div>\n" +
+                    "                <div class=\"col-md-4\">\n" +
+                    "                    <h3>"+data.candidateList[i].votedNum+"票</h3>\n" +
+                    "                </div>\n" +
+                    "            </div>")
+            }
+
+            break
     }
+
+
+
 
 }

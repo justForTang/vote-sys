@@ -163,8 +163,9 @@ public class VoteController {
     @PostMapping("/updateSecondVoteRule")
     public ResultVO updateSecondVoteRule(@RequestParam("passNum") int passNum,
                                          @RequestParam("voteRule") int voteRule,
+                                         @RequestParam("showType") int showType,
                                          HttpServletRequest request){
-        return voteService.updateSecondVoteRule(passNum,voteRule,request);
+        return voteService.updateSecondVoteRule(passNum,voteRule,showType,request);
     }
 
     @PostMapping("/addSecondCandidate")
@@ -185,5 +186,10 @@ public class VoteController {
     public ResultVO deleteSecondCandidates(@RequestParam("idList") List<String> idList, HttpServletRequest request){
         System.out.println(idList);
         return voteService.deleteSecondCandidates(idList,request);
+    }
+
+    @GetMapping("/getSecondData")
+    public ResultVO getSecondData(){
+        return voteService.getSecondData();
     }
 }

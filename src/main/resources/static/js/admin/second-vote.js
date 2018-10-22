@@ -1,5 +1,6 @@
 var passNum = 0;
 var voteRule = 1;
+var showType = 1;
 var screenPassword;
 var timeOutLock; // 无操作多久后锁屏，单位分钟，可以有一位小数;
 window.onload = function (){
@@ -93,6 +94,7 @@ function renderTable(){
             ,parseData: function(res){ //res 即为原始返回的数据
                 passNum = res.data.passNum;
                 voteRule = res.data.voteRule;
+                showType = res.data.showType;
                 renderRuleForm();
                 return {
                     "code": res.code, //解析接口状态
@@ -199,6 +201,7 @@ function renderRuleForm() {
     layui.use('form',function () {
         var form  = layui.form;
         $("input[name=voteRule][value='"+voteRule+"']").attr("checked",true);
+        $("input[name=showType][value='"+showType+"']").attr("checked",true);
         $("input[name=passNum]").val(passNum);
         form.render();
     })
@@ -212,7 +215,8 @@ function updateVoteRule(data){
         type:"post",
         data:{
             voteRule:data.voteRule,
-            passNum:data.passNum
+            passNum:data.passNum,
+            showType:data.showType
         },
         dataType:"json",
         async:false,

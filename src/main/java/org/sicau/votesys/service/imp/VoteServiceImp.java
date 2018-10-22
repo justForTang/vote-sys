@@ -161,6 +161,7 @@ public class VoteServiceImp implements VoteService {
         List<SecondCandidatePO> secondCandidatePOList = voteDao.getSecondVoteData();
         Map<String,Object> resMap = new HashMap<>();
         resMap.put("passNum",secondDataPO.getPassNum());
+        resMap.put("showType",secondDataPO.getShowType());
         resMap.put("voteRole",secondDataPO.getPassNum());
         resMap.put("candidateList",secondCandidatePOList);
         return resultUtil.success(resMap);
@@ -210,6 +211,7 @@ public class VoteServiceImp implements VoteService {
             SecondDataPO secondDataPO = voteDao.querySecondData();
             Map<String,Object> resMap = new HashMap<>();
             resMap.put("passNum",secondDataPO.getPassNum());
+            resMap.put("showType",secondDataPO.getShowType());
             resMap.put("voteRule",secondDataPO.getVoteRule());
             resMap.put("candidateList",secondCandidatePOList);
             return resultUtil.success(resMap);
@@ -326,14 +328,14 @@ public class VoteServiceImp implements VoteService {
     }
 
     @Override
-    public ResultVO updateSecondVoteRule(int passNum, int voteRule, HttpServletRequest request) {
+    public ResultVO updateSecondVoteRule(int passNum, int voteRule,int showType, HttpServletRequest request) {
         String sessionValue = SessionUtil.getSession(ConstantEnum.SESSION_NAME_ADMIN.getValue(),request.getSession());
         if (sessionValue ==null){
             return resultUtil.loginError();
         }else{
             if(adminDao.selectAdminNumById(sessionValue) == null) return resultUtil.loginError();
         }
-        if(voteDao.updateSecondVoteData(passNum,voteRule)){
+        if(voteDao.updateSecondVoteData(passNum,voteRule,showType)){
             return resultUtil.success();
         }
         return resultUtil.unknowError();
@@ -377,6 +379,15 @@ public class VoteServiceImp implements VoteService {
         }
         if(voteDao.deleteSecondCandidates(idList)){
             return resultUtil.success();
+        }
+        return resultUtil.unknowError();
+    }
+
+    @Override
+    public ResultVO getSecondData() {
+        SecondDataPO secondDataPO = voteDao.selectSecondData();
+        if(secondDataPO!= null){
+            return resultUtil.success(secondDataPO);
         }
         return resultUtil.unknowError();
     }
