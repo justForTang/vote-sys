@@ -54,4 +54,8 @@ public interface VoteService {
     ResultVO deleteFirstCandidate(String id, HttpServletRequest request);
 
     ResultVO addFirstCandidate(CandidatePO candidatePO, HttpServletRequest request);
+
+    ResultVO deleteFirstVoteCollegeLog(String voteCollegeId, HttpServletRequest request);
+
+    ResultVO deleteFirstVoteAllCollegeLog(HttpServletRequest request);
 }

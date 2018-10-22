@@ -68,9 +68,30 @@
             <legend>投票管理（第一轮）</legend>
             <div class="layui-field-box">
                 <fieldset class="layui-elem-field layui-field-title">
+                    <legend>记录专区</legend>
+                    <div class="layui-field-box">
+                        <blockquote class="layui-elem-quote">说明：投票为匿名投票，管理员无法查看详细投票记录。</blockquote>
+                        <div class="layui-col-xs12 layui-col-md12 ">
+                            <form class="layui-form">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">校区</label>
+                                    <div class="layui-input-inline">
+                                        <select name="collegeId" lay-verify="required" id="deleteLogCollege">
+
+                                        </select>
+                                    </div>
+                                    <div class="layui-input-inline" style="width: auto;">
+                                        <button type="button" class="layui-btn layui-btn-danger" lay-submit lay-filter="deleteCollegeVoteLog">删除组别投票记录</button>
+                                        <button type="button" class="layui-btn layui-btn-danger" lay-submit lay-filter="deleteAllCollegeVoteLog"><i class="layui-icon layui-icon-tips" style="color: yellow; font-weight: 600"></i>&nbsp;删除全部组别投票记录</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset class="layui-elem-field layui-field-title">
                     <legend>组别专区</legend>
                     <div class="layui-field-box">
-                        <blockquote class="layui-elem-quote">说明：在这里你可以设定规则及组别数据。</blockquote>
                         <div class="layui-col-xs12 layui-col-md6 ">
                             <div class="margin-15 layui-card">
                                 <h2 style="text-align: center;margin:20px 0;">新增组别</h2>
@@ -123,7 +144,6 @@
                 <fieldset class="layui-elem-field layui-field-title">
                     <legend>选手专区</legend>
                     <div class="layui-field-box">
-                        <blockquote class="layui-elem-quote">说明：在这里你可以管理竞选人员。</blockquote>
                         <div class="layui-col-xs12 layui-col-md6 ">
                             <div class="margin-15 layui-card">
                                 <h2 style="text-align: center;margin:20px 0;">新增第一轮选手</h2>

@@ -1,4 +1,5 @@
 var passNum = 0;
+var voteRule = 1;
 $(function () {
     init();
 })
@@ -42,6 +43,8 @@ function renderTable(){
             }
             ,parseData: function(res){ //res 即为原始返回的数据
                 passNum = res.data.passNum;
+                voteRule = res.data.voteRule;
+                renderRuleForm();
                 return {
                     "code": res.code, //解析接口状态
                     "msg": res.msg, //解析提示文本
@@ -66,4 +69,16 @@ function renderTable(){
             }
         });
     });
+}
+
+/**
+ * 渲染规则表
+ * */
+function renderRuleForm() {
+    layui.use('form',function () {
+        var form  = layui.form;
+        $("input[name=voteRule][value='"+voteRule+"']").attr("checked",true);
+        $("input[name=passNum]").val(passNum);
+        form.render();
+    })
 }

@@ -70,22 +70,22 @@
                 <fieldset class="layui-elem-field layui-field-title">
                     <legend>规则专区</legend>
                     <div class="layui-field-box">
-                        <blockquote class="layui-elem-quote">说明：在这里你可以设定规则及组别数据。</blockquote>
                         <div class="layui-col-xs12 layui-col-sm8 layui-col-sm-offset2 layui-col-md6 layui-col-md-offset3 layui-card" style="padding: 20px 20px 20px 0">
                             <form class="layui-form">
                                 <div class="layui-form-item">
                                     <label class="layui-form-label">投票人</label>
-                                    <div class="layui-input-block">
-                                        <input type="radio" name="rater" value="ts" title="允许教师和学生" checked>
-                                        <input type="radio" name="rater" value="t" title="仅允许教师">
-                                        <input type="radio" name="rater" value="s" title="仅允许学生">
+                                    <div class="layui-input-block" >
+                                        <input type="radio" name="voteRule" lay-filter="voteRule" value="1" title="允许教师和学生" checked>
+                                        <input type="radio" name="voteRule" lay-filter="voteRule" value="2" title="仅允许教师">
+                                        <input type="radio" name="voteRule" lay-filter="voteRule" value="3" title="仅允许学生">
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
                                     <label class="layui-form-label">胜出人数</label>
-                                    <div class="layui-input-block">
-                                        <input type="number" name="number" required  lay-verify="required" placeholder="请输入最终胜出人数" autocomplete="off" class="layui-input">
+                                    <div class="layui-input-inline">
+                                        <input type="number" name="passNum"  required lay-filter="passNum"  lay-verify="required" placeholder="请输入最终胜出人数" autocomplete="off" class="layui-input">
                                     </div>
+                                    <div class="layui-form-mid layui-word-aux">评委最多可投人数</div>
                                 </div>
                                 <div class="layui-form-item">
                                     <div class="layui-input-block">

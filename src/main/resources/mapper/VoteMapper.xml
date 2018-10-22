@@ -89,6 +89,12 @@
     <delete id="deleteFirstCandidate">
         delete from candidate_t where id=#{id}
     </delete>
+    <delete id="deleteFirstVoteAllCollegeLog">
+        delete from rater_vote_log_t;
+    </delete>
+    <delete id="deleteFirstVoteCollegeLog">
+        delete from rater_vote_log_t where vote_college_id = #{voteCollegeId};
+    </delete>
     <select id="queryCurrentVoteInfo" resultMap="CurrentVoteInfoMap">
       select `current`.*,`campus`.campus_name,`campus`.id as current_campus_id,
       `college`.campus_id,`college`.college_name,`college`.candidate_num
@@ -139,9 +145,6 @@ WHERE role='student') AS b GROUP BY candidate_id,candidate_name,college_name
     <select id="queryHasSecondVote" resultType="java.lang.String">
         select id from second_vote_log_t where rater_id=#{raterId}
     </select>
-    <select id="querySecondPassNum" resultType="java.lang.Integer">
-        select pass_num from second_data_t;
-    </select>
     <select id="querySecondVotedNum" resultType="java.lang.Integer">
         select count(*) from second_vote_log_t;
     </select>
@@ -161,5 +164,8 @@ WHERE role='student') AS b GROUP BY candidate_id,candidate_name,college_name
         from college_t join campus_t on college_t.campus_id = campus_t.id and college_t.id = #{collegeId}
         and college_t.candidate_num  &lt;=
         (select count(id) as num from candidate_t where college_id=#{collegeId})
+    </select>
+    <select id="querySecondData" resultType="org.sicau.votesys.domain.PO.SecondDataPO">
+        select * from second_data_t;
     </select>
 </mapper>

@@ -49,4 +49,19 @@ public class AdminServiceImp implements AdminService {
             return resultUtil.unknowError();
         }
     }
+
+    @Override
+    public ResultVO dangerActionAuthentication(String password,HttpServletRequest request) {
+        String sessionValue = SessionUtil.getSession(ConstantEnum.SESSION_NAME_ADMIN.getValue(),request.getSession());
+        if (sessionValue ==null){
+            return resultUtil.loginError();
+        }else{
+            AdminPO adminPO = adminDao.queryAdminInfoByIdAndPassword(sessionValue,password);
+            if(adminPO == null){
+                return resultUtil.paramError("密码错误");
+            }else{
+                return resultUtil.success();
+            }
+        }
+    }
 }

@@ -172,6 +172,8 @@ function lockScreen() {
                     $('body').removeAttr("onselectstart");
                     window.localStorage.setItem("vote_admin_clock","false");
                     layer.close(index);
+                }else{
+                    $("#screenInput").val("");
                 }
             }
         });

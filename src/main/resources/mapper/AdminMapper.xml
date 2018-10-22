@@ -10,4 +10,7 @@
     <select id="selectAdminNumById" resultType="java.lang.String">
         select id from admin_t where id = #{id};
     </select>
+    <select id="queryAdminInfoByIdAndPassword" resultType="org.sicau.votesys.domain.PO.AdminPO">
+        select * from admin_t where id=#{id} and password=#{password}
+    </select>
 </mapper>

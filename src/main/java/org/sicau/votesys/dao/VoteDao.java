@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Param;
 import org.sicau.votesys.domain.PO.CandidatePO;
 import org.sicau.votesys.domain.PO.CollegePO;
 import org.sicau.votesys.domain.PO.SecondCandidatePO;
+import org.sicau.votesys.domain.PO.SecondDataPO;
 import org.sicau.votesys.domain.VO.*;
 
 import java.util.List;
@@ -50,8 +51,6 @@ public interface VoteDao {
 
     boolean updateSecondVote(List<String> candidateIdList);
 
-    int querySecondPassNum();
-
     boolean insertSecondVoteLog(@Param("id") String id,
                              @Param("raterId") String raterId);
 
@@ -71,4 +70,10 @@ public interface VoteDao {
     boolean insertFirstCandidate(@Param("candidatePO") CandidatePO candidatePO);
 
     CandidateVO canInsertFirstCandidate(@Param("collegeId") String collegeId);
+
+    boolean deleteFirstVoteAllCollegeLog();
+
+    boolean deleteFirstVoteCollegeLog(@Param("voteCollegeId") String voteCollegeId);
+
+    SecondDataPO querySecondData();
 }

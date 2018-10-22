@@ -61,8 +61,135 @@ function init() {
                 addCandidate(data.field);
                 return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
             });
+
+            form.on('submit(deleteCollegeVoteLog)',function (data) {
+                console.log(data.field);
+                layer.open({
+                    type: 1
+                    ,title: false //不显示标题栏
+                    ,closeBtn: true
+                    ,area: '300px;'
+                    ,shade: 0.3
+                    ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
+                    ,btn: ['解锁']
+                    ,btnAlign: 'c'
+                    ,moveType: 1 //拖拽模式，0或者1
+                    ,content: '<div style="padding: 50px; line-height: 22px; background-color: #f47645; color: #fff; font-weight: 300;">本操作属于危险操作，需确认操作者身份。</div>' +
+                        '<div class="margin-15">\n' +
+                        '                                                <input type="password" required  lay-verify="required" placeholder="请填入管理员密码" autocomplete="off" class="layui-input checkLoginPassword">\n' +
+                        '                                            </div>'
+                    ,yes: function(index){
+                        layer.close(index);
+                        if (dangerActionAuthentication($(".checkLoginPassword").val())) {
+                            $.ajax({
+                                url:"/vote/deleteFirstVoteCollegeLog",
+                                type:"post",
+                                data:{
+                                    voteCollegeId:data.field.collegeId
+                                },
+                                dataType:"json",
+                                async:false,
+                                success:function (res) {
+                                    console.log(res);
+                                    if(res.code == 100001){
+                                        location.href = "/login.html";
+                                    }else if(res.code == 0){
+                                        systemAlert("已成功删除该组别投票记录！",1,function () {
+                                            location.reload();
+                                        });
+                                    }else{
+                                        systemAlert(res.msg+",code："+res.code,2);
+                                    }
+                                },
+                                error:function (res) {
+                                    console.log(res.status);
+                                    systemAlert("错误code："+res.status,2);
+                                }
+                            });
+                        }
+                    }
+                });
+                return false;
+            })
+
+            form.on('submit(deleteAllCollegeVoteLog)',function (data) {
+                layer.open({
+                    type: 1
+                    ,title: false //不显示标题栏
+                    ,closeBtn: true
+                    ,area: '300px;'
+                    ,shade: 0.3
+                    ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
+                    ,btn: ['解锁']
+                    ,btnAlign: 'c'
+                    ,moveType: 1 //拖拽模式，0或者1
+                    ,content: '<div style="padding: 50px; line-height: 22px; background-color: #f47645; color: #fff; font-weight: 300;">本操作属于危险操作，需确认操作者身份。</div>' +
+                        '<div class="margin-15">\n' +
+                        '                                                <input type="password" required  lay-verify="required" placeholder="请填入管理员密码" autocomplete="off" class="layui-input checkLoginPassword">\n' +
+                        '                                            </div>'
+                    ,yes: function(index){
+                        layer.close(index);
+                        if(dangerActionAuthentication($(".checkLoginPassword").val())){
+                            $.ajax({
+                                url:"/vote/deleteFirstVoteAllCollegeLog",
+                                type:"post",
+                                dataType:"json",
+                                async:false,
+                                success:function (res) {
+                                    console.log(res);
+                                    if(res.code == 100001){
+                                        location.href = "/login.html";
+                                    }else if(res.code == 0){
+                                        systemAlert("已成功删除第一轮全部投票记录！",1,function () {
+                                            location.reload();
+                                        });
+                                    }else{
+                                        systemAlert(res.msg+",code："+res.code,2);
+                                    }
+                                },
+                                error:function (res) {
+                                    console.log(res.status);
+                                    systemAlert("错误code："+res.status,2);
+                                }
+                            });
+                        }
+                    }
+                });
+                return false;
+            })
         })
     }
+}
+/**
+ * 危险操作身份验证
+ * */
+function dangerActionAuthentication(password) {
+    var pass = false;
+    $.ajax({
+        url:"/admin/dangerActionAuthentication",
+        type:"post",
+        data:{
+            password:password
+        },
+        dataType:"json",
+        async:false,
+        success:function (res) {
+            console.log(res);
+            if(res.code == 100001){
+                location.href = "/login.html";
+            }else if(res.code == 0){
+                pass = true;
+            }else if(res.code == 100004){
+                systemAlert("密码错误",2);
+            }else{
+                systemAlert(res.msg+",code："+res.code,2);
+            }
+        },
+        error:function (res) {
+            console.error(res.status);
+        }
+    });
+    return pass;
 }
 /**
  * 渲染组别
@@ -79,8 +206,10 @@ function renderCollegeSelect(){
                 location.href = "/login.html";
             }else if(res.code == 0){
                 $("#collegeSelect").empty();
+                $("#deleteLogCollege").empty();
                 for (var i = 0; i < res.data.length; i++) {
                     $("#collegeSelect").append("<option value="+res.data[i].id+">"+res.data[i].collegeName+"</option>")
+                    $("#deleteLogCollege").append("<option value="+res.data[i].id+">"+res.data[i].collegeName+"</option>")
                 }
                 layui.use('form',function () {
                     var form = layui.form;
@@ -166,10 +295,10 @@ function renderCandidateTable(){
             ,toolbar: 'true' //开启工具栏，此处显示默认图标，可以自定义模板，详见文档
             ,totalRow: false //开启合计行
             ,cols: [[ //表头
-                {field: 'campusName', title: '校区'}
-                ,{field: 'collegeName', title: '组别名'}
-                ,{field: 'candidateName', title: '姓名'}
-                ,{fixed: 'right', title: '操作', align:'center', toolbar: '#candidateBar'}
+                {field: 'campusName',width:'25%', title: '校区'}
+                ,{field: 'collegeName', width:'25%',title: '组别名'}
+                ,{field: 'candidateName',width:'25%', title: '姓名'}
+                ,{fixed: 'right', title: '操作', align:'center', width:'25%',toolbar: '#candidateBar'}
             ]]
             ,request: {
                 pageName: 'page' //页码的参数名称，默认：page
@@ -427,6 +556,8 @@ function lockScreen() {
                     $('body').removeAttr("onselectstart");
                     window.localStorage.setItem("vote_admin_clock","false");
                     layer.close(index);
+                }else{
+                    $("#screenInput").val("");
                 }
             }
         });

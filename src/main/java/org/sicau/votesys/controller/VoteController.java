@@ -147,4 +147,14 @@ public class VoteController {
         CandidatePO candidatePO = new CandidatePO(IdUtil.getUUID(),collegeId,candidateName);
         return voteService.addFirstCandidate(candidatePO,request);
     }
+
+    @PostMapping("/deleteFirstVoteCollegeLog")
+    public ResultVO deleteFirstVoteCollegeLog(@RequestParam("voteCollegeId") String voteCollegeId,HttpServletRequest request){
+        return voteService.deleteFirstVoteCollegeLog(voteCollegeId,request);
+    }
+
+    @PostMapping("/deleteFirstVoteAllCollegeLog")
+    public ResultVO deleteFirstVoteAllCollegeLog(HttpServletRequest request){
+        return voteService.deleteFirstVoteAllCollegeLog(request);
+    }
 }

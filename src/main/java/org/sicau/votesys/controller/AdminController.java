@@ -30,4 +30,9 @@ public class AdminController {
     public ResultVO logout(HttpServletRequest request){
         return adminService.logout(request);
     }
+
+    @PostMapping("/dangerActionAuthentication")
+    public ResultVO dangerActionAuthentication(@RequestParam("password") String password,HttpServletRequest request){
+        return adminService.dangerActionAuthentication(password,request);
+    }
 }

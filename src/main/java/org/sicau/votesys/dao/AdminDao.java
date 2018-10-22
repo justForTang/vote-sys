@@ -13,4 +13,6 @@ public interface AdminDao {
                                                 @Param("password") String password);
 
     String selectAdminNumById(@Param("id") String id);
+
+    AdminPO queryAdminInfoByIdAndPassword(@Param("id")String id,@Param("password") String password);
 }

@@ -3,10 +3,7 @@ package org.sicau.votesys.service.imp;
 import org.sicau.votesys.dao.AdminDao;
 import org.sicau.votesys.dao.UserDao;
 import org.sicau.votesys.dao.VoteDao;
-import org.sicau.votesys.domain.PO.CandidatePO;
-import org.sicau.votesys.domain.PO.CollegePO;
-import org.sicau.votesys.domain.PO.SecondCandidatePO;
-import org.sicau.votesys.domain.PO.UserPO;
+import org.sicau.votesys.domain.PO.*;
 import org.sicau.votesys.domain.VO.*;
 import org.sicau.votesys.enums.ConstantEnum;
 import org.sicau.votesys.service.VoteService;
@@ -160,10 +157,11 @@ public class VoteServiceImp implements VoteService {
         }else{
             if(userDao.selectUserNumById(sessionValue) == null) return resultUtil.loginError();
         }
-        int passNum = voteDao.querySecondPassNum();
+        SecondDataPO secondDataPO = voteDao.querySecondData();
         List<SecondCandidatePO> secondCandidatePOList = voteDao.getSecondVoteData();
         Map<String,Object> resMap = new HashMap<>();
-        resMap.put("passNum",passNum);
+        resMap.put("passNum",secondDataPO.getPassNum());
+        resMap.put("voteRole",secondDataPO.getPassNum());
         resMap.put("candidateList",secondCandidatePOList);
         return resultUtil.success(resMap);
     }
@@ -209,9 +207,10 @@ public class VoteServiceImp implements VoteService {
     public ResultVO getSecondCurrentData() {
         List<SecondCandidatePO> secondCandidatePOList = voteDao.getSecondVoteDataOrderByNum();
         if(secondCandidatePOList!=null){
-            int passNum = voteDao.querySecondPassNum();
+            SecondDataPO secondDataPO = voteDao.querySecondData();
             Map<String,Object> resMap = new HashMap<>();
-            resMap.put("passNum",passNum);
+            resMap.put("passNum",secondDataPO.getPassNum());
+            resMap.put("voteRule",secondDataPO.getVoteRule());
             resMap.put("candidateList",secondCandidatePOList);
             return resultUtil.success(resMap);
         }else{
@@ -294,6 +293,34 @@ public class VoteServiceImp implements VoteService {
             }
         }else{
             return resultUtil.sourceExistError("组别人数已上线");
+        }
+        return resultUtil.unknowError();
+    }
+
+    @Override
+    public ResultVO deleteFirstVoteCollegeLog(String voteCollegeId, HttpServletRequest request) {
+        String sessionValue = SessionUtil.getSession(ConstantEnum.SESSION_NAME_ADMIN.getValue(),request.getSession());
+        if (sessionValue ==null){
+            return resultUtil.loginError();
+        }else{
+            if(adminDao.selectAdminNumById(sessionValue) == null) return resultUtil.loginError();
+        }
+        if(voteDao.deleteFirstVoteCollegeLog(voteCollegeId)){
+            return resultUtil.success();
+        }
+        return resultUtil.unknowError();
+    }
+
+    @Override
+    public ResultVO deleteFirstVoteAllCollegeLog(HttpServletRequest request) {
+        String sessionValue = SessionUtil.getSession(ConstantEnum.SESSION_NAME_ADMIN.getValue(),request.getSession());
+        if (sessionValue ==null){
+            return resultUtil.loginError();
+        }else{
+            if(adminDao.selectAdminNumById(sessionValue) == null) return resultUtil.loginError();
+        }
+        if(voteDao.deleteFirstVoteAllCollegeLog()){
+            return resultUtil.success();
         }
         return resultUtil.unknowError();
     }

@@ -13,4 +13,7 @@ public interface AdminService {
     ResultVO login(String username, String password, HttpServletRequest request);
 
     ResultVO logout(HttpServletRequest request);
+
+    ResultVO dangerActionAuthentication(String password, HttpServletRequest request);
+
 }
