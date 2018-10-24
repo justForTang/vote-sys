@@ -1,5 +1,5 @@
 $(function () {
-    getSysConf();
+    // getSysConf();
     showMsg();
 })
 /**

@@ -30,7 +30,7 @@ public interface UserDao {
 
     boolean updateUserLogStatsByUsername(@Param("username") String username);
 
-    boolean deleteUserByUsername(@Param("username") String username);
+    boolean deleteUserById(@Param("id") String id);
 
     boolean updateAllUserLogStats(List<String> usernameList);
 

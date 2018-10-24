@@ -131,14 +131,14 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public ResultVO deleteUser(String username, HttpServletRequest request) {
+    public ResultVO deleteUser(String id, HttpServletRequest request) {
         String sessionValue = SessionUtil.getSession(ConstantEnum.SESSION_NAME_ADMIN.getValue(),request.getSession());
         if (sessionValue ==null){
             return resultUtil.loginError();
         }else{
             if(adminDao.selectAdminNumById(sessionValue) == null) return resultUtil.loginError();
         }
-        if(userDao.deleteUserByUsername(username)) return resultUtil.success();
+        if(userDao.deleteUserById(id)) return resultUtil.success();
         return resultUtil.unknowError();
     }
 

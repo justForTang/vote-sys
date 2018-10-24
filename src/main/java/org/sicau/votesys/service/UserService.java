@@ -26,7 +26,7 @@ public interface UserService {
 
     ResultVO updateAllUserLogStats(List<String> usernameList, HttpServletRequest request);
 
-    ResultVO deleteUser(String username, HttpServletRequest request);
+    ResultVO deleteUser(String id, HttpServletRequest request);
 
     ResultVO getUserCount();
 

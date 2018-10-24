@@ -1,6 +1,7 @@
 var voteList = [];
 var voteStats = {};
 var secondVoteData;
+var systemConf ;
 $(function () {
     getSysConf();
     var urlData = getRequest();
@@ -27,6 +28,7 @@ function getSysConf(){
         success:function (res) {
             console.log(res);
             if(res.code == 0){
+                systemConf = res.data;
                 $("title").text("投票——"+res.data.singleTitle);
             }else{
                 systemAlert('red',res.msg);
@@ -103,7 +105,7 @@ function renderVotePage(data){
             $("#secondVote").hide();
         }
     }else{// 第二轮
-        $("#voteMsg").text("川农优标遴选投票（第二轮）");
+        $("#voteMsg").text(systemConf.singleTitle+"（第二轮）");
         $("#secondVote").show();
         $(".msg-box").hide();
         showSecondVote();
@@ -134,6 +136,7 @@ function showSecondVote() {
             systemAlert("出错了，code："+res.status);
         }
     })
+    // 对投票限制
     $("input[name='voteSecond']").click(function () {
         var secondFormData = $("#secondForm").serializeJson();
         if(secondFormData.voteSecond == null){
@@ -145,15 +148,29 @@ function showSecondVote() {
                 $("#secondChooseNum").text(secondFormData.voteSecond.length);
             }
         }
-        if(secondFormData.voteSecond.length >= secondVoteData.passNum){
-            for(var i=0;i<$("input[type='checkbox']").length;i++){
-                if(!$("input[type='checkbox']")[i].checked){
-                    $("input[type='checkbox']")[i].disabled=true;
+        if(typeof(secondFormData.voteSecond) == "string"){
+            if(secondVoteData.passNum == 1){
+                for(var i=0;i<$("input[type='checkbox']").length;i++){
+                    if(!$("input[type='checkbox']")[i].checked){
+                        $("input[type='checkbox']")[i].disabled=true;
+                    }
+                }
+            }else{
+                for(var i=0;i<$("input[type='checkbox']").length;i++){
+                    $("input[type='checkbox']")[i].disabled=false;
                 }
             }
         }else{
-            for(var i=0;i<$("input[type='checkbox']").length;i++){
-                $("input[type='checkbox']")[i].disabled=false;
+            if(secondFormData.voteSecond.length >= secondVoteData.passNum){
+                for(var i=0;i<$("input[type='checkbox']").length;i++){
+                    if(!$("input[type='checkbox']")[i].checked){
+                        $("input[type='checkbox']")[i].disabled=true;
+                    }
+                }
+            }else{
+                for(var i=0;i<$("input[type='checkbox']").length;i++){
+                    $("input[type='checkbox']")[i].disabled=false;
+                }
             }
         }
     });
@@ -295,7 +312,7 @@ function updateSecondForm() {
 
 }
 /**
- *
+ * id转换为name
  * */
 function getCandidateNameById(id){
     if(id == "waiver"){

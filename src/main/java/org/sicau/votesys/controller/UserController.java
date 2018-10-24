@@ -62,9 +62,9 @@ public class UserController {
     }
 
     @PostMapping("deleteUser")
-    public ResultVO deleteUser(@RequestParam("username") String username,
+    public ResultVO deleteUser(@RequestParam("id") String id,
                                        HttpServletRequest request){
-        return userService.deleteUser(username,request);
+        return userService.deleteUser(id,request);
     }
 
     @GetMapping("getUserCount")

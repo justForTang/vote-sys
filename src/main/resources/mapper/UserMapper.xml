@@ -39,8 +39,8 @@
             username = #{username}
         </foreach>;
     </update>
-    <delete id="deleteUserByUsername">
-        delete from user_t where username=#{username}
+    <delete id="deleteUserById">
+        delete from user_t where id=#{id}
     </delete>
     <delete id="deleteCollegeById">
         delete from college_t where id = #{id}

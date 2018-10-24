@@ -100,7 +100,7 @@ function renderTable(){
                     obj.del(); //删除对应行（tr）的DOM结构
                     console.log(data);
                     layer.close(index);
-                    delUserByUsername(data.username);
+                    delUserById(data.id);
                 });
             }
         });
@@ -180,13 +180,13 @@ function logOut() {
 /**
  * 删除某一个用户
  * */
-function delUserByUsername(username){
+function delUserById(id){
     $.ajax({
         url:"/user/deleteUser",
         type:"post",
         dataType:"json",
         data:{
-            username:username
+            id:id
         },
         async:false,
         success:function (res) {
