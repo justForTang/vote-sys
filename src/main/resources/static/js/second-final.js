@@ -140,10 +140,11 @@ function checkSecondVote(res){
             $("#totalNum").text(rater.student);
             if(res.data == rater.student){
                 window.clearInterval(getVotedNumClock);
-                $(".loading-container").hide();
+
                 // $("body,html").css("overflow","auto");
                 // 先渲染页面再显示动画
                 getSecondCurrentData();
+                $(".loading-container").hide();
                 $(".show-container").css({
                     "transform":"scale(1, 1)",
                     "filter":"blur(0)"
@@ -221,6 +222,11 @@ function renderResult(data) {
         case 2:// 长页显示
             $("#passCandidateList").empty();
             for (var i = 0; i < data.candidateList.length; i++) {
+                if((i+1)>data.passNum){
+                    showColorClass = "not-through";
+                }else{
+                    showColorClass = "through";
+                }
                 $("#passCandidateList").append("<div class='row "+showColorClass+"'>\n" +
                     "                <div class=\"col-md-4\">\n" +
                     "                    <h3>"+data.candidateList[i].candidateName+"</h3>\n" +
