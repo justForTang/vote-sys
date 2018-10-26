@@ -25,6 +25,7 @@ function getSysConf(){
         url:"/system/getSysConf",
         type:"get",
         dataType:"json",
+        async:false,
         success:function (res) {
             console.log(res);
             if(res.code == 0){

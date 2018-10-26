@@ -42,4 +42,4 @@ mybatis:
   config-location: classpath:mybatis-config.xml # 配置配置文件路径
 
 logging:
-  file: /opt/webapp/vote/sicau_vote_sys.log
+  file: /opt/webapp/vote/logs/sicau_vote_sys.log

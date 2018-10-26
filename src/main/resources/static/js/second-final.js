@@ -137,17 +137,17 @@ function checkSecondVote(res){
             }
             break;
         case 3:
-            console.log(22222222222222222);
             $("#totalNum").text(rater.student);
             if(res.data == rater.student){
                 window.clearInterval(getVotedNumClock);
                 $(".loading-container").hide();
                 // $("body,html").css("overflow","auto");
+                // 先渲染页面再显示动画
+                getSecondCurrentData();
                 $(".show-container").css({
                     "transform":"scale(1, 1)",
                     "filter":"blur(0)"
                 });
-                getSecondCurrentData();
             }
             break;
     }
